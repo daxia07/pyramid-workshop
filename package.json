@@ -1,0 +1,1 @@
+{"name":"pyramid-workshop","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"vite build","test":"node --test tests/*.test.js"},"dependencies":{"three":"0.186.1"},"devDependencies":{"vite":"^7.3.7"}}

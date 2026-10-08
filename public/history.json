@@ -1,0 +1,131 @@
+{
+  "egypt": {
+    "title": "The Great Pyramid of Khufu",
+    "location": "Giza, Egypt",
+    "date": "About 2580 BCE",
+    "builders": "Ancient Egyptian builders working for King Khufu",
+    "purpose": "A royal tomb",
+    "detail": "Its outside was once covered with fine white limestone. Some of that stone arrived by boat.",
+    "story": "About 4,600 years ago, Egyptian builders raised the Great Pyramid at Giza for King Khufu. It was a royal tomb. Teams worked together to cut, move, and fit huge stones. Most of the pyramid is limestone. Its outside once had a smooth covering of fine limestone, and boats brought some of this stone to the building site. The pyramid stood near the Nile valley, at the desert\u2019s edge. Look at the photograph: many outer stones are now missing, so you can see the rougher blocks below!",
+    "simplification": "Our small block model teaches layers and counting. The real pyramid had smooth sloping sides and far more stones. It is not an exact reconstruction.",
+    "sources": [
+      {
+        "label": "Egyptian Ministry of Tourism and Antiquities: The Great Pyramid",
+        "url": "https://egymonuments.gov.eg/monuments/the-great-pyramid/"
+      },
+      {
+        "label": "Ancient Egypt Research Associates: Pyramid builders and waterways",
+        "url": "https://aeraweb.org/"
+      },
+      {
+        "label": "AERA: Fieldwork at Giza",
+        "url": "https://aeraweb.org/projects/"
+      },
+      {
+        "label": "Photo source",
+        "url": "https://commons.wikimedia.org/wiki/File:Kheops-Pyramid.jpg"
+      },
+      {
+        "label": "CC BY 2.5",
+        "url": "https://creativecommons.org/licenses/by/2.5/"
+      }
+    ],
+    "image_credit": "Nina Aldin Thune / Wikimedia Commons",
+    "image_license": "CC BY 2.5",
+    "image_license_url": "https://creativecommons.org/licenses/by/2.5/",
+    "image_alt": "The Great Pyramid of Khufu at Giza, with exposed stone courses and visitors at its base.",
+    "image_caption": "The Great Pyramid today. Photo: Nina Aldin Thune, CC BY 2.5.",
+    "image": "/assets/egypt.jpg",
+    "image_source": "https://commons.wikimedia.org/wiki/File:Kheops-Pyramid.jpg",
+    "image_original_url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Kheops-Pyramid.jpg",
+    "image_changes": "Resized for this game; the photograph retains its stated license.",
+    "imageAlt": "The Great Pyramid of Khufu at Giza, with exposed stone courses and visitors at its base.",
+    "credit": "Nina Aldin Thune / Wikimedia Commons \u00b7 CC BY 2.5 \u00b7 resized for this game"
+  },
+  "maya": {
+    "title": "El Castillo: Temple of Kukulc\u00e1n",
+    "location": "Chich\u00e9n Itz\u00e1, Yucat\u00e1n, Mexico",
+    "date": "About 900\u20131200 CE (the city\u2019s main building era)",
+    "builders": "Maya builders at Chich\u00e9n Itz\u00e1",
+    "purpose": "A temple raised on a stepped pyramid",
+    "detail": "The real pyramid has nine stepped levels and stairways on four sides.",
+    "story": "Maya builders made El Castillo in the city of Chich\u00e9n Itz\u00e1, in what is now Mexico. The city\u2019s main building era was about 900 to 1200 CE. This stepped pyramid supported a temple linked with Kukulc\u00e1n, the Feathered Serpent. It has nine levels and stairways on all four sides. Near the spring and autumn equinoxes, sunlight and shadows can make a snake-like pattern beside a stairway. Imagine its busy ceremonial plaza, with people and buildings around it. Our little model helps you explore its layered shape.",
+    "simplification": "Our small terraces, temple assembly and stair flights teach planning and counting. Their size, colors, piece counts and arrangement are teaching choices, not an exact archaeological reconstruction.",
+    "sources": [
+      {
+        "label": "INAH: Chich\u00e9n Itz\u00e1",
+        "url": "https://lugares.inah.gob.mx/en/node/4335"
+      },
+      {
+        "label": "INAH: Archaeological zone of Chich\u00e9n Itz\u00e1",
+        "url": "https://www.inah.gob.mx/zonas/146-zona-arqueologica-de-chichen-itza?highlight=WyJjaGljaGVuIiwiaXR6YSJd"
+      },
+      {
+        "label": "UNESCO: Pre-Hispanic City of Chichen-Itza",
+        "url": "https://whc.unesco.org/en/list/483"
+      },
+      {
+        "label": "Photo source",
+        "url": "https://commons.wikimedia.org/wiki/File:Chichen_Itza_3.jpg"
+      },
+      {
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    ],
+    "image_credit": "Daniel Schwen / Wikimedia Commons",
+    "image_license": "CC BY-SA 4.0",
+    "image_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "image_alt": "El Castillo at Chich\u00e9n Itz\u00e1, showing stepped stone terraces, a central stairway and its summit temple, with trees behind.",
+    "image_caption": "El Castillo today. Photo: Daniel Schwen, CC BY-SA 4.0.",
+    "image": "/assets/maya.jpg",
+    "image_source": "https://commons.wikimedia.org/wiki/File:Chichen_Itza_3.jpg",
+    "image_original_url": "https://upload.wikimedia.org/wikipedia/commons/5/51/Chichen_Itza_3.jpg",
+    "image_changes": "Resized for this game; the photograph retains its stated license.",
+    "imageAlt": "El Castillo at Chich\u00e9n Itz\u00e1, showing stepped stone terraces, a central stairway and its summit temple, with trees behind.",
+    "credit": "Daniel Schwen / Wikimedia Commons \u00b7 CC BY-SA 4.0 \u00b7 resized for this game"
+  },
+  "mesopotamia": {
+    "title": "The Great Ziggurat of Ur",
+    "location": "Ur, southern Iraq",
+    "date": "About 2100 BCE",
+    "builders": "Sumerian builders under King Ur-Nammu",
+    "purpose": "A raised religious platform in the temple area of Nanna, the moon god",
+    "detail": "A surviving brick from Ur has a king\u2019s inscription and a dog\u2019s paw print!",
+    "story": "Around 2100 BCE, Sumerian builders worked for King Ur-Nammu at Ur, in what is now Iraq. They built a ziggurat: a huge stepped platform for a temple. It belonged to the sacred area of Nanna, the moon god. Builders used clay bricks in this river-plain city. Here is a tiny clue from their world: a brick from Ur still has a dog\u2019s paw print, made before the clay dried! The ziggurat\u2019s upper parts have not survived. The photograph shows the remaining structure, with restored lower parts.",
+    "simplification": "Our model teaches the idea of a stepped temple platform. The original upper stages are uncertain. Our small temple assembly, layers and piece count are imaginative teaching choices, not an exact reconstruction.",
+    "sources": [
+      {
+        "label": "The Metropolitan Museum of Art: Ur, The Ziggurat",
+        "url": "https://www.metmuseum.org/essays/ur-the-ziggurat"
+      },
+      {
+        "label": "Penn Museum: Brick B16461",
+        "url": "https://collections.penn.museum/collections/object/446712"
+      },
+      {
+        "label": "UNESCO: The Ahwar of Southern Iraq",
+        "url": "https://whc.unesco.org/en/list/1481/"
+      },
+      {
+        "label": "Photo source",
+        "url": "https://commons.wikimedia.org/wiki/File:Ziggarut_of_Ur_-_M.Lubinski.jpg"
+      },
+      {
+        "label": "CC BY-SA 2.0",
+        "url": "https://creativecommons.org/licenses/by-sa/2.0/"
+      }
+    ],
+    "image_credit": "Michael Lubinski; contrast correction by Tmtriumph / Wikimedia Commons",
+    "image_license": "CC BY-SA 2.0",
+    "image_license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "image_alt": "The surviving and partly restored Ziggurat of Ur, with broad brick walls and long stairways rising above flat ground.",
+    "image_caption": "Ur\u2019s partly restored ziggurat today. Photo: Michael Lubinski; contrast correction by Tmtriumph, CC BY-SA 2.0.",
+    "image": "/assets/mesopotamia.jpg",
+    "image_source": "https://commons.wikimedia.org/wiki/File:Ziggarut_of_Ur_-_M.Lubinski.jpg",
+    "image_original_url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Ziggarut_of_Ur_-_M.Lubinski.jpg",
+    "image_changes": "Resized for this game; the photograph retains its stated license.",
+    "imageAlt": "The surviving and partly restored Ziggurat of Ur, with broad brick walls and long stairways rising above flat ground.",
+    "credit": "Michael Lubinski; contrast correction by Tmtriumph / Wikimedia Commons \u00b7 CC BY-SA 2.0 \u00b7 resized for this game"
+  }
+}

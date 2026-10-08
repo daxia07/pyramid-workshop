@@ -1,0 +1,5457 @@
+{
+  "schemaVersion": 1,
+  "scenes": [
+    {
+      "id": "egypt",
+      "name": "Nile and Desert",
+      "missions": [
+        "egypt-1",
+        "egypt-2",
+        "egypt-3",
+        "egypt-4"
+      ]
+    },
+    {
+      "id": "maya",
+      "name": "Forest and Plaza",
+      "missions": [
+        "maya-1",
+        "maya-2",
+        "maya-3",
+        "maya-4"
+      ]
+    },
+    {
+      "id": "mesopotamia",
+      "name": "River Plain of Ur",
+      "missions": [
+        "ur-1",
+        "ur-2",
+        "ur-3",
+        "ur-4"
+      ]
+    }
+  ],
+  "missions": [
+    {
+      "id": "egypt-1",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "name": "Fit the Final Stones",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 24,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
+        "inspectShapes"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "egypt",
+      "targetQuantities": {
+        "corner": 8,
+        "edge": 4,
+        "brick": 1,
+        "cap": 1
+      },
+      "requiredNewQuantities": {
+        "corner": 4,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 21,
+      "minimumTotalCost": 21,
+      "lockedIds": [
+        "-1,0,-1",
+        "0,0,-1",
+        "1,0,-1",
+        "-1,0,0",
+        "0,0,0",
+        "1,0,0",
+        "-1,0,1",
+        "0,0,1",
+        "1,0,1"
+      ],
+      "unlocksAfter": null,
+      "initialState": {
+        "stage": "plan",
+        "money": 24,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-1,0,-1",
+            "x": -1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,-1",
+            "x": 0.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,-1",
+            "x": 1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,0",
+            "x": -1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,0",
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,0",
+            "x": 1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,1",
+            "x": -1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,1",
+            "x": 0.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,1",
+            "x": 1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "egypt-2",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "name": "Load the Nile Boat",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 24,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
+        "deliveryBins"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "egypt",
+      "delivery": {
+        "capacity": 3,
+        "weights": {
+          "corner": 1,
+          "cap": 2
+        },
+        "optimalTrips": 2,
+        "extraTripsAllowed": true,
+        "state": {
+          "loads": [
+            [],
+            []
+          ],
+          "delivered": {},
+          "trips": 0
+        },
+        "actions": [
+          "allocate",
+          "unallocate",
+          "dispatch",
+          "skipAnimation",
+          "unload",
+          "returnBoat"
+        ],
+        "validation": "sum(load quantity \u00d7 SKU weight) <= 3; place only delivered inventory"
+      },
+      "targetQuantities": {
+        "corner": 8,
+        "edge": 4,
+        "brick": 1,
+        "cap": 1
+      },
+      "requiredNewQuantities": {
+        "corner": 4,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 21,
+      "minimumTotalCost": 21,
+      "lockedIds": [
+        "-1,0,-1",
+        "0,0,-1",
+        "1,0,-1",
+        "-1,0,0",
+        "0,0,0",
+        "1,0,0",
+        "-1,0,1",
+        "0,0,1",
+        "1,0,1"
+      ],
+      "unlocksAfter": "egypt-1",
+      "initialState": {
+        "stage": "plan",
+        "money": 24,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-1,0,-1",
+            "x": -1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,-1",
+            "x": 0.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,-1",
+            "x": 1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,0",
+            "x": -1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,0",
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,0",
+            "x": 1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,1",
+            "x": -1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,1",
+            "x": 0.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,1",
+            "x": 1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "egypt-3",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "name": "Find the Broken Pattern",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 15,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner",
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner",
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "edge",
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "edge",
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        }
+      ],
+      "mechanics": [
+        "inspectRepair"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "egypt",
+      "targetQuantities": {
+        "corner": 8,
+        "edge": 4,
+        "brick": 1,
+        "cap": 1
+      },
+      "requiredNewQuantities": {
+        "corner": 2,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 13,
+      "minimumTotalCost": 13,
+      "lockedIds": [
+        "-1,0,-1",
+        "0,0,-1",
+        "1,0,-1",
+        "-1,0,0",
+        "0,0,0",
+        "1,0,0",
+        "-1,0,1",
+        "0,0,1",
+        "1,0,1"
+      ],
+      "unlocksAfter": "egypt-2",
+      "initialState": {
+        "stage": "plan",
+        "money": 15,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-1,0,-1",
+            "x": -1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,-1",
+            "x": 0.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,-1",
+            "x": 1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,0",
+            "x": -1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,0",
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,0",
+            "x": 1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,1",
+            "x": -1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,1",
+            "x": 0.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,1",
+            "x": 1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,1,-0.5",
+            "x": -0.5,
+            "y": 1,
+            "z": -0.5,
+            "type": "corner",
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          },
+          {
+            "id": "0.5,1,-0.5",
+            "x": 0.5,
+            "y": 1,
+            "z": -0.5,
+            "type": "corner",
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          },
+          {
+            "id": "-0.5,1,0.5",
+            "x": -0.5,
+            "y": 1,
+            "z": 0.5,
+            "type": "edge",
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          },
+          {
+            "id": "0.5,1,0.5",
+            "x": 0.5,
+            "y": 1,
+            "z": 0.5,
+            "type": "edge",
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "egypt-4",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "name": "Your Pyramid Commission",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 54,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [],
+      "mechanics": [
+        "independentTally",
+        "rowFill"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "egypt",
+      "targetQuantities": {
+        "corner": 8,
+        "edge": 4,
+        "brick": 1,
+        "cap": 1
+      },
+      "requiredNewQuantities": {
+        "corner": 8,
+        "edge": 4,
+        "brick": 1,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 51,
+      "minimumTotalCost": 51,
+      "lockedIds": [],
+      "unlocksAfter": "egypt-3",
+      "initialState": {
+        "stage": "plan",
+        "money": 54,
+        "inventory": {},
+        "blocks": [],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "maya-1",
+      "sceneId": "maya",
+      "shapeFamily": "maya",
+      "name": "Leave a Terrace",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 22,
+      "prices": {
+        "brick": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0,
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
+        "footprintChoice",
+        "rowFill"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "maya",
+      "planning": {
+        "choices": [
+          {
+            "upperWidth": 3,
+            "valid": false
+          },
+          {
+            "upperWidth": 2,
+            "valid": true
+          }
+        ],
+        "answer": {
+          "upperBricks": 4
+        }
+      },
+      "targetQuantities": {
+        "brick": 13,
+        "temple": 1,
+        "stairs": 2
+      },
+      "requiredNewQuantities": {
+        "brick": 4,
+        "temple": 1,
+        "stairs": 1
+      },
+      "minimumPurchaseCost": 19,
+      "minimumTotalCost": 19,
+      "lockedIds": [
+        "-1,0,-1",
+        "0,0,-1",
+        "1,0,-1",
+        "-1,0,0",
+        "0,0,0",
+        "1,0,0",
+        "-1,0,1",
+        "0,0,1",
+        "1,0,1",
+        "stair:front:0"
+      ],
+      "unlocksAfter": null,
+      "initialState": {
+        "stage": "plan",
+        "money": 22,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-1,0,-1",
+            "x": -1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,-1",
+            "x": 0.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,-1",
+            "x": 1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,0",
+            "x": -1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,0",
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,0",
+            "x": 1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,1",
+            "x": -1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,1",
+            "x": 0.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,1",
+            "x": 1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "stair:front:0",
+            "x": 0,
+            "y": 0,
+            "z": 1.75,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 0,
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "maya-2",
+      "sceneId": "maya",
+      "shapeFamily": "maya",
+      "name": "Stairs on Both Sides",
+      "dims": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "budget": 20,
+      "prices": {
+        "brick": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-1.5,0,-1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,-1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,-1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,-1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1.5,0,-0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,-0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,-0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,-0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1.5,0,0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1.5,0,1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,2,-0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,2,-0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,2,0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,2,0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0,3,0",
+          "x": 0.0,
+          "y": 3,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 2.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1
+        },
+        {
+          "id": "stair:front:2",
+          "x": 0,
+          "y": 2,
+          "z": 1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 2
+        },
+        {
+          "id": "stair:rear:0",
+          "x": 0,
+          "y": 0,
+          "z": -2.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "rear",
+          "routeId": "rear",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:rear:1",
+          "x": 0,
+          "y": 1,
+          "z": -1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "rear",
+          "routeId": "rear",
+          "stepIndex": 1
+        },
+        {
+          "id": "stair:rear:2",
+          "x": 0,
+          "y": 2,
+          "z": -1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "rear",
+          "routeId": "rear",
+          "stepIndex": 2
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1.5,0,-1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,-1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,-1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,-1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1.5,0,-0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,-0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,-0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,-0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1.5,0,0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1.5,0,1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,2,-0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,2,-0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,2,0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,2,0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 2.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0,
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1,
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "stair:front:2",
+          "x": 0,
+          "y": 2,
+          "z": 1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 2,
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
+        "mirrorStairs"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "bothRoutesConnected"
+      ],
+      "rewardKey": "maya",
+      "targetQuantities": {
+        "brick": 29,
+        "temple": 1,
+        "stairs": 6
+      },
+      "requiredNewQuantities": {
+        "temple": 1,
+        "stairs": 3
+      },
+      "minimumPurchaseCost": 17,
+      "minimumTotalCost": 17,
+      "lockedIds": [
+        "-1.5,0,-1.5",
+        "-0.5,0,-1.5",
+        "0.5,0,-1.5",
+        "1.5,0,-1.5",
+        "-1.5,0,-0.5",
+        "-0.5,0,-0.5",
+        "0.5,0,-0.5",
+        "1.5,0,-0.5",
+        "-1.5,0,0.5",
+        "-0.5,0,0.5",
+        "0.5,0,0.5",
+        "1.5,0,0.5",
+        "-1.5,0,1.5",
+        "-0.5,0,1.5",
+        "0.5,0,1.5",
+        "1.5,0,1.5",
+        "-1,1,-1",
+        "0,1,-1",
+        "1,1,-1",
+        "-1,1,0",
+        "0,1,0",
+        "1,1,0",
+        "-1,1,1",
+        "0,1,1",
+        "1,1,1",
+        "-0.5,2,-0.5",
+        "0.5,2,-0.5",
+        "-0.5,2,0.5",
+        "0.5,2,0.5",
+        "stair:front:0",
+        "stair:front:1",
+        "stair:front:2"
+      ],
+      "unlocksAfter": "maya-1",
+      "initialState": {
+        "stage": "plan",
+        "money": 20,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-1.5,0,-1.5",
+            "x": -1.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,-1.5",
+            "x": -0.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,-1.5",
+            "x": 0.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,-1.5",
+            "x": 1.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1.5,0,-0.5",
+            "x": -1.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,-0.5",
+            "x": -0.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,-0.5",
+            "x": 0.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,-0.5",
+            "x": 1.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1.5,0,0.5",
+            "x": -1.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,0.5",
+            "x": -0.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,0.5",
+            "x": 0.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,0.5",
+            "x": 1.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1.5,0,1.5",
+            "x": -1.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,1.5",
+            "x": -0.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,1.5",
+            "x": 0.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,1.5",
+            "x": 1.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,-1",
+            "x": -1.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,-1",
+            "x": 0.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,-1",
+            "x": 1.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,0",
+            "x": -1.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,0",
+            "x": 0.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,0",
+            "x": 1.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,1",
+            "x": -1.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,1",
+            "x": 0.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,1",
+            "x": 1.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,2,-0.5",
+            "x": -0.5,
+            "y": 2,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,2,-0.5",
+            "x": 0.5,
+            "y": 2,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,2,0.5",
+            "x": -0.5,
+            "y": 2,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,2,0.5",
+            "x": 0.5,
+            "y": 2,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "stair:front:0",
+            "x": 0,
+            "y": 0,
+            "z": 2.25,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 0,
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "stair:front:1",
+            "x": 0,
+            "y": 1,
+            "z": 1.75,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 1,
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "stair:front:2",
+            "x": 0,
+            "y": 2,
+            "z": 1.25,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 2,
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "maya-3",
+      "sceneId": "maya",
+      "shapeFamily": "maya",
+      "name": "Reconnect the Ascent",
+      "dims": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "budget": 6,
+      "prices": {
+        "brick": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-1.5,0,-1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,-1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,-1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,-1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1.5,0,-0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,-0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,-0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,-0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1.5,0,0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1.5,0,1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,0,1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,2,-0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,2,-0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,2,0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,2,0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0,3,0",
+          "x": 0.0,
+          "y": 3,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 2.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1
+        },
+        {
+          "id": "stair:front:2",
+          "x": 0,
+          "y": 2,
+          "z": 1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 2
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1.5,0,-1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,-1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,-1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,-1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1.5,0,-0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,-0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,-0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,-0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1.5,0,0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1.5,0,1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,0,1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,0,1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1.5,0,1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,2,-0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,2,-0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,2,0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,2,0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,3,0",
+          "x": 0.0,
+          "y": 3,
+          "z": 0.0,
+          "type": "temple",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 2.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0,
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        },
+        {
+          "id": "stair:rear:1",
+          "x": 0,
+          "y": 1,
+          "z": -1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "rear",
+          "routeId": "rear",
+          "stepIndex": 1,
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        },
+        {
+          "id": "stair:front:2",
+          "x": 0,
+          "y": 2,
+          "z": 1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 2,
+          "locked": false,
+          "provenance": "site",
+          "refundValue": 0
+        }
+      ],
+      "mechanics": [
+        "routeRepair",
+        "zeroPurchase"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "frontRouteConnected"
+      ],
+      "rewardKey": "maya",
+      "allowDisconnectedSeed": true,
+      "targetQuantities": {
+        "brick": 29,
+        "temple": 1,
+        "stairs": 3
+      },
+      "requiredNewQuantities": {},
+      "minimumPurchaseCost": 0,
+      "minimumTotalCost": 0,
+      "lockedIds": [
+        "-1.5,0,-1.5",
+        "-0.5,0,-1.5",
+        "0.5,0,-1.5",
+        "1.5,0,-1.5",
+        "-1.5,0,-0.5",
+        "-0.5,0,-0.5",
+        "0.5,0,-0.5",
+        "1.5,0,-0.5",
+        "-1.5,0,0.5",
+        "-0.5,0,0.5",
+        "0.5,0,0.5",
+        "1.5,0,0.5",
+        "-1.5,0,1.5",
+        "-0.5,0,1.5",
+        "0.5,0,1.5",
+        "1.5,0,1.5",
+        "-1,1,-1",
+        "0,1,-1",
+        "1,1,-1",
+        "-1,1,0",
+        "0,1,0",
+        "1,1,0",
+        "-1,1,1",
+        "0,1,1",
+        "1,1,1",
+        "-0.5,2,-0.5",
+        "0.5,2,-0.5",
+        "-0.5,2,0.5",
+        "0.5,2,0.5",
+        "0,3,0"
+      ],
+      "unlocksAfter": "maya-2",
+      "initialState": {
+        "stage": "plan",
+        "money": 6,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-1.5,0,-1.5",
+            "x": -1.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,-1.5",
+            "x": -0.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,-1.5",
+            "x": 0.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,-1.5",
+            "x": 1.5,
+            "y": 0,
+            "z": -1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1.5,0,-0.5",
+            "x": -1.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,-0.5",
+            "x": -0.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,-0.5",
+            "x": 0.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,-0.5",
+            "x": 1.5,
+            "y": 0,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1.5,0,0.5",
+            "x": -1.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,0.5",
+            "x": -0.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,0.5",
+            "x": 0.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,0.5",
+            "x": 1.5,
+            "y": 0,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1.5,0,1.5",
+            "x": -1.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,0,1.5",
+            "x": -0.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,0,1.5",
+            "x": 0.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1.5,0,1.5",
+            "x": 1.5,
+            "y": 0,
+            "z": 1.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,-1",
+            "x": -1.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,-1",
+            "x": 0.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,-1",
+            "x": 1.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,0",
+            "x": -1.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,0",
+            "x": 0.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,0",
+            "x": 1.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,1",
+            "x": -1.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,1",
+            "x": 0.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,1",
+            "x": 1.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,2,-0.5",
+            "x": -0.5,
+            "y": 2,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,2,-0.5",
+            "x": 0.5,
+            "y": 2,
+            "z": -0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,2,0.5",
+            "x": -0.5,
+            "y": 2,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,2,0.5",
+            "x": 0.5,
+            "y": 2,
+            "z": 0.5,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,3,0",
+            "x": 0.0,
+            "y": 3,
+            "z": 0.0,
+            "type": "temple",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "stair:front:0",
+            "x": 0,
+            "y": 0,
+            "z": 2.25,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 0,
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          },
+          {
+            "id": "stair:rear:1",
+            "x": 0,
+            "y": 1,
+            "z": -1.75,
+            "type": "stairs",
+            "stair": true,
+            "side": "rear",
+            "routeId": "rear",
+            "stepIndex": 1,
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          },
+          {
+            "id": "stair:front:2",
+            "x": 0,
+            "y": 2,
+            "z": 1.25,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 2,
+            "locked": false,
+            "provenance": "site",
+            "refundValue": 0
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "maya-4",
+      "sceneId": "maya",
+      "shapeFamily": "maya",
+      "name": "Design for the Plaza",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 43,
+      "prices": {
+        "brick": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 1.75,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 1.25,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1
+        }
+      ],
+      "seed": [],
+      "mechanics": [
+        "templateConstraints",
+        "rowFill"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "corridorClear"
+      ],
+      "rewardKey": "maya",
+      "planning": {
+        "choices": [
+          {
+            "id": "small",
+            "dims": [
+              3,
+              2,
+              1
+            ],
+            "baseArea": 9,
+            "cost": 40,
+            "corridorClear": true
+          },
+          {
+            "id": "large",
+            "dims": [
+              4,
+              3,
+              2,
+              1
+            ],
+            "baseArea": 16,
+            "cost": 75,
+            "corridorClear": false
+          }
+        ],
+        "acceptedChoice": "small"
+      },
+      "siteConstraints": {
+        "pad": {
+          "xMin": -2.1,
+          "xMax": 2.1,
+          "zMin": -2.1,
+          "zMax": 2.05
+        },
+        "corridor": {
+          "xMin": -3,
+          "xMax": 3,
+          "zMin": 2.05,
+          "zMax": 2.65
+        },
+        "corridorPurpose": "Fictional access path toward a water-access area",
+        "validate": "Check projected rendered mesh bounds including every stair tread; overlap with corridor fails"
+      },
+      "targetQuantities": {
+        "brick": 13,
+        "temple": 1,
+        "stairs": 2
+      },
+      "requiredNewQuantities": {
+        "brick": 13,
+        "temple": 1,
+        "stairs": 2
+      },
+      "minimumPurchaseCost": 40,
+      "minimumTotalCost": 40,
+      "lockedIds": [],
+      "unlocksAfter": "maya-3",
+      "initialState": {
+        "stage": "plan",
+        "money": 43,
+        "inventory": {},
+        "blocks": [],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "ur-1",
+      "sceneId": "mesopotamia",
+      "shapeFamily": "mesopotamia",
+      "name": "Inside and Outside",
+      "dims": [
+        3,
+        1
+      ],
+      "budget": 30,
+      "prices": {
+        "core": 1,
+        "facing": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 2.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        }
+      ],
+      "seed": [
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
+        "materialChoice",
+        "crossSection"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "correctMaterials"
+      ],
+      "rewardKey": "mesopotamia",
+      "targetQuantities": {
+        "facing": 8,
+        "core": 1,
+        "temple": 1,
+        "stairs": 1
+      },
+      "requiredNewQuantities": {
+        "facing": 8,
+        "temple": 1,
+        "stairs": 1
+      },
+      "minimumPurchaseCost": 27,
+      "minimumTotalCost": 27,
+      "lockedIds": [
+        "0,0,0"
+      ],
+      "unlocksAfter": null,
+      "initialState": {
+        "stage": "plan",
+        "money": 30,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "0,0,0",
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "ur-2",
+      "sceneId": "mesopotamia",
+      "shapeFamily": "mesopotamia",
+      "name": "Order by the Stack",
+      "dims": [
+        5,
+        3,
+        1
+      ],
+      "budget": 30,
+      "prices": {
+        "core": 1,
+        "facing": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-2,0,-2",
+          "x": -2.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,-2",
+          "x": -1.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,-2",
+          "x": 0.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,-2",
+          "x": 1.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "2,0,-2",
+          "x": 2.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,-1",
+          "x": -2.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "2,0,-1",
+          "x": 2.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,0",
+          "x": -2.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "2,0,0",
+          "x": 2.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,1",
+          "x": -2.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "2,0,1",
+          "x": 2.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,2",
+          "x": -2.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,2",
+          "x": -1.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,2",
+          "x": 0.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,2",
+          "x": 1.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "2,0,2",
+          "x": 2.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 3.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 2.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1
+        }
+      ],
+      "seed": [
+        {
+          "id": "-2,0,-2",
+          "x": -2.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,-2",
+          "x": -1.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,-2",
+          "x": 0.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,-2",
+          "x": 1.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "2,0,-2",
+          "x": 2.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-2,0,-1",
+          "x": -2.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "2,0,-1",
+          "x": 2.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-2,0,0",
+          "x": -2.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "2,0,0",
+          "x": 2.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-2,0,1",
+          "x": -2.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "2,0,1",
+          "x": 2.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-2,0,2",
+          "x": -2.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,0,2",
+          "x": -1.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,0,2",
+          "x": 0.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,0,2",
+          "x": 1.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "2,0,2",
+          "x": 2.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 3.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0,
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
+        "packPurchase",
+        "perimeterRun"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "correctMaterials"
+      ],
+      "rewardKey": "mesopotamia",
+      "packs": [
+        {
+          "sku": "facing",
+          "quantity": 4,
+          "price": 8
+        }
+      ],
+      "planning": {
+        "answer": {
+          "facingNeeded": 8,
+          "packsOfFour": 2
+        }
+      },
+      "targetQuantities": {
+        "facing": 24,
+        "core": 10,
+        "temple": 1,
+        "stairs": 2
+      },
+      "requiredNewQuantities": {
+        "facing": 8,
+        "core": 1,
+        "temple": 1,
+        "stairs": 1
+      },
+      "minimumPurchaseCost": 28,
+      "minimumTotalCost": 28,
+      "lockedIds": [
+        "-2,0,-2",
+        "-1,0,-2",
+        "0,0,-2",
+        "1,0,-2",
+        "2,0,-2",
+        "-2,0,-1",
+        "-1,0,-1",
+        "0,0,-1",
+        "1,0,-1",
+        "2,0,-1",
+        "-2,0,0",
+        "-1,0,0",
+        "0,0,0",
+        "1,0,0",
+        "2,0,0",
+        "-2,0,1",
+        "-1,0,1",
+        "0,0,1",
+        "1,0,1",
+        "2,0,1",
+        "-2,0,2",
+        "-1,0,2",
+        "0,0,2",
+        "1,0,2",
+        "2,0,2",
+        "stair:front:0"
+      ],
+      "unlocksAfter": "ur-1",
+      "initialState": {
+        "stage": "plan",
+        "money": 30,
+        "inventory": {},
+        "blocks": [
+          {
+            "id": "-2,0,-2",
+            "x": -2.0,
+            "y": 0,
+            "z": -2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,-2",
+            "x": -1.0,
+            "y": 0,
+            "z": -2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,-2",
+            "x": 0.0,
+            "y": 0,
+            "z": -2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,-2",
+            "x": 1.0,
+            "y": 0,
+            "z": -2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "2,0,-2",
+            "x": 2.0,
+            "y": 0,
+            "z": -2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-2,0,-1",
+            "x": -2.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,-1",
+            "x": -1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,-1",
+            "x": 0.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,-1",
+            "x": 1.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "2,0,-1",
+            "x": 2.0,
+            "y": 0,
+            "z": -1.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-2,0,0",
+            "x": -2.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,0",
+            "x": -1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,0",
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,0",
+            "x": 1.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "2,0,0",
+            "x": 2.0,
+            "y": 0,
+            "z": 0.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-2,0,1",
+            "x": -2.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,1",
+            "x": -1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,1",
+            "x": 0.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,1",
+            "x": 1.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "material": "core",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "2,0,1",
+            "x": 2.0,
+            "y": 0,
+            "z": 1.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-2,0,2",
+            "x": -2.0,
+            "y": 0,
+            "z": 2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,0,2",
+            "x": -1.0,
+            "y": 0,
+            "z": 2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,0,2",
+            "x": 0.0,
+            "y": 0,
+            "z": 2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,0,2",
+            "x": 1.0,
+            "y": 0,
+            "z": 2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "2,0,2",
+            "x": 2.0,
+            "y": 0,
+            "z": 2.0,
+            "type": "brick",
+            "material": "facing",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "stair:front:0",
+            "x": 0,
+            "y": 0,
+            "z": 3.0,
+            "type": "stairs",
+            "stair": true,
+            "side": "front",
+            "routeId": "front",
+            "stepIndex": 0,
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "ur-3",
+      "sceneId": "mesopotamia",
+      "shapeFamily": "mesopotamia",
+      "name": "Choose the Higher Site",
+      "dims": [
+        3,
+        1
+      ],
+      "budget": 32,
+      "prices": {
+        "core": 1,
+        "facing": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 2.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        }
+      ],
+      "seed": [],
+      "mechanics": [
+        "siteChoice",
+        "waterPreview"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "correctMaterials",
+        "aboveWaterline"
+      ],
+      "rewardKey": "mesopotamia",
+      "site": {
+        "waterline": 1,
+        "choices": [
+          {
+            "id": "low",
+            "elevation": 0,
+            "fee": 0
+          },
+          {
+            "id": "high",
+            "elevation": 2,
+            "fee": 2
+          }
+        ],
+        "accepted": "high",
+        "previewInitiallyVisible": false,
+        "comparisonCosts": {
+          "low": 28,
+          "high": 30
+        },
+        "state": {
+          "selected": null,
+          "feePaid": 0
+        },
+        "actions": [
+          "selectSite",
+          "previewWater",
+          "clearPreview"
+        ],
+        "validation": "selected elevation > waterline; fee changes by new fee minus old fee, once"
+      },
+      "targetQuantities": {
+        "facing": 8,
+        "core": 1,
+        "temple": 1,
+        "stairs": 1
+      },
+      "requiredNewQuantities": {
+        "facing": 8,
+        "core": 1,
+        "temple": 1,
+        "stairs": 1
+      },
+      "minimumPurchaseCost": 28,
+      "minimumTotalCost": 30,
+      "lockedIds": [],
+      "unlocksAfter": "ur-2",
+      "initialState": {
+        "stage": "plan",
+        "money": 32,
+        "inventory": {},
+        "blocks": [],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "ur-4",
+      "sceneId": "mesopotamia",
+      "shapeFamily": "mesopotamia",
+      "name": "Plan the River-Plain Landmark",
+      "dims": [
+        5,
+        3,
+        1
+      ],
+      "budget": 76,
+      "prices": {
+        "core": 1,
+        "facing": 2,
+        "temple": 8,
+        "stairs": 3
+      },
+      "target": [
+        {
+          "id": "-2,0,-2",
+          "x": -2.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,-2",
+          "x": -1.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,-2",
+          "x": 0.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,-2",
+          "x": 1.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "2,0,-2",
+          "x": 2.0,
+          "y": 0,
+          "z": -2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,-1",
+          "x": -2.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "2,0,-1",
+          "x": 2.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,0",
+          "x": -2.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "2,0,0",
+          "x": 2.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,1",
+          "x": -2.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "2,0,1",
+          "x": 2.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-2,0,2",
+          "x": -2.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,0,2",
+          "x": -1.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,0,2",
+          "x": 0.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,0,2",
+          "x": 1.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "2,0,2",
+          "x": 2.0,
+          "y": 0,
+          "z": 2.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "material": "core"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "brick",
+          "material": "facing"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "temple"
+        },
+        {
+          "id": "stair:front:0",
+          "x": 0,
+          "y": 0,
+          "z": 3.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 0
+        },
+        {
+          "id": "stair:front:1",
+          "x": 0,
+          "y": 1,
+          "z": 2.0,
+          "type": "stairs",
+          "stair": true,
+          "side": "front",
+          "routeId": "front",
+          "stepIndex": 1
+        }
+      ],
+      "seed": [],
+      "mechanics": [
+        "siteChoice",
+        "waterPreview",
+        "packPurchase",
+        "perimeterRun",
+        "rowFill",
+        "materialChoice"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative",
+        "correctMaterials",
+        "aboveWaterline"
+      ],
+      "rewardKey": "mesopotamia",
+      "packs": [
+        {
+          "sku": "facing",
+          "quantity": 4,
+          "price": 8
+        }
+      ],
+      "site": {
+        "waterline": 1,
+        "choices": [
+          {
+            "id": "low",
+            "elevation": 0,
+            "fee": 0
+          },
+          {
+            "id": "high",
+            "elevation": 2,
+            "fee": 2
+          }
+        ],
+        "accepted": "high",
+        "previewInitiallyVisible": false,
+        "comparisonCosts": {
+          "low": 72,
+          "high": 74
+        },
+        "state": {
+          "selected": null,
+          "feePaid": 0
+        },
+        "actions": [
+          "selectSite",
+          "previewWater",
+          "clearPreview"
+        ],
+        "validation": "selected elevation > waterline; fee changes by new fee minus old fee, once"
+      },
+      "targetQuantities": {
+        "facing": 24,
+        "core": 10,
+        "temple": 1,
+        "stairs": 2
+      },
+      "requiredNewQuantities": {
+        "facing": 24,
+        "core": 10,
+        "temple": 1,
+        "stairs": 2
+      },
+      "minimumPurchaseCost": 72,
+      "minimumTotalCost": 74,
+      "lockedIds": [],
+      "unlocksAfter": "ur-3",
+      "initialState": {
+        "stage": "plan",
+        "money": 76,
+        "inventory": {},
+        "blocks": [],
+        "undoStack": []
+      }
+    }
+  ]
+}

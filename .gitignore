@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vercel/
+.openai/
+.env
+.env.*
+*.pem
+*.key
+*.log
+.DS_Store
+coverage/

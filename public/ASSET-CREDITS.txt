@@ -1,0 +1,7 @@
+Pyramid Workshop asset notes
+
+The history collection uses real present-day monument photographs. Photographer credits, source links, image licenses and resizing notices are displayed beside each photograph and included in history.json.
+
+Distant landscape illustrations and the detailed broadleaf texture are AI-generated scenic art, not historical photographs or archaeological reconstructions. The Sphinx model is an original interpretive sculpture shown only in a labeled later-Giza view. Material textures and other construction props are original procedural game assets.
+
+Dimensions, material prices, boat capacity, construction pieces and flood levels are teaching simplifications. Sourced historical stories and reconstructed worksite explanations are available within the game.

@@ -1,0 +1,11 @@
+{
+  "sourceVersion": "2026-10-08-public-source-r1",
+  "reviewedBuild": "2026-10-08-r1-vlhdOufz",
+  "nodeTested": "24.19.0",
+  "testsPassed": 54,
+  "mainBundle": "assets/index-vlhdOufz.js",
+  "mainBundleSha256": "6a8ff2608dcfb0db8f8c71a6689a478028179106dbef542fcadbbe90298d57ec",
+  "intendedDomain": "pyramid.mingli.world",
+  "deploymentVerified": false,
+  "firstPartyLicenseAdded": false
+}
