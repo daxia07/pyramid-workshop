@@ -4,70 +4,35 @@ import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js'
 import {SoftwareRenderer} from './software-renderer.js';
 import {DECK, CARGO_SPECS, footprint, placementProblem, loadMetrics} from './cargo-packing.js';
 import {VOYAGE_MS} from './harbor-game.js';
+import {createHarborEnvironment,MARKET_BAYS} from './harbor-environment.js';
+import {terrainHeight,voyagePose} from './harbor-terrain.js';
 
 const CELL=.76, DECK_Y=.61;
 const INKS={brick:0x2a7380,edge:0x53849d,corner:0xb46d42,cap:0xc99c35};
 export function createHarborWorld(container, getContext, actions) {
-  const scene=new THREE.Scene(); scene.background=new THREE.Color(0xd8e6e3);scene.fog=new THREE.Fog(0xd8e6e3,24,66);
-  const camera=new THREE.PerspectiveCamera(43,1,.1,110);
+  const scene=new THREE.Scene(); scene.background=new THREE.Color(0xd8e6e3);
+  const camera=new THREE.PerspectiveCamera(43,1,.1,700);
   let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});}catch{renderer=new SoftwareRenderer();}
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.02;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.65));renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.96;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
   container.append(renderer.domElement);container.dataset.renderer=renderer instanceof SoftwareRenderer?'textured-software':'webgl-pbr';
-  renderer.domElement.setAttribute('aria-label','3D quarry harbor. Select a cargo sled, then tap the deck. Drag empty water to orbit.');
+  renderer.domElement.setAttribute('aria-label','3D quarry harbor. Tap a packed stone at the market, then tap the deck to load it. Drag empty water to orbit.');
   const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.enablePan=false;
-  controls.minDistance=6;controls.maxDistance=22;controls.maxPolarAngle=Math.PI*.46;
-  const hemi=new THREE.HemisphereLight(0xd8ecf1,0xd0ab79,1.8);scene.add(hemi);
-  const sun=new THREE.DirectionalLight(0xffe5b5,2.8);sun.position.set(-7,14,9);sun.castShadow=true;
-  sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-15,right:15,top:15,bottom:-15,near:1,far:40});sun.shadow.normalBias=.035;sun.shadow.bias=-.0002;scene.add(sun);
+  controls.minDistance=6;controls.maxDistance=42;controls.maxPolarAngle=Math.PI*.46;
   const mats=new Map(),geometries=new Map(),loader=new THREE.TextureLoader();let dirty=true;
-  function tex(name,repeat=1,color=true){const t=loader.load(`/textures/${name}.png`,()=>dirty=true);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(repeat,repeat);if(color)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t;}
-  const stone=new THREE.MeshStandardMaterial({map:tex('limestone-color'),normalMap:tex('limestone-normal-512',1,false),normalScale:new THREE.Vector2(.3,.3),roughness:.92,color:0xfff3d6});
+  function tex(name,repeat=1,color=true){const t=loader.load(`/textures/${name.includes('.')?name:name+'.png'}`,()=>dirty=true);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(repeat,repeat);if(color)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t;}
+  const stone=new THREE.MeshStandardMaterial({map:tex('quarry-limestone-v2.jpg'),normalMap:tex('limestone-normal-512',1,false),normalScale:new THREE.Vector2(.3,.3),roughness:.92,color:0xf4eddc});
   const sand=new THREE.MeshStandardMaterial({map:tex('sand-color',6),normalMap:tex('sand-normal-512',5,false),normalScale:new THREE.Vector2(.4,.4),roughness:1,color:0xf3dbac});
-  const waterMap=tex('water-color',6),waterNormal=tex('water-normal-512',5,false);
-  const waterMat=new THREE.MeshStandardMaterial({color:0x3a9296,map:waterMap,normalMap:waterNormal,normalScale:new THREE.Vector2(.35,.35),metalness:.28,roughness:.22});
-  function woodTexture(){const c=document.createElement('canvas');c.width=512;c.height=128;const x=c.getContext('2d');x.fillStyle='#aa7c4c';x.fillRect(0,0,512,128);for(let i=0;i<120;i++){x.strokeStyle=`rgba(${i%3?'62,34,17':'242,205,145'},${.05+(i%7)*.015})`;x.lineWidth=.6+(i%4)*.4;x.beginPath();for(let a=0;a<=16;a++){const px=a*32,py=(i*17)%128+Math.sin(a*.8+i)*2.2;a?x.lineTo(px,py):x.moveTo(px,py);}x.stroke();}const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;}
-  const woodMap=woodTexture(),wood=new THREE.MeshStandardMaterial({map:woodMap,color:0xd1ae7d,roughness:.8}),darkWood=new THREE.MeshStandardMaterial({map:woodMap,color:0x7e5738,roughness:.9});
+  function woodTexture(){const c=document.createElement('canvas');c.width=512;c.height=128;const x=c.getContext('2d');x.fillStyle='#948573';x.fillRect(0,0,512,128);for(let i=0;i<45;i++){x.strokeStyle=`rgba(${i%3?'62,34,17':'242,205,145'},${.035+(i%7)*.009})`;x.lineWidth=.35+(i%4)*.2;x.beginPath();for(let a=0;a<=16;a++){const px=a*32,py=(i*17)%128+Math.sin(a*.8+i)*2.2;a?x.lineTo(px,py):x.moveTo(px,py);}x.stroke();}const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;}
+  const woodMap=woodTexture(),wood=new THREE.MeshStandardMaterial({map:woodMap,color:0xd1c4a9,roughness:.8}),darkWood=new THREE.MeshStandardMaterial({map:woodMap,color:0x82735a,roughness:.9});
   function material(color){if(!mats.has(color))mats.set(color,new THREE.MeshStandardMaterial({color,roughness:.78}));return mats.get(color);}
   function mesh(parent,geo,mat,x=0,y=0,z=0){const m=new THREE.Mesh(geo,typeof mat==='number'?material(mat):mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
   function box(parent,x,y,z,w,h,d,mat=wood,r=.025){const k=[w,h,d,r].join(',');if(!geometries.has(k))geometries.set(k,new RoundedBoxGeometry(w,h,d,2,Math.min(r,w*.2,h*.2,d*.2)));return mesh(parent,geometries.get(k),mat,x,y,z);}
   function pole(parent,a,b,r,mat=darkWood){const aa=new THREE.Vector3(...a),bb=new THREE.Vector3(...b),m=mesh(parent,new THREE.CylinderGeometry(r,r*.95,aa.distanceTo(bb),9),mat);m.position.copy(aa).add(bb).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),bb.sub(aa).normalize());return m;}
   function rope(parent,points,r=.017,mat=0xc6a879){return mesh(parent,new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p))),24,r,5,false),mat);}
-  function label(parent,text,x,y,z,w=1,color='#294e51',bg='#f4e5c4'){const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=bg;ctx.fillRect(0,0,512,128);ctx.strokeStyle=color;ctx.lineWidth=4;ctx.strokeRect(9,9,494,110);ctx.font='bold 44px Georgia';const fontSize=Math.min(44,44*472/ctx.measureText(text).width);ctx.font=`bold ${fontSize}px Georgia`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color;ctx.fillText(text,256,68);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;const m=mesh(parent,new THREE.PlaneGeometry(w,w/4),new THREE.MeshStandardMaterial({map:t,side:THREE.DoubleSide,roughness:1}),x,y,z);m.castShadow=false;return m;}
-  // A continuous river, terraced quarry face, and a small, detailed working quay.
-  const water=mesh(scene,new THREE.PlaneGeometry(130,130,1,1),waterMat,0,-.13,0);water.rotation.x=-Math.PI/2;water.userData.water=true;
-  const bank=box(scene,-13,-.4,-2,20,.9,60,sand,.4);bank.userData.ground=true;
-  for(let tier=0;tier<4;tier++){for(let j=0;j<7-tier;j++){const rock=box(scene,-6-j*1.8-tier*.3,.15+tier*.92,-9-tier*1.2,2.1,1.1,2.3,stone,.15);rock.rotation.y=Math.sin(j*3+tier)*.04;}}
-  for(let j=0;j<12;j++){const r=mesh(scene,new THREE.DodecahedronGeometry(.13+(j%3)*.055),stone,-4.4-(j%4)*.32,.03,-5.5+Math.floor(j/4)*.36);r.scale.set(1.2,.6,.9);r.rotation.y=j*.61;}
-  const dock=new THREE.Group();scene.add(dock);
-  for(let i=0;i<26;i++)box(dock,-4.7,.23,-3.6+i*.25,4.5,.17,.236,wood,.025);
-  for(const x of[-6.5,-3])for(const z of[-3.4,2.4]){pole(dock,[x,-.7,z],[x,.73,z],.12);box(dock,x,.82,z,.32,.1,.3,darkWood);for(let j=0;j<4;j++){const t=mesh(dock,new THREE.TorusGeometry(.14,.025,5,16),0xbba477,x,.62+j*.04,z);t.rotation.x=Math.PI/2;}}
-  for(const z of[-3,0,2])box(dock,-4.7,.08,z,4.8,.19,.18,darkWood);
-  // Shade awning, stock racks, tools, amphorae and a surveyor's worktable.
-  for(const x of[-7,-4.2])for(const z of[-3.5,-1.4])pole(scene,[x,.1,z],[x,3.1,z],.055);
-  const awningGeo=new THREE.PlaneGeometry(3.1,2.4,12,8);const ap=awningGeo.attributes.position;
-  for(let i=0;i<ap.count;i++){const x=ap.getX(i),yy=ap.getY(i);ap.setZ(i,.17*Math.cos(x*2)-.08*Math.sin(yy*2));}awningGeo.computeVertexNormals();
-  const awning=mesh(scene,awningGeo,new THREE.MeshStandardMaterial({color:0xece0c4,side:THREE.DoubleSide,roughness:1}),-5.6,3.03,-2.5);awning.rotation.x=-Math.PI/2;awning.rotation.z=.04;
-  for(let i=0;i<5;i++){const stripe=box(scene,-6.82+i*.61,3.08,-2.5,.1,.016,2.3,0x567978,.006);stripe.rotation.z=.04;}
-  label(scene,'THE QUARRY',-5.55,2.54,-1.27,1.65);
-  for(let i=0;i<7;i++)box(scene,-6.7+(i%3)*.58,.45+Math.floor(i/3)*.32,-3.13,.53,.29,.52,stone,.04);
-  for(let i=0;i<3;i++){const g=new THREE.LatheGeometry([new THREE.Vector2(.11,0),new THREE.Vector2(.23,.1),new THREE.Vector2(.26,.35),new THREE.Vector2(.15,.52),new THREE.Vector2(.12,.65),new THREE.Vector2(.15,.67)],16);mesh(scene,g,0xba7852,-6.4+i*.46,.32,1.88);}
-  for(let j=0;j<4;j++) {const coil=mesh(scene,new THREE.TorusGeometry(.22-j*.043,.018,6,32),0xcbb07b,-3.1,.34,1.92);coil.rotation.x=Math.PI/2;}
-  pole(scene,[-6.5,.4,.8],[-5.75,1.45,.8],.033);box(scene,-5.75,1.5,.8,.35,.13,.13,0x86745b);
-  const table=new THREE.Group();table.position.set(-4.8,.33,.75);scene.add(table);
-  for(const x of[-.92,.92])for(const z of[-.68,.68])box(table,x,.39,z,.12,.78,.12,darkWood);
-  box(table,0,.82,0,2.3,.15,1.8,wood,.045);
-  const planSheet=box(table,0,.905,0,1.95,.014,1.48,0xe9d8b4,.02);
-  const reference=new THREE.Group();reference.position.set(0,.93,0);table.add(reference);
-  const referenceLabel=label(table,'THE ARCHITECT’S MODEL',0,.67,.915,1.85);
-  // Palms and sedges soften the quarry edge without covering the puzzle.
-  function palm(x,z,h){const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);rope(g,[[0,0,0],[.05,h*.5,0],[.25,h,0]],.085,0x907b54);for(let j=0;j<11;j++){const a=j*Math.PI*2/11;const points=[[.25,h,0],[.25+Math.cos(a)*.65,h+.18,Math.sin(a)*.65],[.25+Math.cos(a)*1.4,h-.6,Math.sin(a)*1.4]];rope(g,points,.022,0x647b4c);for(let k=1;k<9;k++){const t=k/9,r=t*1.3,yy=h+Math.sin(t*Math.PI)*.23-.65*t*t;const leaf=mesh(g,new THREE.ConeGeometry(.1,.65*(1-t*.55),3),0x6e8956,.25+Math.cos(a)*r,yy,Math.sin(a)*r);leaf.rotation.set(Math.cos(a)*1.05,a,Math.sin(a)*1.05);}}}
-  palm(-7.8,4.7,3.9);palm(-9,-6,4.8);palm(-7.6,7,3.3);
-  for(let j=0;j<25;j++){const x=-3.23-(j%3)*.11,z=4.3+Math.floor(j/3)*.26;pole(scene,[x,-.04,z],[x+.1,.45+(j%5)*.11,z+.08],.011,0x758768);}
-  for(const [x,z,r,h]of[[7,-24,3.6,4.4],[12,-28,3.2,4],[1,-29,2.3,2.9]]){const g=new THREE.ConeGeometry(r,h,4);g.rotateY(Math.PI/4);mesh(scene,g,0xd0c2a0,x,h/2-.1,z);}
-  const farQuay=box(scene,7,-.08,-20,10,.2,4,sand,.2);label(scene,'GIZA',7,1.12,-18,2.1);
-  for(const x of[4,10])pole(scene,[x,0,-18],[x,1.9,-18],.08);
+  function label(parent,text,x,y,z,w=1,color='#294e51',bg='#f4e5c4'){const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=bg;ctx.fillRect(0,0,512,128);ctx.strokeStyle=color;ctx.lineWidth=4;ctx.strokeRect(9,9,494,110);ctx.font='bold 44px Georgia';const fontSize=Math.min(44,44*472/ctx.measureText(text).width);ctx.font=`bold ${fontSize}px Georgia`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color;ctx.fillText(text,256,68);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;const m=mesh(parent,new THREE.PlaneGeometry(w,w/4),new THREE.MeshStandardMaterial({map:t,side:THREE.DoubleSide,roughness:1}),x,y,z);m.castShadow=false;m.userData.ownedLabel=true;return m;}
+  const environment=createHarborEnvironment(scene,renderer,{mesh,box,pole,rope,label,tex,stone,sand,wood,darkWood},renderer instanceof SoftwareRenderer);
   // Curved, planked hull. The usable grid is a small patch of the physical deck.
   const boat=new THREE.Group();scene.add(boat);
   const sections=[[-2.9,.13],[-2.58,1.18],[-2.02,1.99],[-1.25,2.13],[0,2.15],[1.25,2.13],[2.02,1.99],[2.58,1.18],[2.9,.13]];
@@ -121,44 +86,52 @@ export function createHarborWorld(container, getContext, actions) {
     const topTag=label(g,`${CARGO_SPECS[item.type].weight}`,xx,ropeHeight+.025,zz,.3,'#294e51','#edd6a4');topTag.rotation.x=-Math.PI/2;
     g.traverse(o=>{if(o.isMesh)o.userData.cargoId=item.id;});return g;
   }
-  // Large catalogue examples sit at the quay, not abstract colored dots.
-  ['brick','edge','corner','cap'].forEach((type,i)=>{const g=cargoMesh({type,id:`stock-${type}`,rotation:0});g.scale.setScalar(.46);g.position.set(-6.6+(i%2)*1.7,.34,-.9+Math.floor(i/2)*1.15);g.traverse(o=>delete o.userData.cargoId);scene.add(g);});
-  function disposeGroup(g){for(const child of [...g.children]){g.remove(child);child.traverse(o=>{if(o.geometry&&!Array.from(geometries.values()).includes(o.geometry))o.geometry.dispose();if(o.material?.map?.isCanvasTexture){o.material.map.dispose();o.material.dispose();}if(o.material?.isMeshBasicMaterial&&o.material.transparent)o.material.dispose();});}}
-  function referenceGeometry(b){const h=.25,a=.175;let x0=-a,x1=a,z0=-a,z1=a;if(['edge','corner'].includes(b.type)){if(b.type==='corner'||Math.abs(b.x)>=Math.abs(b.z)){if(b.x<0)x0=0;else x1=0;}if(b.type==='corner'||Math.abs(b.z)>Math.abs(b.x)){if(b.z<0)z0=0;else z1=0;}}const v=[[-a,0,-a],[a,0,-a],[a,0,a],[-a,0,a],[x0,h,z0],[x1,h,z0],[x1,h,z1],[x0,h,z1]],indices=[0,4,1,1,4,5,1,5,2,2,5,6,2,6,3,3,6,7,3,7,0,0,7,4,4,7,5,5,7,6,0,1,3,1,2,3],g=new THREE.BufferGeometry(),pts=indices.flatMap(i=>v[i]);g.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));g.computeVertexNormals();g.setAttribute('uv',new THREE.Float32BufferAttribute(indices.flatMap(i=>[v[i][0]*3,v[i][2]*3+v[i][1]]),2));return g;}
-  let signature='',referenceSignature='',mode='',view='orbit',hoverSignature='',frame=0,lastFrame=0;
+  const marketGroup=new THREE.Group();scene.add(marketGroup);
+  let marketSignature='';
+  function syncMarket(state,level){
+    const stock=MARKET_BAYS.map(b=>({bay:b,items:state.harbor?.cargo.filter(c=>c.type===b.type&&['market','quay'].includes(c.status)),need:level.requiredNewQuantities[b.type]||0}));
+    const key=JSON.stringify(stock.map(s=>[s.bay.type,s.items?.map(i=>i.status),s.need]));if(key===marketSignature)return;marketSignature=key;disposeGroup(marketGroup);
+    for(const {bay,items,need}of stock){const available=items?items.length:need,y=terrainHeight(bay.x,bay.z)+.17;
+      for(let i=0;i<Math.min(3,available);i++){const item=cargoMesh({type:bay.type,id:'market',rotation:0}),cells=footprint(bay.type),w=Math.max(...cells.map(c=>c[0]))+1,d=Math.max(...cells.map(c=>c[1]))+1;
+        item.scale.setScalar(.9);item.position.set(bay.x-w*CELL*.45+(i%2)*.09,y+i*.51,bay.z-d*CELL*.45-i*.035);item.traverse(o=>{delete o.userData.cargoId;if(o.isMesh)o.userData.marketType=bay.type;});marketGroup.add(item);
+      }
+      const ready=items?.filter(i=>i.status==='quay').length||0,sale=items?.filter(i=>i.status==='market').length||0;
+      const caption=!available?(need?'All dispatched':'Not in this order'):items?(ready&&sale?`${ready} bought / ${sale} to buy`:`${available} ${ready?'ready':'for sale'} · ${CARGO_SPECS[bay.type].weight} wt`):`${available} in your plan · ${CARGO_SPECS[bay.type].weight} wt`;
+      const board=label(marketGroup,caption,bay.x,y+.36,bay.z+1.04,2.3,'#f3e6c7','#'+INKS[bay.type].toString(16));if(available)board.userData.marketType=bay.type;
+    }
+  }
+  function disposeGroup(g){for(const child of [...g.children]){g.remove(child);child.traverse(o=>{if(o.geometry&&!Array.from(geometries.values()).includes(o.geometry))o.geometry.dispose();if(o.userData.ownedLabel&&o.material?.map?.isCanvasTexture){o.material.map.dispose();o.material.dispose();}if(o.material?.isMeshBasicMaterial&&o.material.transparent)o.material.dispose();});}}
+  let signature='',mode='',wasSailing=false,view='orbit',hoverSignature='',frame=0,lastFrame=0;
   function sync(){const {state,level}=getContext();const nextMode=state.stage==='order'||level.journeyRole==='order'?'order':'cargo';
     if(nextMode!==mode){mode=nextMode;home();signature='';}
-    const refKey=level.dims.join('-');if(refKey!==referenceSignature){disposeGroup(reference);referenceSignature=refKey;
-      level.dims.forEach((n,y)=>{for(let r=0;r<n;r++)for(let c=0;c<n;c++){const x=(c-(n-1)/2)*.36,z=(r-(n-1)/2)*.36;
-        if(n===1){const geo=new THREE.ConeGeometry(.36/Math.sqrt(2),.27,4);geo.rotateY(Math.PI/4);mesh(reference,geo,0xd2ad60,x,y*.25+.135,z);}
-        else {const block=level.blueprint.find(b=>b.y===y&&Math.abs(b.x-(c-(n-1)/2))<.01&&Math.abs(b.z-(r-(n-1)/2))<.01);mesh(reference,referenceGeometry(block),y===0&&level.journeyRole==='expand'?0xcba36b:stone,x,y*.25,z);}
-      }});reference.scale.setScalar(level.dims[0]===4?.96:1.15);
-    }
-    const h=state.harbor;const sig=JSON.stringify([h?.cargo,h?.selected]);if(sig!==signature){signature=sig;disposeGroup(cargoGroup);if(h)for(const item of h.cargo.filter(c=>['boat','transit'].includes(c.status))){const g=cargoMesh(item);g.position.set((item.column-2.5)*CELL,DECK_Y+.02,(item.row-2)*CELL);cargoGroup.add(g);if(h.selected===item.id){const edges=cargoMesh(item,true,true);edges.position.copy(g.position);edges.position.y=DECK_Y+.04;cargoGroup.add(edges);}}}
+    syncMarket(state,level);
+    const h=state.harbor;if(h?.inTransit&&!wasSailing)departureView();else if(!h?.inTransit&&wasSailing)home();wasSailing=!!h?.inTransit;const sig=JSON.stringify([h?.cargo,h?.selected]);if(sig!==signature){signature=sig;disposeGroup(cargoGroup);if(h)for(const item of h.cargo.filter(c=>['boat','transit'].includes(c.status))){const g=cargoMesh(item);g.position.set((item.column-2.5)*CELL,DECK_Y+.02,(item.row-2)*CELL);cargoGroup.add(g);if(h.selected===item.id){const edges=cargoMesh(item,true,true);edges.position.copy(g.position);edges.position.y=DECK_Y+.04;cargoGroup.add(edges);}}}
     deckCells.visible=mode==='cargo';ghost.visible=mode==='cargo'&&!!h?.selected&&!h.inTransit;controls.enabled=!h?.selected||mode==='order'||!!h?.inTransit;
-    renderer.domElement.style.cursor=h?.selected?'crosshair':'grab';hoverSignature='';dirty=true;resize();
+    renderer.domElement.style.cursor=h?.selected?'crosshair':'grab';container.dataset.view=view;hoverSignature='';dirty=true;resize();
   }
-  function home(){view='orbit';if(mode==='order'){controls.target.set(-4.8,1.22,.7);camera.position.set(.2,5.8,8.2);}else{controls.target.set(0,.5,0);camera.position.set(7.3,9.5,10.6);}camera.zoom=1;controls.update();resize();dirty=true;}
-  function topView(){view='deck';controls.target.set(0,.4,0);camera.position.set(0,12.4,2.9);controls.update();resize();dirty=true;}
+  function departureView(){view='voyage';controls.target.set(3,1,-20);camera.position.set(5.5,5.2,16);controls.update();resize();container.dataset.view=view;dirty=true;}
+  function marketView(){view='market';controls.target.set(-7.8,1.1,-2.6);camera.position.set(4.4,7.1,13.4);controls.update();resize();container.dataset.view=view;dirty=true;}
+  function home(){view='orbit';if(mode==='order'){view='shore';controls.target.set(-4,1.1,-5);camera.position.set(5,5.7,16);controls.update();resize();container.dataset.view=view;return;}controls.target.set(-.5,.55,-.3);camera.position.set(7.3,8.3,10.6);camera.zoom=1;controls.update();resize();container.dataset.view=view;dirty=true;}
+  function topView(){view='deck';container.dataset.view=view;controls.target.set(0,.4,0);camera.position.set(0,12.4,2.9);controls.update();resize();dirty=true;}
   function resize(){const w=container.clientWidth,h=container.clientHeight;if(!w||!h)return;camera.aspect=w/h;
     const mobile=w<=800&&h>500;
     // Keep the physical puzzle clear of the side order and lower cargo tray.
-    camera.clearViewOffset();camera.zoom=mobile?(mode==='order'?.67:.71):(mode==='cargo'?1.12:1);
-    camera.setViewOffset(w,h,mobile?0:(Math.min(355,w*.3)-(mode==='cargo'?(w>1100?180:60):0))/2,mobile?(mode==='order'?h*.13:view==='deck'?10:h*.055):(mode==='cargo'?105:35),w,h);
+    camera.clearViewOffset();camera.zoom=mobile?(mode==='order'?.88:view==='market'?.8:.71):(view==='voyage'?.97:mode==='order'?.93:view==='market'?1:1.12);
+    camera.setViewOffset(w,h,mobile?0:(Math.min(355,w*.3)-(mode==='cargo'?(w>1100?180:60):0))/2,mobile?(mode==='order'?h*.13:view==='deck'?10:h*.055):(mode==='order'||view==='market'||view==='voyage'?35:105),w,h);
     camera.updateProjectionMatrix();renderer.setSize(w,h);dirty=true;
   }
   new ResizeObserver(resize).observe(container);
   const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();
-  function hit(e){const r=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(pointer,camera);const cargoHit=ray.intersectObjects(cargoGroup.children,true).find(x=>x.object.userData.cargoId);const deckHit=ray.intersectObjects(deckCells.children,true).find(x=>x.object.userData.deck);return{cargoId:cargoHit?.object.userData.cargoId,cell:deckHit?.object.userData.deck};}
+  function hit(e){const r=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(pointer,camera);const cargoHit=ray.intersectObjects(cargoGroup.children,true).find(x=>x.object.userData.cargoId);const deckHit=ray.intersectObjects(deckCells.children,true).find(x=>x.object.userData.deck);const marketHit=ray.intersectObjects(marketGroup.children,true).find(x=>x.object.userData.marketType);return{cargoId:cargoHit?.object.userData.cargoId,cell:deckHit?.object.userData.deck,marketType:marketHit&&marketHit.distance<Math.min(cargoHit?.distance??Infinity,deckHit?.distance??Infinity)?marketHit.object.userData.marketType:undefined};}
   function preview(column,row){const{state}=getContext(),h=state.harbor,item=h?.cargo.find(c=>c.id===h.selected);if(!item||h.inTransit){ghost.visible=false;return;}
     const problem=placementProblem(h.cargo,item,column,row,h.rotation),sig=[item.id,column,row,h.rotation,problem].join(':');
     if(sig!==hoverSignature){hoverSignature=sig;disposeGroup(ghost);const g=cargoMesh({...item,rotation:h.rotation},true,!problem);g.position.set((column-2.5)*CELL,DECK_Y+.04,(row-2)*CELL);ghost.add(g);ghost.visible=true;actions.onHover?.(problem||`Place at ${String.fromCharCode(65+column)}${row+1} · ${h.rotation}°`);dirty=true;}
   }
   let down=null,pointers=new Set();
-  renderer.domElement.addEventListener('pointerdown',e=>{pointers.add(e.pointerId);if(pointers.size>1){down=null;controls.enabled=true;return;}const{state}=getContext();if(mode!=='cargo'||state.harbor?.inTransit)return;const hitInfo=hit(e);down={x:e.clientX,y:e.clientY,selected:state.harbor?.selected,cargoId:hitInfo.cargoId};if(!down.selected&&hitInfo.cargoId){actions.onSelect(hitInfo.cargoId);controls.enabled=false;}if(down.selected||hitInfo.cargoId)renderer.domElement.setPointerCapture(e.pointerId);});
-  renderer.domElement.addEventListener('pointermove',e=>{if(pointers.size>1)return;const{state}=getContext();if(mode!=='cargo'||!state.harbor?.selected)return;const info=hit(e);if(info.cell)preview(info.cell.column,info.cell.row);else ghost.visible=false;});
-  renderer.domElement.addEventListener('pointerup',e=>{pointers.delete(e.pointerId);if(!down)return;const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y)>7,shouldPlace=down.selected||down.cargoId&&moved;down=null;if(shouldPlace){const info=hit(e);if(info.cell)actions.onPlace(info.cell.column,info.cell.row);}});
-  renderer.domElement.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);down=null;});
+  renderer.domElement.addEventListener('pointerdown',e=>{pointers.add(e.pointerId);if(pointers.size>1){down=null;controls.enabled=true;return;}const{state}=getContext();if(state.harbor?.inTransit)return;const hitInfo=hit(e);down={x:e.clientX,y:e.clientY,selected:state.harbor?.selected,cargoId:hitInfo.cargoId,marketType:hitInfo.marketType};if(hitInfo.marketType){controls.enabled=false;renderer.domElement.setPointerCapture(e.pointerId);return;}if(!down.selected&&hitInfo.cargoId){actions.onSelect(hitInfo.cargoId);controls.enabled=false;}if(down.selected||hitInfo.cargoId)renderer.domElement.setPointerCapture(e.pointerId);});
+  renderer.domElement.addEventListener('pointermove',e=>{if(pointers.size>1)return;const{state}=getContext();const info=hit(e);renderer.domElement.style.cursor=info.marketType?'pointer':state.harbor?.selected?'crosshair':'grab';if(mode!=='cargo'||!state.harbor?.selected)return;if(info.cell)preview(info.cell.column,info.cell.row);else ghost.visible=false;});
+  renderer.domElement.addEventListener('pointerup',e=>{pointers.delete(e.pointerId);if(!down)return;const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y)>7,shouldPlace=down.selected||down.cargoId&&moved,marketType=down.marketType;down=null;if(marketType){controls.enabled=true;if(!moved)actions.onMarket?.(marketType);return;}if(shouldPlace){const info=hit(e);if(info.cell)actions.onPlace(info.cell.column,info.cell.row);}});
+  renderer.domElement.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);down=null;controls.enabled=!getContext().state.harbor?.selected;});
   renderer.domElement.addEventListener('pointerleave',()=>{if(!down)ghost.visible=false;});
   controls.addEventListener('change',()=>dirty=true);
   controls.addEventListener('start',()=>renderer.setInteractive?.(true));controls.addEventListener('end',()=>renderer.setInteractive?.(false));
@@ -166,12 +139,12 @@ export function createHarborWorld(container, getContext, actions) {
     const{state}=getContext(),h=state.harbor,trip=h?.inTransit;const m=h?loadMetrics(h.cargo):{offsetX:0,offsetZ:0};
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
     let dx=0,dz=0,turn=0;
-    if(trip){const p=Math.min(1,Math.max(0,(Date.now()-trip.startedAt)/VOYAGE_MS));const ease=x=>x*x*(3-2*x);if(p<.48){const a=ease(p/.48);dx=a*7;dz=-a*17;turn=-.38*a;}else if(p<.63){dx=7;dz=-17;turn=-.38;}else{const a=ease((p-.63)/.37);dx=7*(1-a);dz=-17*(1-a);turn=-.38*(1-a);}cargoGroup.visible=p<.57;wake.visible=p<.48||p>.63;
-    }else{cargoGroup.visible=true;wake.visible=false;}
+    if(trip){const p=Math.min(1,Math.max(0,(Date.now()-trip.startedAt)/VOYAGE_MS)),pose=voyagePose(p);dx=pose.x;dz=pose.z;turn=pose.heading;boat.visible=pose.visible;cargoGroup.visible=true;wake.visible=pose.visible;
+    }else{boat.visible=true;cargoGroup.visible=true;wake.visible=false;}
     boat.position.set(dx,reduced?0:Math.sin(t*.0013)*.025,dz);boat.rotation.set((trip?.offsetZ??m.offsetZ)*.12,turn,-(trip?.offsetX??m.offsetX)*.16+(reduced?0:Math.sin(t*.0009)*.007));wake.position.set(dx,-.01,dz+2.5);
-    if(!reduced){waterNormal.offset.set(t*.000009,t*.000003);waterMap.offset.x=t*.000001;pennant.rotation.y=Math.sin(t*.002)*.12;}
+    environment.update(t,reduced);if(!reduced)pennant.rotation.y=Math.sin(t*.002)*.12;
     controls.update();renderer.render(scene,camera);container.dataset.ready='ready';container.dataset.frame=String(++frame);dirty=false;
   }
   sync();requestAnimationFrame(animate);
-  return{sync,home,topView,preview,zoom(factor){camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target);controls.update();dirty=true;},orbit(){if(getContext().state.harbor)getContext().state.harbor.selected=null;actions.onDeselect?.();},get view(){return view;}};
+  return{sync,home,marketView,topView,preview,zoom(factor){camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target);controls.update();dirty=true;},orbit(){if(getContext().state.harbor)getContext().state.harbor.selected=null;actions.onDeselect?.();},get view(){return view;}};
 }

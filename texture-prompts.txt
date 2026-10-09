@@ -1,0 +1,11 @@
+# Harbor realism texture prompts
+
+Generated with the built-in imagegen tool. Saved outputs: `public/textures/quarry-limestone-v2.jpg` and `public/textures/date-palm-frond-v2.png`.
+
+## Limestone
+
+Use case: photorealistic-natural. Asset type: seamless albedo texture for a physically rendered limestone quarry in a 3D game. A straight-on close photograph of naturally weathered pale beige Egyptian sedimentary limestone, representing a roughly 4 metre wide rock face. Extremely fine realistic grain and pores, shallow irregular horizontal sediment bands, subtle ochre mineral staining, fractured hairline cracks and occasional old vertical chisel scoring. Warm grey ivory stone, restrained natural variation. Entire square image is rock edge to edge, flat diffuse overcast illumination with no directional shadows, no perspective, no vignette, no objects, no text, no blocks or brickwork. Seamless repeating texture, 2048 square. Not a painting, not stylized, not shiny or plastic.
+
+## Date palm
+
+Use case: photorealistic-natural. Asset type: alpha cutout texture for a curved 3D date-palm frond, game foliage. One single long Phoenix dactylifera date palm frond photographed straight from above, isolated on a truly transparent background. Stem begins at the bottom centre and extends vertically up to a tapered pointed tip at the top centre. Narrow gracefully irregular grey-olive green leaflets branch from both sides, pinnate, fine separated edges, natural spacing and slight bends, a few dry ochre tips, delicate longitudinal leaf veins and realistic matte surface. The entire leaf fits with a tiny clear margin on every side; approximately twice as tall as wide. The main stem is slender, not a tree trunk. Flat soft diffuse lighting with no cast shadow. Natural botanical photographic texture, no pot, no extra leaves, no ground, no text, no illustration, not plastic.
