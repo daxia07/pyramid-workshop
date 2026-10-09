@@ -1,4 +1,5 @@
 import manifest from './missions.json' with {type:'json'};
+import {createHarbor, isHarbor} from './harbor-game.js';
 export const COURSE=.64;
 export const PARTS={core:{name:'Sun-dried core brick',short:'Core',color:0xb9a786},facing:{name:'Fired facing brick',short:'Facing',color:0xbd7b58},brick:{name:'Flat brick',short:'Brick',color:0xe8cc91},edge:{name:'Sloping edge',short:'Edge',color:0xf3d395},corner:{name:'Corner stone',short:'Corner',color:0xecc582},cap:{name:'Pyramid cap',short:'Cap',color:0xffdf99},temple:{name:'Temple assembly',short:'Temple',color:0xe4d8b6},stairs:{name:'Stair flight',short:'Stairs',color:0xd8c49b}};
 export const SCENES=[
@@ -8,7 +9,7 @@ export const SCENES=[
 ];
 export const missionText={
  'egypt-1':'The base is already built. Count the four upper corner stones and the cap. Their sloping faces must meet.',
- 'egypt-2':'Stone travelled to Giza by water. Our model boat carries three weight units: a corner weighs one, the cap weighs two.',
+ 'egypt-2':'At the quarry, buy four corner stones and a capstone. Arrange their weight across the boat and deliver them to Giza within the budget. Each voyage costs two coins.',
  'egypt-3':'Two upper stones have the wrong shape. Inspect the pattern, lift them out, and restore the smooth casing.',
  'egypt-4':'Plan the whole fourteen-piece pyramid. Keep all four faces smooth and finish within fifty-four coins.',
  'maya-1':'The next floor needs a terrace around it. Compare the two footprints before ordering your materials.',
@@ -31,11 +32,10 @@ export function required(l){const owned={};for(const b of l.seed)owned[sku(b)]=(
 export function bounds(b){let x0=b.x-.5,x1=b.x+.5,z0=b.z-.5,z1=b.z+.5;if(b.type==='edge'||b.type==='corner'){if(b.type==='corner'||Math.abs(b.x)>=Math.abs(b.z)){if(b.x<0)x0+=.5;else x1-=.5;}if(b.type==='corner'||Math.abs(b.z)>Math.abs(b.x)){if(b.z<0)z0+=.5;else z1-=.5;}}if(b.type==='cap'){x0=x1=b.x;z0=z1=b.z;}return{x0,x1,z0,z1};}
 export function supported(b,blocks,l){if(b.y===0)return true;if(b.type==='stairs')return blocks.some(p=>p.y===b.y-1&&p.type==='stairs'&&(p.routeId||'front')===(b.routeId||'front'));const below=blocks.filter(p=>p.y===b.y-1&&p.type!=='stairs');return[-.49,.49].every(dx=>[-.49,.49].every(dz=>below.some(p=>{const q=bounds(p);return b.x+dx>=q.x0-.011&&b.x+dx<=q.x1+.011&&b.z+dz>=q.z0-.011&&b.z+dz<=q.z1+.011;})));}
 export function validate(l,blocks){const wants=new Map(target(l).map(b=>[key(b.x,b.y,b.z),sku(b)])),has=new Map(blocks.map(b=>[key(b.x,b.y,b.z),sku(b)]));return{missing:[...wants].filter(([k])=>!has.has(k)).length,extra:[...has].filter(([k])=>!wants.has(k)).length,wrong:[...has].filter(([k,t])=>wants.has(k)&&wants.get(k)!==t).length,unsupported:blocks.filter(b=>!supported(b,blocks,l)).length};}
-export function initial(i=0){const l=LEVELS[i],empty=()=>Object.fromEntries(l.types.map(t=>[t,0]));return{level:i,stage:'plan',estimates:Object.fromEntries(l.types.map(t=>[t,required(l)[t]===0?'0':''])),money:l.budget,inventory:empty(),freeInventory:empty(),warehouse:empty(),blocks:structuredClone(l.seed),layer:Math.min(...target(l).filter(b=>!l.seed.some(p=>key(p.x,p.y,p.z)===key(b.x,b.y,b.z)&&sku(p)===sku(b))).map(b=>b.y),l.dims.length-1),tool:'place',part:l.types.find(t=>required(l)[t]>0)||l.types[0],history:[],completed:[],siteChoice:null,planningChoice:null,waterPreview:false,cutaway:false,trips:0};}
+export function initial(i=0){const l=LEVELS[i],empty=()=>Object.fromEntries(l.types.map(t=>[t,0]));return{level:i,stage:'plan',estimates:Object.fromEntries(l.types.map(t=>[t,required(l)[t]===0?'0':''])),money:l.budget,inventory:empty(),freeInventory:empty(),warehouse:empty(),blocks:structuredClone(l.seed),layer:Math.min(...target(l).filter(b=>!l.seed.some(p=>key(p.x,p.y,p.z)===key(b.x,b.y,b.z)&&sku(p)===sku(b))).map(b=>b.y),l.dims.length-1),tool:'place',part:l.types.find(t=>required(l)[t]>0)||l.types[0],history:[],completed:[],siteChoice:null,planningChoice:null,waterPreview:false,cutaway:false,trips:0,...(isHarbor(l)?{stage:'harbor',harbor:createHarbor(l)}:{})};}
 export const inventoryTotal=s=>Object.values(s.inventory).reduce((a,v)=>a+v,0);
+export const unusedPurchases=s=>Object.entries(s.inventory).reduce((n,[type,count])=>n+Math.max(0,count-(s.freeInventory?.[type]||0)),0)+Object.values(s.warehouse||{}).reduce((n,count)=>n+count,0);
 export const available=(l,completed)=>!l.unlocksAfter||completed.includes(l.unlocksAfter);
 export function planningValid(l,s){if(l.site&&s.siteChoice!==l.site.accepted)return false;if(l.planning?.acceptedChoice&&s.planningChoice!==l.planning.acceptedChoice)return false;if(l.planning?.choices?.[0]?.upperWidth&&s.planningChoice!==2)return false;return true;}
 export function previewDims(l,s){if(l.planning?.choices?.[0]?.upperWidth&&s.planningChoice)return[l.dims[0],s.planningChoice,1];if(l.planning?.acceptedChoice&&s.planningChoice)return l.planning.choices.find(c=>c.id===s.planningChoice)?.dims||l.dims;return l.dims;}
 export function previewTarget(l,s){const dims=previewDims(l,s);if(dims===l.dims)return target(l);const a=dims.flatMap((n,y)=>cells(n,y).map(b=>({...b,type:n===1?'temple':'brick'})));for(let y=0;y<dims.length-1;y++)a.push({x:0,y,z:dims[y]/2+.25,type:'stairs',stair:true,routeId:'front'});return a;}
-
-export const unusedPurchases=s=>Object.entries(s.inventory).reduce((n,[type,count])=>n+Math.max(0,count-(s.freeInventory?.[type]||0)),0)+Object.values(s.warehouse||{}).reduce((n,count)=>n+count,0);

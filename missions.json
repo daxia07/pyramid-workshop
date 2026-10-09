@@ -361,13 +361,13 @@
       "id": "egypt-2",
       "sceneId": "egypt",
       "shapeFamily": "egypt",
-      "name": "Load the Nile Boat",
+      "name": "The Quarry & the Nile",
       "dims": [
         3,
         2,
         1
       ],
-      "budget": 24,
+      "budget": 25,
       "prices": {
         "brick": 2,
         "edge": 3,
@@ -558,40 +558,28 @@
         }
       ],
       "mechanics": [
-        "deliveryBins"
+        "quarryMarket",
+        "cargoArrangement",
+        "loadBalance",
+        "shippingBudget"
       ],
       "completion": [
-        "exactTarget",
-        "correctTypes",
-        "supported",
+        "allCargoDelivered",
         "budgetNonnegative"
       ],
       "rewardKey": "egypt",
       "delivery": {
-        "capacity": 3,
+        "mode": "harbor",
+        "capacity": 6,
         "weights": {
-          "corner": 1,
-          "cap": 2
+          "corner": 2,
+          "cap": 3
         },
+        "maxImbalance": 2,
+        "fee": 2,
         "optimalTrips": 2,
-        "extraTripsAllowed": true,
-        "state": {
-          "loads": [
-            [],
-            []
-          ],
-          "delivered": {},
-          "trips": 0
-        },
-        "actions": [
-          "allocate",
-          "unallocate",
-          "dispatch",
-          "skipAnimation",
-          "unload",
-          "returnBoat"
-        ],
-        "validation": "sum(load quantity \u00d7 SKU weight) <= 3; place only delivered inventory"
+        "extraTripsAllowed": false,
+        "validation": "Deliver four corners and one cap; each voyage weighs at most 6; side weights differ by at most 2; pay 2 coins per voyage."
       },
       "targetQuantities": {
         "corner": 8,
@@ -604,7 +592,7 @@
         "cap": 1
       },
       "minimumPurchaseCost": 21,
-      "minimumTotalCost": 21,
+      "minimumTotalCost": 25,
       "lockedIds": [
         "-1,0,-1",
         "0,0,-1",
@@ -618,8 +606,8 @@
       ],
       "unlocksAfter": "egypt-1",
       "initialState": {
-        "stage": "plan",
-        "money": 24,
+        "stage": "harbor",
+        "money": 25,
         "inventory": {},
         "blocks": [
           {

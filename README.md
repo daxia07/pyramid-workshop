@@ -16,45 +16,38 @@ The original sanitized snapshot is commit `495e585` (reviewed release `2026-10-0
 
 ## Current interface
 
-The 2026-10-09 update fills the window with the worksite, opens planning and market controls in a floating field journal, and moves building materials into a large illustrated tray. Eight distinct stone drawings appear consistently in planning, ordering, and building, with shape descriptions and quantity badges. The camera makes room for the journal and tray; short landscape screens use a side tray. A browser fullscreen button is available where supported.
+The worksite fills the window, with an illustrated material tray and a floating field journal. Capstone and other layer transitions now show a persistent next-step hint, highlight the suggested layer, and offer a layer shortcut. Repair missions allow salvaged stones to remain in the store after inspection.
 
-The journal retains the keyboard-accessible top-view grid, specialist mission tools, and mission selection. Close it to build directly in 3D; reopen it with **Field journal** or **Blueprint & tools**. Saved progress continues to use the existing browser storage key.
+Egypt mission 2 is a separate quarry and harbor puzzle. Buy four corner stones (weight 2 each) and a capstone (weight 3), arrange them on a six-space boat, keep each voyage within weight 6 and a side-to-side difference of 2, and pay 2 coins per voyage. The 25-coin contract covers stone purchases and two shipments. Delivery completes the mission without repeating construction. Cargo can be dragged or selected and placed by tapping; saved voyages resume on reload. Earlier purchases and deliveries migrate without being discarded.
+
+Completed missions pay 20, 25, 30 or 35 earned coins according to their position in the chapter. Wages are separate from contract budgets, paid once per mission, and credited for earlier saved completions. Free Design offers 3×3, 5×5 and 7×7 pyramids, smooth or stepped forms, four stone palettes, unlimited construction, layer filling, removal and undo. Earned coins unlock decorations once for unlimited placement: paths, palms, banners, obelisks and pools. Designs, purchases and mission progress persist together in the existing browser storage key.
 
 ## Publishing
 
-Production destinations: https://pyramid.mingli.world/ and https://pyramid-mingli-world.vercel.app/. The Vercel project is `mingxia-lis-projects/pyramid-mingli-world` (`prj_opPerdde2LuNl72PHK2S1tndfGlI`).
+Production: https://pyramid.mingli.world/ and https://pyramid-mingli-world.vercel.app/. Vercel project: `mingxia-lis-projects/pyramid-mingli-world` (`prj_opPerdde2LuNl72PHK2S1tndfGlI`). Aliyun's `pyramid` CNAME points to `7c3590a381be7036.vercel-dns-017.com` with TTL 600; the domain is already verified and assigned to this project.
 
-Published and verified on 2026-10-09: GitHub release commit [`9bd8840`](https://github.com/daxia07/pyramid-workshop/commit/9bd884072902c52d2ed9f3c9a666bb34a2798af6), Vercel deployment `dpl_D33btDBiXpzCdSKtHrMuUXhFG4oA`. Both production URLs return HTTPS 200. All 30 served build files were checked against the tested local build and match byte for byte.
-
-Aliyun manages the domain's DNS. The `pyramid` CNAME points to Vercel's recommended target, `7c3590a381be7036.vercel-dns-017.com`, with a 600-second TTL. The custom domain is registered and ownership-verified on the existing Vercel project.
-
-Release commits must use an email associated with the publishing account. The original GitHub no-reply address caused Vercel's `TEAM_ACCESS_REQUIRED` verification error; see [Vercel's commit attribution guidance](https://vercel.com/docs/deployments/troubleshoot-project-collaboration#resolving-git-provider-commit-attribution-issues). Deploy from the recorded GitHub release commit, or from a synchronized local checkout:
-
-This Vercel account currently has no GitHub login connection. This release used the authenticated Vercel file-upload API with accurate metadata from the recorded GitHub commit; all 63 source files were matched against that commit before upload. Direct `gitSource` deployments require connecting GitHub to Vercel first.
+Deploy a tested, committed checkout using the authenticated CLI:
 
 ```sh
 vercel deploy --prod --project prj_opPerdde2LuNl72PHK2S1tndfGlI --scope mingxia-lis-projects --yes
 ```
 
-The 2026-10-09 interface build produces `assets/index-DhR-l2dW.js` (SHA-256 `355ebcf3e91a41c0793f5556b024465a6cd74420f8b3baa271d07db3e3b66c78`) and `assets/index-CXiOOuV5.css`. Verify the served assets after publishing. `.vercelignore` excludes local build output and dependencies so Vercel builds the uploaded source.
+Release commits must use an email associated with the publishing account. The original GitHub no-reply address caused `TEAM_ACCESS_REQUIRED`; using the verified publishing identity unblocked deployment. This Vercel account has no GitHub login connection, so direct `gitSource` deployment is unavailable; CLI source uploads work. `.vercelignore` excludes dependencies, local build output and secrets. After publishing, compare the served HTML and build assets with the tested `dist/` output.
 
 ## Play and learning
-- Egypt: shaped casing stones, boat load balancing, pattern repair and an independent commission. The 14-piece model preserves 3×3 + 2×2 + 1 counting with centred layers and continuous sloping faces.
+- Egypt: shaped casing stones, a quarry shipping and load-balance puzzle, pattern repair and an independent commission. The 14-piece model preserves 3×3 + 2×2 + 1 counting with centred layers and continuous sloping faces.
 - Maya cities: terrace footprints, mirrored stairs, zero-purchase route repair and a protected cenote-access corridor.
 - Ur: core versus facing materials, packs of four, reversible higher-site comparison and a mixed-constraint commission.
 
 Dimensions, prices, transport capacities and flood levels are teaching abstractions. Generated scenery and reconstructed worksite props are distinct from real present-day history photographs. The optional remote Sphinx is labeled as a later Khafre-era view, after Khufu. See `public/ASSET-CREDITS.txt`, `public/history.json` and `THIRD-PARTY-NOTICES.md` for credits, licenses and sources.
 
 ## Verification and limits
-All 54 automated checks and the production build pass for the current interface. Additional DOM checks with the renderer stubbed covered a complete Egypt mission (planning, purchasing, placement, undo, completion), material controls in all twelve missions, guide toggles, and unique control IDs. Camera projection and picking were checked at desktop and phone dimensions. The eight illustrations were rendered and visually inspected.
 
-The original snapshot had a desktop browser playthrough of all twelve missions and a 500px-wide desktop check. Live browser review of the new interface was blocked by session permissions; its layout and true touch interaction remain unverified. Three.js provides mesh geometry, picking, orbit and zoom; a textured depth-buffered software renderer handles browsers where WebGL cannot initialize.
+All 73 automated checks and the production build pass. Regression coverage includes capstone guidance, salvaged repair inventory, shipping weight/balance/budget constraints, saved-voyage recovery, migration, once-only wages, decoration purchases, all six studio size/shape combinations, support rules and undo data.
 
-Still open:
-- Overall visual realism and a coherent high-resolution distant environment. Failed scenery experiments are excluded.
-- GPU rendering and true iPad/touch interaction. The reviewed preview used software rendering; narrow desktop testing is not touch testing.
+Connected Chrome checks exercised the capstone hint through actual 3D picking, mission 3 inspection with two salvaged edge stones, both shipping voyages and fees, wages, studio size and stone changes, decoration placement, free layer building and undo, reload persistence, and return to missions. Desktop and emulated phone layouts were visually checked with WebGL rendering. Physical iPad/touch-device testing remains open. A textured software renderer remains available when WebGL cannot initialize.
 
-No accounts, analytics or backend services are used. Progress stays in local browser storage on the current device. The source snapshot excludes build output and installed dependencies.
+No accounts, analytics or backend services are used. Coins are in-game rewards, with no real-money purchases. Progress stays in local browser storage on the current device. The original sanitized source snapshot excludes build output and installed dependencies.
 
 ## Integrity and rights
 The original source archive includes `SOURCE-SHA256SUMS.txt`, covering that archive's payload except the manifest itself. Public repository visibility is authorized, but this source adds no license grant for the original game code. Third-party components and photographs retain their respective licenses and attributions.
