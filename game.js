@@ -37,3 +37,5 @@ export const available=(l,completed)=>!l.unlocksAfter||completed.includes(l.unlo
 export function planningValid(l,s){if(l.site&&s.siteChoice!==l.site.accepted)return false;if(l.planning?.acceptedChoice&&s.planningChoice!==l.planning.acceptedChoice)return false;if(l.planning?.choices?.[0]?.upperWidth&&s.planningChoice!==2)return false;return true;}
 export function previewDims(l,s){if(l.planning?.choices?.[0]?.upperWidth&&s.planningChoice)return[l.dims[0],s.planningChoice,1];if(l.planning?.acceptedChoice&&s.planningChoice)return l.planning.choices.find(c=>c.id===s.planningChoice)?.dims||l.dims;return l.dims;}
 export function previewTarget(l,s){const dims=previewDims(l,s);if(dims===l.dims)return target(l);const a=dims.flatMap((n,y)=>cells(n,y).map(b=>({...b,type:n===1?'temple':'brick'})));for(let y=0;y<dims.length-1;y++)a.push({x:0,y,z:dims[y]/2+.25,type:'stairs',stair:true,routeId:'front'});return a;}
+
+export const unusedPurchases=s=>Object.entries(s.inventory).reduce((n,[type,count])=>n+Math.max(0,count-(s.freeInventory?.[type]||0)),0)+Object.values(s.warehouse||{}).reduce((n,count)=>n+count,0);

@@ -1,4 +1,5 @@
 import { STONE_DETAILS, stoneArt } from './stone-art.js';
+import { buildHint } from './build-hints.js';
 
 let lastStage, lastLevel, panelOpen = true;
 let shellNotice;
@@ -35,6 +36,7 @@ export function playShell() {
     <aside id="panel" aria-label="Expedition field journal"></aside>
     <section id="builder-dock" aria-label="Building materials and tools" hidden>
       <div class="dock-heading"><span class="eyebrow">THE STONE YARD</span><p id="selected-piece"></p><button id="open-tools" aria-controls="panel" aria-expanded="false">Blueprint & tools</button></div>
+      <div id="build-hint" hidden><p id="build-hint-text" role="status" aria-live="polite" aria-atomic="true"></p><span id="build-hint-action"></span></div>
       <div id="material-tray"></div><div id="build-tools"></div>
     </section>
   </main>`;
@@ -106,12 +108,17 @@ export function updatePlayUI(state, level, guide) {
   panel.prepend(heading);
   document.getElementById('close-panel').onclick = () => showPanel(false, true);
   document.getElementById('mission-objective').innerHTML = `<span>${state.stage === 'plan' ? '01 / Imagine & plan' : state.stage === 'shop' ? '02 / Gather your materials' : state.stage === 'complete' ? 'A wonder, built by you' : '03 / Bring the stones together'}</span><strong>${state.money} coins <i aria-hidden="true">·</i> ${state.blocks.length} stones placed</strong>`;
-  for (const id of ['material-tray','build-tools','layer-control']) document.getElementById(id).replaceChildren();
+  for (const id of ['material-tray','build-tools','layer-control','build-hint-action']) document.getElementById(id).replaceChildren();
+  document.getElementById('build-hint').hidden = true;
   document.getElementById('builder-dock').hidden = !building;
   if (building) {
     const move = (selector, id) => { const e = panel.querySelector(selector); if (e) document.getElementById(id).append(e); };
     move('.part-palette', 'material-tray');
     move('.layer-tabs', 'layer-control');
+    const layerCaption = document.createElement('span');
+    layerCaption.className = 'layer-caption';
+    layerCaption.textContent = `L${state.layer + 1} active`;
+    document.getElementById('layer-control').prepend(layerCaption);
     move('.tools', 'build-tools');
     move('#market', 'build-tools');
     move('#ghost', 'build-tools');
@@ -122,7 +129,35 @@ export function updatePlayUI(state, level, guide) {
     document.querySelectorAll('[data-part]').forEach(button => {
       button.setAttribute('aria-pressed',String(state.part === button.dataset.part && state.tool === 'place'));
     });
-    document.querySelectorAll('[data-layer]').forEach(button => button.setAttribute('aria-pressed',String(+button.dataset.layer === state.layer)));
+    const hint = buildHint(state, level);
+    document.querySelectorAll('#layer-control [data-layer]').forEach(button => {
+      const layer = +button.dataset.layer;
+      button.setAttribute('aria-pressed', String(layer === state.layer));
+      button.setAttribute('aria-label', `Layer ${layer + 1}, ${level.dims[layer]} by ${level.dims[layer]}${hint?.layer === layer ? ', suggested next layer' : ''}`);
+      button.classList.toggle('suggested-layer', hint?.layer === layer);
+      if (hint?.layer === layer) {
+        const marker = document.createElement('span');
+        marker.className = 'layer-next';
+        marker.textContent = 'Next';
+        button.append(marker);
+      }
+    });
+    const hintText = document.getElementById('build-hint-text');
+    if (hintText.textContent !== (hint?.text || '')) hintText.textContent = hint?.text || '';
+    document.getElementById('build-hint').hidden = !hint;
+    if (hint?.layer !== undefined || hint?.part) {
+      const action = document.createElement('button');
+      action.id = 'build-hint-button';
+      if (hint.layer !== undefined) {
+        action.dataset.layer = hint.layer;
+        action.textContent = `Select L${hint.layer + 1} ↑`;
+      } else {
+        action.dataset.part = hint.part;
+        action.textContent = `Select ${STONE_DETAILS[hint.part].label.toLowerCase()}`;
+      }
+      action.setAttribute('aria-describedby', 'build-hint-text');
+      document.getElementById('build-hint-action').append(action);
+    }
     // Keep the selected material in reach when the touch tray scrolls.
     requestAnimationFrame(() => {
       const selected = document.querySelector('#material-tray [aria-pressed="true"]');
