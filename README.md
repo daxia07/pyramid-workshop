@@ -24,9 +24,13 @@ The journal retains the keyboard-accessible top-view grid, specialist mission to
 
 Production destinations: https://pyramid.mingli.world/ and https://pyramid-mingli-world.vercel.app/. The Vercel project is `mingxia-lis-projects/pyramid-mingli-world` (`prj_opPerdde2LuNl72PHK2S1tndfGlI`).
 
+Published and verified on 2026-10-09: GitHub release commit [`9bd8840`](https://github.com/daxia07/pyramid-workshop/commit/9bd884072902c52d2ed9f3c9a666bb34a2798af6), Vercel deployment `dpl_D33btDBiXpzCdSKtHrMuUXhFG4oA`. Both production URLs return HTTPS 200. All 30 served build files were checked against the tested local build and match byte for byte.
+
 Aliyun manages the domain's DNS. The `pyramid` CNAME points to Vercel's recommended target, `7c3590a381be7036.vercel-dns-017.com`, with a 600-second TTL. The custom domain is registered and ownership-verified on the existing Vercel project.
 
 Release commits must use an email associated with the publishing account. The original GitHub no-reply address caused Vercel's `TEAM_ACCESS_REQUIRED` verification error; see [Vercel's commit attribution guidance](https://vercel.com/docs/deployments/troubleshoot-project-collaboration#resolving-git-provider-commit-attribution-issues). Deploy from the recorded GitHub release commit, or from a synchronized local checkout:
+
+This Vercel account currently has no GitHub login connection. This release used the authenticated Vercel file-upload API with accurate metadata from the recorded GitHub commit; all 63 source files were matched against that commit before upload. Direct `gitSource` deployments require connecting GitHub to Vercel first.
 
 ```sh
 vercel deploy --prod --project prj_opPerdde2LuNl72PHK2S1tndfGlI --scope mingxia-lis-projects --yes
