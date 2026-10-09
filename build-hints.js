@@ -32,5 +32,6 @@ export function buildHint(state, level) {
   if (state.part === 'cap' || state.part === 'temple') {
     return {text: `L${state.layer + 1} is selected. Tap the top space to place the ${label}.`};
   }
+  if(state.scaffold) return {text:'Your 14 completed stones rest on the scaffold. Fit the 16 new foundation stones below; inspection will lower the upper layers.'};
   return null;
 }

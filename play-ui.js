@@ -1,5 +1,5 @@
 import { STONE_DETAILS, stoneArt } from './stone-art.js';
-import { isHarbor } from './harbor-game.js';
+import { isQuarry } from './harbor-game.js';
 import { buildHint } from './build-hints.js';
 
 let lastStage, lastLevel, panelOpen = true;
@@ -25,6 +25,7 @@ export function playShell() {
     <div class="brand"><div class="brand-icon" aria-hidden="true">${stoneArt('cap')}</div><div><h1>Pyramid Workshop</h1><span class="eyebrow">An architect’s expedition</span></div></div>
     <div class="header-actions"><span id="earned-purse" aria-label="Earned coins"></span><button id="free-design">Free Design</button><button id="toggle-panel" aria-controls="panel" aria-expanded="true">Field journal</button><button id="collection" class="outline">Discoveries <span id="card-count">0/3</span></button><button id="fullscreen" class="outline" aria-label="Enter fullscreen">Full screen</button></div>
   </header>
+  <nav id="journey-timeline" aria-label="Egypt expedition timeline" hidden></nav>
   <main class="layout">
     <section class="workbench" aria-label="Interactive 3D construction site"><div class="canvas-wrap">
       <div id="scene" style="height:100%"></div>
@@ -101,7 +102,9 @@ export function restorePlayFocus(focus) {
 
 export function updatePlayUI(state, level, guide) {
   const app = document.getElementById('app'), panel = document.getElementById('panel');
-  const harbor = isHarbor(level);
+  const harbor = isQuarry(level,state);
+  const journey=document.getElementById('journey-timeline');journey.hidden=level.id!=='egypt'||state.studioMode;
+  if(!journey.hidden)journey.innerHTML=['Shopping list','Pack & ship','Build 3 layers','Expand to 4'].map((name,i)=>{const done=state.completed.includes(`egypt-${i+1}`),active=state.level===i,open=!i||state.completed.includes(`egypt-${i}`);return `<button data-journey="${i}" class="${active?'current':''} ${done?'done':''}" ${open?'':'disabled'} ${active?'aria-current="step"':''}><b>${done?'✓':i+1}</b><span>${name}</span></button>`;}).join('');
   const building = !harbor && !state.studioMode && ['build','complete'].includes(state.stage);
   const stageChanged = lastStage !== state.stage || lastLevel !== state.level;
   if (stageChanged) panelOpen = !building && !harbor && !state.studioMode;
@@ -114,7 +117,7 @@ export function updatePlayUI(state, level, guide) {
   heading.innerHTML = `<span class="eyebrow">${state.stage === 'shop' ? 'THE RIVERSIDE MARKET' : 'YOUR EXPEDITION JOURNAL'}</span><button id="close-panel" aria-label="Close journal">×</button>`;
   panel.prepend(heading);
   document.getElementById('close-panel').onclick = () => showPanel(false, true);
-  document.getElementById('mission-objective').innerHTML = `<span>${state.stage === 'plan' ? '01 / Imagine & plan' : state.stage === 'shop' ? '02 / Gather your materials' : state.stage === 'complete' ? 'A wonder, built by you' : '03 / Bring the stones together'}</span><strong>${state.money} coins <i aria-hidden="true">·</i> ${state.blocks.length} stones placed</strong>`;
+  document.getElementById('mission-objective').innerHTML = `<span>${state.stage === 'plan' ? '01 / Imagine & plan' : state.stage === 'shop' ? '02 / Gather your materials' : state.stage === 'complete' ? 'A wonder, built by you' : '03 / Bring the stones together'}</span><strong>${level.journeyRole?`${state.blocks.length}/${level.blueprint.length} stones · ${level.journeyRole==='expand'?'14 preserved from your first pyramid':'Materials delivered'}`:`${state.money} coins <i aria-hidden="true">·</i> ${state.blocks.length} stones placed`}</strong>`;
   for (const id of ['material-tray','build-tools','layer-control','build-hint-action']) document.getElementById(id).replaceChildren();
   document.getElementById('build-hint').hidden = true;
   document.getElementById('builder-dock').hidden = !building;

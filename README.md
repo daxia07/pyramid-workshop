@@ -18,7 +18,13 @@ The original sanitized snapshot is commit `495e585` (reviewed release `2026-10-0
 
 The worksite fills the window, with an illustrated material tray and a floating field journal. Capstone and other layer transitions now show a persistent next-step hint, highlight the suggested layer, and offer a layer shortcut. Repair missions allow salvaged stones to remain in the store after inspection.
 
-Egypt mission 2 is a separate quarry and harbor puzzle. Buy four corner stones (weight 2 each) and a capstone (weight 3), arrange them on a six-space boat, keep each voyage within weight 6 and a side-to-side difference of 2, and pay 2 coins per voyage. The 25-coin contract covers stone purchases and two shipments. Delivery completes the mission without repeating construction. Cargo can be dragged or selected and placed by tapping; saved voyages resume on reload. Earlier purchases and deliveries migrate without being discarded.
+Egypt follows a visible expedition timeline: **Shopping list → Pack and ship → Build three layers → Expand to four**. The opening quarry scene uses a read-only 3D reference model and quantities for all 14 stones. After shipping, that stock is supplied to an empty construction site. The later expansion preserves the completed upper 14 stones on a temporary model scaffold and adds a new 16-stone, 4×4 foundation.
+
+The cargo game has a real Three.js quarry and river scene: a curved, planked barge with rigging, textured limestone cargo, water, shadows, a planning table, quarry stock, and animated voyages. Select a sled, rotate it with the button or R, and tap the deck; loaded sleds can be picked up and moved. Drag empty water to orbit, switch to Deck view for precision, or open the accessible deck map. The physical boat tilts with the load.
+
+The 5×4 deck has two mast spaces. Protective sleds use domino, straight triomino, L-triomino and 2×2 footprints; weights are 2, 3, 3 and 5. A voyage must avoid collisions, fit the deck, weigh at most 16 and balance in both directions. Freight costs 3 coins per voyage. Contract budgets (63 initially, 60 for expansion) cover all stones plus four voyages; both shipments have verified three-voyage solutions. Undoing a voyage restores its cargo and fee. Shipping never repeats the building task.
+
+Saved discoveries, earned coins, studio designs and non-Egypt progress survive the update. Previous Egypt runs are archived, earlier cargo purchases and deliveries keep their value, and the old repair build retains its stones and salvaged inventory.
 
 Completed missions pay 20, 25, 30 or 35 earned coins according to their position in the chapter. Wages are separate from contract budgets, paid once per mission, and credited for earlier saved completions. Free Design offers 3×3, 5×5 and 7×7 pyramids, smooth or stepped forms, four stone palettes, unlimited construction, layer filling, removal and undo. Earned coins unlock decorations once for unlimited placement: paths, palms, banners, obelisks and pools. Designs, purchases and mission progress persist together in the existing browser storage key.
 
@@ -35,7 +41,7 @@ vercel deploy --prod --project prj_opPerdde2LuNl72PHK2S1tndfGlI --scope mingxia-
 Release commits must use an email associated with the publishing account. The original GitHub no-reply address caused `TEAM_ACCESS_REQUIRED`; using the verified publishing identity unblocked deployment. This Vercel account has no GitHub login connection, so direct `gitSource` deployment is unavailable; CLI source uploads work. `.vercelignore` excludes dependencies, local build output and secrets. After publishing, compare the served HTML and build assets with the tested `dist/` output.
 
 ## Play and learning
-- Egypt: shaped casing stones, a quarry shipping and load-balance puzzle, pattern repair and an independent commission. The 14-piece model preserves 3×3 + 2×2 + 1 counting with centred layers and continuous sloping faces.
+- Egypt: a shopping list, spatial cargo packing, supplied-stock construction and a four-layer expansion. The 14-piece model uses 3×3 + 2×2 + 1; the expansion adds 4×4 below for 30 pieces. Layers stay centred with continuous sloping faces.
 - Maya cities: terrace footprints, mirrored stairs, zero-purchase route repair and a protected cenote-access corridor.
 - Ur: core versus facing materials, packs of four, reversible higher-site comparison and a mixed-constraint commission.
 
@@ -43,9 +49,9 @@ Dimensions, prices, transport capacities and flood levels are teaching abstracti
 
 ## Verification and limits
 
-All 73 automated checks and the production build pass. Regression coverage includes capstone guidance, salvaged repair inventory, shipping weight/balance/budget constraints, saved-voyage recovery, migration, once-only wages, decoration purchases, all six studio size/shape combinations, support rules and undo data.
+All 96 automated checks and the production build pass. Coverage includes spatial collision and mast restrictions, both balance axes, verified three-voyage solutions for both contracts, freight accounting and undo, voyage persistence, legacy migration, salvaged inventory, one-time wages, free design, monument geometry and capstone guidance.
 
-Connected Chrome checks exercised the capstone hint through actual 3D picking, mission 3 inspection with two salvaged edge stones, both shipping voyages and fees, wages, studio size and stone changes, decoration placement, free layer building and undo, reload persistence, and return to missions. Desktop and emulated phone layouts were visually checked with WebGL rendering. Physical iPad/touch-device testing remains open. A textured software renderer remains available when WebGL cannot initialize.
+Connected Chrome checks exercised the full four-stop Egypt journey through UI controls, shipment undo and fees, native canvas picking, the L3 capstone hint, the 30-piece expansion, earned wages, save/reload, and returning to Free Design. Desktop and emulated phone layouts were visually reviewed with WebGL rendering. Physical touch-device testing remains open. A textured software renderer remains available when WebGL cannot initialize.
 
 No accounts, analytics or backend services are used. Coins are in-game rewards, with no real-money purchases. Progress stays in local browser storage on the current device. The original sanitized source snapshot excludes build output and installed dependencies.
 

@@ -1,76 +1,75 @@
-import {awardCompletedMissions, missionWage} from './workshop-profile.js';
 import {stoneArt, STONE_DETAILS} from './stone-art.js';
-import {harborStats, buyCargo, placeCargo, unloadCargo, dispatchProblem, dispatchCargo, arriveCargo} from './harbor-game.js';
-
-let arrivalTimer, timerVoyage;
-export function clearHarborTimer() {
-  clearTimeout(arrivalTimer); arrivalTimer = null; timerVoyage = null;
+import {CARGO_SPECS,DECK,footprint,occupiedCells,placementProblem,suggestPlacement} from './cargo-packing.js';
+import {buyCargo,buyOrder,placeCargo,unloadCargo,harborStats,dispatchProblem,dispatchCargo,arriveCargo,undoVoyage,beginExpansionBuild,VOYAGE_MS} from './harbor-game.js';
+import {confirmOrder} from './journey-game.js';
+import {createHarborWorld} from './harbor-world.js';
+let arrivalTimer,timerVoyage,world,api;
+export function clearHarborTimer(){clearTimeout(arrivalTimer);arrivalTimer=null;timerVoyage=null;}
+const names={brick:'Flat bricks',edge:'Edge stones',corner:'Corner stones',cap:'Capstone'};
+const symbols={brick:'B',edge:'E',corner:'C',cap:'▲'};
+const clean=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export function footprintArt(type,rotation=0){const cells=footprint(type,rotation),w=Math.max(...cells.map(c=>c[0]))+1,h=Math.max(...cells.map(c=>c[1]))+1;return `<svg class="sled-icon" viewBox="0 0 ${w*12+2} ${h*12+2}" aria-hidden="true">${cells.map(([c,r])=>`<rect x="${c*12+1}" y="${r*12+1}" width="11" height="11" rx="1.5"/><path d="M${c*12+4} ${r*12+4}h5"/>`).join('')}<circle cx="4" cy="4" r="1.4" fill="currentColor"/></svg>`;}
+function referenceHTML(level){return `<div class="order-reference"><div class="mini-blueprints">${level.dims.map((n,y)=>{const owned=level.journeyRole==='expand'&&y>0;return `<div class="reference-layer ${owned?'owned':''}"><span>L${y+1} · ${n}×${n}</span><div style="grid-template-columns:repeat(${n},1fr)">${level.blueprint.filter(b=>b.y===y).map(b=>`<i class="ref-${b.type}" title="${STONE_DETAILS[b.type].label}">${symbols[b.type]}</i>`).join('')}</div><small>${owned?'Already built':n*n+(n===1?' stone':' stones')}</small></div>`;}).join('')}</div><p>${level.journeyRole==='expand'?'Keep your 14 stones. Order only the new 4 × 4 foundation.':'9 foundation stones + 4 upper corners + 1 cap = 14 stones.'}</p></div>`;}
+function orderHTML(state,level){const q=level.requiredNewQuantities,done=state.stage==='complete',cost=Object.entries(q).reduce((n,[t,c])=>n+c*level.prices[t],0);return `<div class="harbor-heading"><span class="eyebrow">THE SURVEYOR’S TABLE · ${level.journeyRole==='expand'?'A LARGER AMBITION':'BEFORE THE FIRST STONE'}</span><h2>${level.journeyRole==='expand'?'Make room for<br>one more layer.':'A little plan.<br>A lasting wonder.'}</h2><p>${level.journeyRole==='expand'?'Your three layers become the top of a four-layer pyramid. The new foundation needs its own shipment.':'Study the model. Count the shapes.<br>Then take your shopping list to the quarry.'}</p></div>
+  <section class="order-paper"><span class="eyebrow">${done?'YOUR ORDER IS READY':'01 / YOUR SHOPPING LIST'}</span><h3>${level.journeyRole==='expand'?'16 new foundation stones':'A three-layer pyramid'}</h3>${referenceHTML(level)}
+  <div class="reference-key">${level.types.map(t=>`<span><i class="ref-${t}">${symbols[t]}</i>${STONE_DETAILS[t].label}</span>`).join('')}</div>
+  <div class="shopping-rows">${level.types.map(type=>`<label class="shopping-row"><span class="order-stone">${stoneArt(type)}</span><span><strong>${names[type]}</strong><small>Need ${q[type]||0} · ${level.prices[type]} coins each</small></span><input data-shopping="${type}" aria-label="Shopping list ${names[type]}" type="number" inputmode="numeric" min="0" max="30" value="${clean(state.estimates[type])}" ${done?'disabled':''}/></label>`).join('')}</div>
+  <div class="order-budget"><span>Stone ${cost}<small>+ reserve 12 for shipping</small></span><strong>${level.budget}<small>contract coins</small></strong></div>
+  ${done?'<div class="order-approved">✓ Shopping list checked · 20 coins earned</div><button id="order-next" class="primary full">Visit the quarry →</button>':'<button id="confirm-order" class="primary full">Confirm my shopping list →</button><button id="reference-counts" class="text-button">Copy the reference counts</button>'}
+  <p class="fineprint">The model is a reference. Your construction starts after delivery.</p>
+  </section><div class="harbor-scene-caption">A model on the table. Your work still to come.</div>${cameraHTML(false)}`;}
+function cameraHTML(cargo=true){return `<div class="harbor-camera" aria-label="Harbor camera"><button id="harbor-home" aria-label="Reset harbor view">⌂</button>${cargo?'<button id="deck-view">Deck view</button>':''}<button id="harbor-zoom-in" aria-label="Zoom harbor in">+</button><button id="harbor-zoom-out" aria-label="Zoom harbor out">−</button></div>`;}
+function balanceHTML(m){return `<div class="balance-target ${m.balanced?'balanced':''}" aria-label="${m.balanced?'Balanced':'Unbalanced'} in both directions"><span class="balance-safe"></span><i style="left:${50+Math.max(-1,Math.min(1,m.offsetX))*43}%;top:${50+Math.max(-1,Math.min(1,m.offsetZ))*43}%"></i><span class="axis-x"></span><span class="axis-z"></span></div>`;}
+function deckMapHTML(state){const h=state.harbor;return `<div class="accessible-deck" role="group" aria-label="Accessible deck map, bow at top">${Array.from({length:20},(_,i)=>{const c=i%5,r=Math.floor(i/5),blocked=DECK.blocked.some(([x,z])=>x===c&&z===r),item=h.cargo.find(a=>a.status==='boat'&&occupiedCells(a).some(([x,z])=>x===c&&z===r));return `<button data-deck="${c},${r}" class="${blocked?'mast':''} ${item?'occupied '+item.type:''}" ${h.inTransit||blocked&&(!h.selected||placementProblem(h.cargo,h.cargo.find(a=>a.id===h.selected),c,r,h.rotation))?'disabled':''} aria-label="Deck ${String.fromCharCode(65+c)}${r+1}${blocked?', mast':item?', '+STONE_DETAILS[item.type].label:', empty'}">${blocked?'╋':item?symbols[item.type]:`${String.fromCharCode(65+c)}${r+1}`}</button>`;}).join('')}</div>`;}
+function cargoHTML(state,level){const h=state.harbor,m=harborStats(state),sailing=!!h.inTransit,finished=h.finished||state.stage==='complete';const selected=h.cargo.find(c=>c.id===h.selected),market=h.cargo.filter(c=>c.status==='market'),cost=market.reduce((n,c)=>n+level.prices[c.type],0),problem=dispatchProblem(state,level);
+  const title=sailing?'Downriver, to Giza.':finished?'Every stone, delivered.':level.journeyRole==='expand'?'A wider foundation.':'A river full of possibility.';
+  const hasBought=h.cargo.some(c=>c.status!=='market');
+  return `<div class="harbor-heading cargo-heading"><span class="eyebrow">THE QUARRY QUAY · ${level.journeyRole==='expand'?'EXPANSION SHIPMENT':'YOUR FIRST SHIPMENT'}</span><h2>${title}</h2><p>${sailing?'Your cargo travels with the barge. The next load waits at the quay.':finished?'The order is waiting at the building site.':hasBought?'Choose a sled. Rotate it. Find its place on the deck.':'Your shopping list is ready. Buy the stones, then pack the boat.'}</p></div>
+  <section class="cargo-order ${h.showOrder?'expanded':''}" aria-label="Shipment order"><button id="toggle-cargo-order" class="cargo-order-heading" aria-expanded="${!!h.showOrder}"><span>THE SHIPPING ORDER <small>${m.delivered}/${h.cargo.length} delivered</small></span><strong>◉ ${state.money}</strong><i>⌄</i></button>
+  <div class="cargo-order-body"><div class="manifest-labels"><span>Stone</span><span>Quay</span><span>Boat</span><span>Giza</span></div>${level.types.filter(t=>level.requiredNewQuantities[t]).map(type=>{const list=h.cargo.filter(c=>c.type===type),n=status=>list.filter(c=>c.status===status).length;return `<div class="manifest-row"><span>${stoneArt(type)}<b>${STONE_DETAILS[type].label}<small>Order ${list.length}</small></b></span><strong>${n('quay')}</strong><strong>${n('boat')+n('transit')}</strong><strong>${n('delivered')}</strong></div>`;}).join('')}
+  ${market.length?`<button id="buy-order" class="gold full" ${sailing||cost>state.money?'disabled':''}>Buy ${hasBought?'remaining':'shopping list'} · ${cost} coins</button>`:''}
+  <div class="freight-ledger"><span>Freight paid <b>${h.feesPaid} coins</b></span><span>Voyages <b>${state.trips} / aim for 3</b></span></div>
+  <p class="fineprint">Budget covers four voyages. Three earns the Efficient Captain seal. Unpack and rearrange freely.</p>
+  <div class="cargo-order-links"><button id="undo-voyage" ${!h.voyages.length||sailing||finished?'disabled':''}>Undo last voyage</button><button id="harbor-restart">Restart shipment</button></div>
+  <details class="packing-rules"><summary>The boat’s rules</summary><p>5 × 4 deck. Two spaces belong to the mast. Sleds cannot overlap or hang over the side. At most 16 weight per voyage.</p><p>The balance dot must stay inside the central square. Distribute weight both left to right and bow to stern.</p><p>Sleds include protective space; these are transport shapes, not the dimensions of masonry.</p></details></div></section>
+  ${sailing?`<div class="voyage-banner"><span class="eyebrow">VOYAGE ${h.inTransit.number} · ${h.inTransit.weight}/16 WEIGHT</span><strong>Quarry <span class="voyage-line">→</span> Giza</strong><button id="finish-voyage">Skip voyage animation</button></div>`:finished?`<section class="harbor-complete"><span class="eyebrow">${state.trips<=3?'✦ EFFICIENT CAPTAIN':'✓ SHIPMENT COMPLETE'}</span><h3>${h.cargo.length} stones.<br>Ready for your hands.</h3><p>${state.trips} voyages · ${h.feesPaid} freight coins · ${state.money} left</p>${level.journeyRole==='cargo'?`<p class="shipping-wage">${h.earnedThisRun?'+25 earned coins · Spend them in Free Design':'Commission wage already earned'}</p>`:''}<button id="harbor-next" class="primary full">${level.journeyRole==='expand'?'Fit the wider foundation':'Build my three layers'} →</button></section>`:`
+  <div class="cargo-controls"><div class="load-readout"><div class="load-weight"><span>HOLD WEIGHT</span><strong>${m.weight}<small> / ${DECK.capacity}</small></strong><div class="weight-track"><i class="${m.overweight?'danger':''}" style="width:${Math.min(100,m.weight/DECK.capacity*100)}%"></i></div><small>${m.tiles} of 18 usable spaces</small></div>${balanceHTML(m)}<div class="balance-copy"><span>TRIM & BALANCE</span><strong>${m.items?m.balanced?'Steady on both axes':'Shift the weight':'Ready to load'}</strong><small>Keep the dot in the square</small></div></div>
+  <div class="cargo-guidance"><p id="cargo-placement-hint" role="status" aria-live="polite">${selected?`${STONE_DETAILS[selected.type].label} selected · ${CARGO_SPECS[selected.type].weight} weight · tap a deck space`:m.items?problem||'A steady load. Sail now, or fit one more sled.':'Choose a stone below, then tap the boat to place its sled.'}</p><button id="sail-cargo" class="primary" ${problem?'disabled':''}>Sail · ${DECK.fee} coins →</button></div>
+  <div class="cargo-tray" aria-label="Quarry cargo">${level.types.filter(t=>level.requiredNewQuantities[t]).map(type=>{const quay=h.cargo.filter(c=>c.type===type&&c.status==='quay'),unbought=h.cargo.filter(c=>c.type===type&&c.status==='market'),active=selected?.type===type;return `<button class="cargo-stock ${type} ${active?'active':''}" data-cargo-type="${type}" ${!quay.length&&!unbought.length?'disabled':''} aria-label="${quay.length?`Select ${STONE_DETAILS[type].label}, ${quay.length} at quay`:`Buy ${STONE_DETAILS[type].label}, ${level.prices[type]} coins`}" aria-pressed="${active}"><span class="cargo-stone-art">${stoneArt(type)}</span><span class="cargo-stock-text"><b>${STONE_DETAILS[type].label}</b><small>${quay.length?`${quay.length} at quay`:unbought.length?`Buy · ${level.prices[type]} coins`:'All aboard / delivered'}</small></span><span class="cargo-footprint">${footprintArt(type,active?h.rotation:0)}<small>${CARGO_SPECS[type].weight} wt</small></span></button>`;}).join('')}</div>
+  <div class="packing-actions"><span class="selection-label">${selected?`${STONE_DETAILS[selected.type].label} · ${h.rotation}°`:'Padded sleds protect your stone'}</span><button id="rotate-cargo" ${!selected?'disabled':''}>↻ Rotate <kbd>R</kbd></button><button id="unload-cargo" ${selected?.status!=='boat'?'disabled':''}>To quay</button><button id="deselect-cargo" ${!selected?'disabled':''}>Orbit / cancel</button><button id="cargo-hint" ${!selected?'disabled':''}>Placement hint</button><button id="toggle-deck-map" aria-expanded="${!!h.showMap}">${h.showMap?'Close':'Open'} deck map</button></div>
+  ${h.showMap?deckMapHTML(state):''}</div>`}
+  ${cameraHTML()}<div class="harbor-scene-caption">${sailing?'A cargo journey on the Nile':'Drag water to orbit · scroll to zoom · R to rotate cargo'}</div>`;
 }
-
-const cliffArt = `<svg class="quarry-landscape" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="quarry-sand" x2="0" y2="1"><stop stop-color="#ead4a2"/><stop offset="1" stop-color="#f6e9c9"/></linearGradient><pattern id="quarry-cuts" width="135" height="70" patternUnits="userSpaceOnUse"><path d="M0 0H135V70H0Z M40 0V70" stroke="#b6915b" stroke-opacity=".3" fill="none"/></pattern></defs><path fill="url(#quarry-sand)" d="M0 0H570L590 210 515 370 575 550 520 900H0Z"/><path d="M0 190L180 105 270 180 345 132 475 270 390 500 0 460Z" fill="#cbb082"/><path d="M0 210L180 125 265 200 345 151 459 278 380 478 0 440Z" fill="url(#quarry-cuts)"/><path d="M580 0Q700 210 578 405T610 900" stroke="#e7d8aa" stroke-width="34" fill="none"/><path d="M1250 710l70-104 70 104Z" fill="#e4c187"/><path d="M1320 606v104h70Z" fill="#b38e55"/><path d="M1180 727l40-64 42 64Z" fill="#edcf99"/><path d="M1060 745h380v155h-400Z" fill="#dcca9e" opacity=".8"/><g stroke="#d3e5d5" stroke-width="2" opacity=".17"><path d="M700 100h90m160 85h110m-400 80h95m400 130h90m-320 165h90m200 80h90m-500 200h95"/></g></svg>`;
-
-export function renderHarbor({state, level, save, render, notice, restart, next}) {
-  awardCompletedMissions(state);
-  document.getElementById('earned-purse').textContent=`◉ ${state.profile.coins} earned`;
-  const root = document.getElementById('harbor-scene');
-  const h = state.harbor, {capacity, maxImbalance, fee, weights} = level.delivery;
-  const stats = harborStats(state, level), sailing = !!h.inTransit, complete = state.stage === 'complete';
-  const problem = dispatchProblem(state, level);
-  const quay = h.cargo.filter(c => c.status === 'quay');
-  const title = complete ? 'The river kept your promise.' : 'From quarry to wonder.';
-  root.classList.toggle('is-sailing', sailing);
-  root.innerHTML = `${cliffArt}
-    <div class="harbor-content">
-      <header class="harbor-title"><div><span class="eyebrow">EGYPT · MISSION 02 · THE RIVER MASTER</span><h2>${title}</h2><p>Four corners. One capstone. A river to cross.</p></div><div class="harbor-purse"><span>CONTRACT BUDGET</span><strong>${state.money}<small> coins</small></strong><span>Shipping paid: ${h.feesPaid} · ${state.trips} voyages</span></div></header>
-      ${h.carriedOver ? '<p class="harbor-carried">Your earlier purchases and deliveries are saved. Start a new river puzzle to try the new challenge.</p>' : ''}
-      <div class="harbor-playfield" ${sailing ? 'inert' : ''}>
-        <section class="quarry-yard" aria-label="Quarry market">
-          <span class="eyebrow">01 / THE QUARRY MARKET</span><h3>Choose your cargo</h3>
-          <p class="harbor-note">Stone prices and shipping share your budget. Keep ${fee * level.delivery.optimalTrips} coins for the river.</p>
-          <div class="quarry-stalls">${['corner','cap'].map(type => {
-            const left = h.cargo.filter(c => c.type === type && c.status === 'market').length;
-            return `<button class="quarry-stall" data-cargo-buy="${type}" ${!left || complete ? 'disabled' : ''} aria-label="Buy ${STONE_DETAILS[type].label.toLowerCase()} for ${level.prices[type]} coins, weight ${weights[type]}, ${left} remaining">${stoneArt(type)}<strong>${STONE_DETAILS[type].label}</strong><span class="cargo-weight">${weights[type]} weight</span><span class="quarry-price">${left ? `Buy · ${level.prices[type]} coins` : 'Order purchased'}</span><small>${left} left to buy</small></button>`;
-          }).join('')}</div>
-          <div class="quay-heading"><strong>Waiting at the quay</strong><span>${quay.length} stones</span></div>
-          <div class="quay-cargo" aria-label="Purchased cargo">${quay.length ? quay.map(c => `<button data-cargo="${c.id}" draggable="true" aria-label="Select ${STONE_DETAILS[c.type].label.toLowerCase()} ${c.id.split('-')[1]}, weight ${weights[c.type]}" aria-pressed="${h.selected === c.id}" class="cargo-token ${h.selected === c.id ? 'cargo-selected' : ''}">${stoneArt(c.type)}<span>${weights[c.type]}</span></button>`).join('') : `<p>${complete ? 'All stones have reached Giza.' : 'Buy a stone above to bring it here.'}</p>`}</div>
-          <p class="harbor-note">Select a stone, then a deck space. You can also drag stones onto the boat.</p>
-        </section>
-        <section class="river-dock" aria-label="Arrange the boat load">
-          <div class="boat-heading"><span class="eyebrow">02 / BALANCE THE BOAT</span><h3>${complete ? 'A well-planned voyage.' : 'Every stone has its place.'}</h3></div>
-          ${complete ? `<div class="harbor-success"><span class="harbor-seal">✓</span><h3>All five stones delivered.</h3><p>The builders at Giza can take it from here.</p><p class="wage-reward">${h.earnedThisRun ? `Work well done · +${missionWage(level.missionId)} earned coins` : 'Mission wage already earned'}<br><small>${h.earnedThisRun ? 'Spend them in Free Design.' : 'Replay for the challenge; wages are paid once.'}</small></p><div class="voyage-receipt"><span>${state.trips}<small>voyages</small></span><span>${h.feesPaid}<small>shipping coins</small></span><span>${state.money}<small>coins left</small></span></div><button id="harbor-next" class="primary">Next mission →</button><button id="harbor-restart" class="outline">Play the river puzzle again</button></div>` : `
-          <div class="boat-quay"><span>CHOOSE CARGO AT THE QUAY</span><div class="quay-cargo">${quay.map(c=>`<button data-cargo="${c.id}" aria-label="Load ${STONE_DETAILS[c.type].label.toLowerCase()} ${c.id.split('-')[1]}, weight ${weights[c.type]}" aria-pressed="${h.selected===c.id}" class="cargo-token ${h.selected===c.id?'cargo-selected':''}">${stoneArt(c.type)}<span>${weights[c.type]}</span></button>`).join('') || '<p>All purchased stones are aboard or delivered.</p>'}</div></div><div class="boat-waters"><div class="boat-wake"></div><div class="cargo-boat" style="--boat-tilt:${Math.max(-7,Math.min(7,(stats.left-stats.right)*1.5))}deg">
-            <span class="boat-bow">NILE TRADER</span><div class="boat-deck" role="group" aria-label="Six deck spaces, left and right sides">${Array.from({length:6},(_,slot)=>{
-              const c=h.cargo.find(c=>['boat','transit'].includes(c.status)&&c.slot===slot);
-              return `<button class="deck-space ${c?'occupied':''} ${c&&h.selected===c.id?'cargo-selected':''}" data-deck="${slot}" ${c?`data-cargo="${c.id}" draggable="true"`:''} aria-label="${slot%2?'Right':'Left'} side, row ${Math.floor(slot/2)+1}${c?`, ${STONE_DETAILS[c.type].label}, weight ${weights[c.type]}`:', empty deck space'}">${c?`${stoneArt(c.type)}<span class="deck-weight">${weights[c.type]}</span>`:'<span class="deck-cross">+</span>'}</button>`;
-            }).join('')}</div><span class="boat-stern">${capacity} WEIGHT MAX</span>
-          </div></div>
-          <div class="load-readout ${stats.weight>capacity||stats.difference>maxImbalance?'load-warning':''}" role="status"><strong>${stats.weight}<small> / ${capacity} weight</small></strong><div class="weight-meter"><span style="width:${Math.min(100,stats.weight/capacity*100)}%"></span></div><span>Left ${stats.left} · Right ${stats.right}<small>Keep the difference at ${maxImbalance} or less</small></span></div>
-          <div class="harbor-tools"><button id="unload-cargo" class="outline" ${stats.load.length?'':'disabled'}>${h.selected && stats.load.some(c=>c.id===h.selected)?'Unload selected stone':'Unload boat'}</button><button id="sail-cargo" class="primary" aria-disabled="${!!problem}">Sail to Giza · ${fee} coins →</button></div>
-          <p class="harbor-guidance" role="status">${problem || `Ready to sail. ${stats.load.length} stones aboard; this voyage costs ${fee} coins.`}</p>`}
-        </section>
-        <aside class="giza-order" aria-label="Delivery order"><span class="eyebrow">03 / WAITING AT GIZA</span><div class="giza-monument">${stoneArt('cap')}</div><h3>A promise in stone</h3><p><strong>${stats.delivered} / 5</strong> delivered</p><div class="delivery-stamps">${h.cargo.map(c=>`<span class="delivery-stamp ${c.status==='delivered'?'arrived':''}" aria-label="${STONE_DETAILS[c.type].label}: ${c.status==='delivered'?'delivered':'waiting'}">${stoneArt(c.type)}${c.status==='delivered'?'<b>✓</b>':''}</span>`).join('')}</div><p class="harbor-note">Deliver the order to finish this mission. Your crew handles the building.</p><div class="voyage-log">${h.voyages.map(v=>`<p>Voyage ${v.number}<strong>${v.weight}/${capacity} weight · ${v.fee} coins</strong></p>`).join('')}</div>${!complete?'<button id="harbor-restart" class="harbor-restart">Start a new river puzzle</button>':''}</aside>
-      </div>
-    </div>
-    ${sailing ? `<div class="voyage-overlay" role="region" aria-label="Voyage to Giza"><span class="eyebrow">VOYAGE ${h.inTransit.number} · ${h.inTransit.fee} COINS PAID</span><h2>The current carries your cargo.</h2><div class="voyage-route"><span>QUARRY</span><div class="river-route"><div class="sailing-miniature">${h.inTransit.ids.map(id=>stoneArt(h.cargo.find(c=>c.id===id).type)).join('')}<i></i></div></div><span>GIZA</span></div><p>${h.inTransit.weight}/${capacity} weight · Left ${h.inTransit.left} / Right ${h.inTransit.right}</p><button id="finish-voyage" class="primary">Arrive at Giza →</button></div>` : ''}`;
-
-  const change = fn => { if(fn() !== false) {save(); render();} };
-  root.querySelectorAll('[data-cargo-buy]').forEach(b=>b.onclick=()=>change(()=>buyCargo(state,level,b.dataset.cargoBuy)));
-  root.querySelectorAll('.quay-cargo [data-cargo]').forEach(b=>b.onclick=()=>{h.selected=h.selected===b.dataset.cargo?null:b.dataset.cargo;save();render();});
-  root.querySelectorAll('[data-deck]').forEach(b=>b.onclick=()=>{
-    if(h.selected && h.selected!==b.dataset.cargo) change(()=>placeCargo(state,h.selected,+b.dataset.deck));
-    else {h.selected=h.selected===b.dataset.cargo?null:b.dataset.cargo||null;save();render();}
-  });
-  root.querySelectorAll('[draggable]').forEach(b=>b.ondragstart=e=>{e.dataTransfer.setData('text/plain',b.dataset.cargo);e.dataTransfer.effectAllowed='move';});
-  root.querySelectorAll('[data-deck]').forEach(b=>{
-    b.ondragover=e=>{e.preventDefault();e.dataTransfer.dropEffect='move';};
-    b.ondrop=e=>{e.preventDefault();change(()=>placeCargo(state,e.dataTransfer.getData('text/plain'),+b.dataset.deck));};
-  });
-  const bind=(id,fn)=>{const b=root.querySelector('#'+id);if(b)b.onclick=fn;};
-  bind('unload-cargo',()=>change(()=>{const ids=stats.load.some(c=>c.id===h.selected)?[h.selected]:stats.load.map(c=>c.id);ids.forEach(id=>unloadCargo(state,id));}));
-  bind('sail-cargo',()=>{const result=dispatchCargo(state,level);if(result.problem)notice(result.problem);else{save();render();}});
-  bind('harbor-restart',restart);bind('harbor-next',next);
-  const arrive=()=>{clearHarborTimer();if(arriveCargo(state,level)){save();render();}};
-  bind('finish-voyage',arrive);
-  if(sailing && timerVoyage!==h.inTransit){clearHarborTimer();timerVoyage=h.inTransit;arrivalTimer=setTimeout(arrive,5000);}
-  else if(!sailing)clearHarborTimer();
+export function renderHarbor(context){api=context;const{state,level,save,render,notice,next}=context;
+  let host=document.getElementById('harbor-world');if(!host){document.getElementById('harbor-scene').innerHTML='<div id="harbor-world"></div><div id="harbor-hud"></div>';host=document.getElementById('harbor-world');}
+  const order=state.stage==='order'||level.journeyRole==='order';document.getElementById('harbor-scene').dataset.phase=order?'order':'cargo';
+  document.getElementById('harbor-hud').innerHTML=order?orderHTML(state,level):cargoHTML(state,level);
+  const update=()=>{save();render();};
+  const select=id=>{if(state.harbor.inTransit)return;const c=state.harbor.cargo.find(c=>c.id===id&&['boat','quay'].includes(c.status));if(!c)return;state.harbor.selected=id;state.harbor.rotation=c.rotation||0;update();};
+  const place=(column,row)=>{const h=state.harbor,item=h.cargo.find(c=>c.id===h.selected);if(!item)return;const problem=placementProblem(h.cargo,item,column,row,h.rotation);if(problem){notice(problem);return;}if(placeCargo(state,item.id,column,row,h.rotation))update();};
+  const rotate=()=>{if(!state.harbor?.selected||state.harbor.inTransit)return;state.harbor.rotation=(state.harbor.rotation+90)%360;update();};
+  const deselect=()=>{if(state.harbor){state.harbor.selected=null;update();}};
+  // Keep one canvas and one camera alive across every stock, rotation and placement update.
+  if(!world){world=createHarborWorld(host,()=>api,{onSelect:id=>api.select(id),onPlace:(c,r)=>api.place(c,r),onDeselect:()=>api.deselect(),onHover:text=>{const e=document.getElementById('cargo-placement-hint');if(e)e.textContent=text;}});
+    document.addEventListener('keydown',e=>{if(document.getElementById('harbor-scene').hidden||document.querySelector('.modal-shade')||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key.toLowerCase()==='r'){e.preventDefault();api.rotate();}if(e.key==='Escape')api.deselect();});}
+  Object.assign(api,{select,place,rotate,deselect});world.sync();
+  const bind=(id,fn)=>{const e=document.getElementById(id);if(e)e.onclick=fn;};
+  bind('harbor-home',()=>world.home());bind('deck-view',()=>world.topView());bind('harbor-zoom-in',()=>world.zoom(.86));bind('harbor-zoom-out',()=>world.zoom(1.16));
+  if(order){clearHarborTimer();document.querySelectorAll('[data-shopping]').forEach(e=>e.oninput=()=>{state.estimates[e.dataset.shopping]=e.value;save();});
+    bind('reference-counts',()=>{for(const t of level.types)state.estimates[t]=String(level.requiredNewQuantities[t]||0);update();});
+    bind('confirm-order',()=>{const problem=confirmOrder(state,level);if(problem)return notice(problem);save();if(level.journeyRole==='order')next();else render();});bind('order-next',next);return;
+  }
+  const h=state.harbor;
+  document.querySelectorAll('[data-cargo-type]').forEach(e=>e.onclick=()=>{const type=e.dataset.cargoType,item=h.cargo.find(c=>c.type===type&&c.status==='quay');if(item)select(item.id);else if(buyCargo(state,level,type))update();});
+  bind('buy-order',()=>{if(buyOrder(state,level))update();});bind('rotate-cargo',rotate);bind('deselect-cargo',deselect);bind('unload-cargo',()=>{if(unloadCargo(state,h.selected))update();});
+  bind('cargo-hint',()=>{const item=h.cargo.find(c=>c.id===h.selected);if(!item)return;const hintCargo=h.cargo.filter(c=>c.id!==item.id);hintCargo.unshift({...item,status:'quay'});const suggestion=suggestPlacement(hintCargo,item.type);if(!suggestion)return notice('No open footprint fits. Move a sled or send a balanced load.');h.rotation=suggestion.rotation;update();world.preview(suggestion.column,suggestion.row);notice(`Try ${String.fromCharCode(65+suggestion.column)}${suggestion.row+1} at ${suggestion.rotation}°. The green footprint shows the space; you place it.`);});
+  bind('toggle-deck-map',()=>{h.showMap=!h.showMap;update();});bind('toggle-cargo-order',()=>{h.showOrder=!h.showOrder;update();});
+  document.querySelectorAll('[data-deck]').forEach(e=>e.onclick=()=>{const[c,r]=e.dataset.deck.split(',').map(Number);if(h.selected)place(c,r);else{const item=h.cargo.find(a=>a.status==='boat'&&occupiedCells(a).some(([x,z])=>x===c&&z===r));if(item)select(item.id);else notice('Select a sled from the quay first.');}});
+  bind('sail-cargo',()=>{const result=dispatchCargo(state,level);if(result.problem)notice(result.problem);else update();});
+  bind('undo-voyage',()=>{if(undoVoyage(state)){update();notice('Voyage undone. Its freight fee and cargo are back.');}});
+  bind('harbor-restart',context.restart);
+  bind('harbor-next',()=>{if(level.journeyRole==='expand'){beginExpansionBuild(state,level);save();render();context.onBuild?.();}else next();});
+  const arrive=()=>{clearHarborTimer();if(arriveCargo(state,level))update();};bind('finish-voyage',arrive);
+  if(h.inTransit&&timerVoyage!==h.inTransit){clearHarborTimer();timerVoyage=h.inTransit;arrivalTimer=setTimeout(arrive,Math.max(0,VOYAGE_MS-(Date.now()-h.inTransit.startedAt)));}
+  else if(!h.inTransit)clearHarborTimer();
 }

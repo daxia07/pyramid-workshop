@@ -8,10 +8,10 @@ export const SCENES=[
  {id:'mesopotamia',name:'The sacred city of Ur',place:'Mesopotamia',kind:'Mudbrick ziggurat',dims:[5,3,1],types:['brick','temple','stairs'],prices:{brick:2,temple:8,stairs:3},budget:94,color:0xc99570,ground:0xb3ad7f,sky:0xd1e7ea,lesson:'A two-unit change in width makes a one-unit terrace on each side. Count bricks and stairs separately.'}
 ];
 export const missionText={
- 'egypt-1':'The base is already built. Count the four upper corner stones and the cap. Their sloping faces must meet.',
- 'egypt-2':'At the quarry, buy four corner stones and a capstone. Arrange their weight across the boat and deliver them to Giza within the budget. Each voyage costs two coins.',
- 'egypt-3':'Two upper stones have the wrong shape. Inspect the pattern, lift them out, and restore the smooth casing.',
- 'egypt-4':'Plan the whole fourteen-piece pyramid. Keep all four faces smooth and finish within fifty-four coins.',
+ 'egypt-1':'Before any stone is lifted, write the complete fourteen-piece order. The quarry list is our reference for the first three layers.',
+ 'egypt-2':'The order is approved. Pack all fourteen sleds for the Nile: weight, shape and balance decide whether each voyage can sail.',
+ 'egypt-3':'The stones have arrived. Build the first three layers from the supplied stock, then inspect every smooth face and the cap.',
+ 'egypt-4':'Keep your three completed layers. Order and ship sixteen new stones, then fit a wider foundation beneath the model on its temporary scaffold.',
  'maya-1':'The next floor needs a terrace around it. Compare the two footprints before ordering your materials.',
  'maya-2':'Mirror the completed front stairway on the rear. Both routes must connect the plaza to the summit.',
  'maya-3':'One stair flight is on the wrong side. Move existing pieces to reconnect the ascent. You do not need to buy anything.',
@@ -21,18 +21,39 @@ export const missionText={
  'ur-3':'Compare two building sites against a model waterline. The higher site costs two coins. Predict, then test the water.',
  'ur-4':'Combine a high site, core and facing materials, packs and access stairs. Keep the complete commission within seventy-six coins.'
 };
-export const LEVELS=manifest.missions.map(m=>({...SCENES.find(s=>s.id===m.sceneId),...m,id:m.sceneId,missionId:m.id,types:Object.keys(m.prices),lesson:missionText[m.id],blueprint:m.target}));
 export const key=(x,y,z)=>`${x},${y},${z}`;
 export const sku=b=>b.material||b.type;
 export function cells(n,y){return Array.from({length:n*n},(_,i)=>({x:i%n-(n-1)/2,y,z:Math.floor(i/n)-(n-1)/2}));}
+function normalizeMission(m){
+ const role=m.journeyRole;
+ if(m.sceneId!=='egypt'||!role)return {...m,id:m.sceneId,missionId:m.id,types:Object.keys(m.prices),lesson:missionText[m.id],blueprint:m.target};
+ const target=(m.target||[]).map(b=>({...b}));
+ const seed=(m.seed||[]).map(b=>({...b}));
+ const types=Object.keys(m.prices);
+ const targetQuantities=Object.fromEntries(types.map(t=>[t,target.filter(b=>sku(b)===t).length]));
+ const suppliedInventory=Object.fromEntries(types.map(t=>[t,Number(m.suppliedInventory?.[t]||0)]));
+ const owned={...suppliedInventory};for(const b of seed)owned[sku(b)]=(owned[sku(b)]||0)+1;
+ const requiredNewQuantities=Object.fromEntries(types.map(t=>[t,Math.max(0,targetQuantities[t]-(owned[t]||0))]));
+ return {...m,id:m.sceneId,missionId:m.id,types,lesson:missionText[m.id],dims:m.dims,target,seed,suppliedInventory,targetQuantities,requiredNewQuantities,minimumPurchaseCost:types.reduce((sum,t)=>sum+requiredNewQuantities[t]*m.prices[t],0),lockedIds:seed.filter(b=>b.locked).map(b=>b.id),blueprint:target};
+}
+export const LEVELS=manifest.missions.map(m=>normalizeMission({...SCENES.find(s=>s.id===m.sceneId),...m}));
 export const target=l=>l.blueprint;
 export function quantities(l){return Object.fromEntries(l.types.map(t=>[t,l.blueprint.filter(b=>sku(b)===t).length]));}
 export const total=l=>l.blueprint.length;
-export function required(l){const owned={};for(const b of l.seed)owned[sku(b)]=(owned[sku(b)]||0)+1;const q=quantities(l);return Object.fromEntries(l.types.map(t=>[t,Math.max(0,q[t]-(owned[t]||0))]));}
+export function required(l){const owned={...(l.suppliedInventory||{})};for(const b of l.seed)owned[sku(b)]=(owned[sku(b)]||0)+1;const q=quantities(l);return Object.fromEntries(l.types.map(t=>[t,Math.max(0,q[t]-(owned[t]||0))]));}
 export function bounds(b){let x0=b.x-.5,x1=b.x+.5,z0=b.z-.5,z1=b.z+.5;if(b.type==='edge'||b.type==='corner'){if(b.type==='corner'||Math.abs(b.x)>=Math.abs(b.z)){if(b.x<0)x0+=.5;else x1-=.5;}if(b.type==='corner'||Math.abs(b.z)>Math.abs(b.x)){if(b.z<0)z0+=.5;else z1-=.5;}}if(b.type==='cap'){x0=x1=b.x;z0=z1=b.z;}return{x0,x1,z0,z1};}
 export function supported(b,blocks,l){if(b.y===0)return true;if(b.type==='stairs')return blocks.some(p=>p.y===b.y-1&&p.type==='stairs'&&(p.routeId||'front')===(b.routeId||'front'));const below=blocks.filter(p=>p.y===b.y-1&&p.type!=='stairs');return[-.49,.49].every(dx=>[-.49,.49].every(dz=>below.some(p=>{const q=bounds(p);return b.x+dx>=q.x0-.011&&b.x+dx<=q.x1+.011&&b.z+dz>=q.z0-.011&&b.z+dz<=q.z1+.011;})));}
 export function validate(l,blocks){const wants=new Map(target(l).map(b=>[key(b.x,b.y,b.z),sku(b)])),has=new Map(blocks.map(b=>[key(b.x,b.y,b.z),sku(b)]));return{missing:[...wants].filter(([k])=>!has.has(k)).length,extra:[...has].filter(([k])=>!wants.has(k)).length,wrong:[...has].filter(([k,t])=>wants.has(k)&&wants.get(k)!==t).length,unsupported:blocks.filter(b=>!supported(b,blocks,l)).length};}
-export function initial(i=0){const l=LEVELS[i],empty=()=>Object.fromEntries(l.types.map(t=>[t,0]));return{level:i,stage:'plan',estimates:Object.fromEntries(l.types.map(t=>[t,required(l)[t]===0?'0':''])),money:l.budget,inventory:empty(),freeInventory:empty(),warehouse:empty(),blocks:structuredClone(l.seed),layer:Math.min(...target(l).filter(b=>!l.seed.some(p=>key(p.x,p.y,p.z)===key(b.x,b.y,b.z)&&sku(p)===sku(b))).map(b=>b.y),l.dims.length-1),tool:'place',part:l.types.find(t=>required(l)[t]>0)||l.types[0],history:[],completed:[],siteChoice:null,planningChoice:null,waterPreview:false,cutaway:false,trips:0,...(isHarbor(l)?{stage:'harbor',harbor:createHarbor(l)}:{})};}
+export function initial(i=0){
+ const l=LEVELS[i],empty=()=>Object.fromEntries(l.types.map(t=>[t,0])),q=required(l),role=l.journeyRole;
+ const supplied=Object.fromEntries(l.types.map(t=>[t,l.suppliedInventory?.[t]||0]));
+ const firstMissing=target(l).filter(b=>!l.seed.some(p=>key(p.x,p.y,p.z)===key(b.x,b.y,b.z)&&sku(p)===sku(b))).map(b=>b.y);
+ const egypt=l.id==='egypt',orderDesk=egypt&&(role==='order'||role==='expand'),state={level:i,stage:'plan',estimates:Object.fromEntries(l.types.map(t=>[t,orderDesk?'':q[t]===0?'0':''])),money:l.budget,inventory:empty(),freeInventory:empty(),warehouse:empty(),blocks:structuredClone(l.seed),layer:firstMissing.length?Math.min(...firstMissing):0,tool:'place',part:l.types.find(t=>q[t]>0)||l.types[0],history:[],completed:[],siteChoice:null,planningChoice:null,waterPreview:false,cutaway:false,trips:0,...(egypt?{journeyVersion:2,expedition:{version:2,orders:{}}}:{}),...(isHarbor(l)?{stage:'harbor',harbor:createHarbor(l)}:{})};
+ if(egypt&&role==='order')state.stage='order';
+ if(egypt&&role==='expand'){state.stage='order';delete state.harbor;}
+ if(egypt&&role==='build'){state.stage='build';state.inventory={...supplied};state.freeInventory={...supplied};}
+ return state;
+}
 export const inventoryTotal=s=>Object.values(s.inventory).reduce((a,v)=>a+v,0);
 export const unusedPurchases=s=>Object.entries(s.inventory).reduce((n,[type,count])=>n+Math.max(0,count-(s.freeInventory?.[type]||0)),0)+Object.values(s.warehouse||{}).reduce((n,count)=>n+count,0);
 export const available=(l,completed)=>!l.unlocksAfter||completed.includes(l.unlocksAfter);

@@ -7,6 +7,9 @@ function capReady() {
   const state = initial(0);
   state.stage = 'build';
   state.blocks = structuredClone(target(LEVELS[0]).filter(b => b.type !== 'cap'));
+  state.part = 'corner';
+  state.layer = 1;
+  state.inventory.corner = 4;
   state.inventory.cap = 1;
   return state;
 }

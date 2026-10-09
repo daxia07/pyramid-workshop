@@ -37,1079 +37,14 @@
       "id": "egypt-1",
       "sceneId": "egypt",
       "shapeFamily": "egypt",
-      "name": "Fit the Final Stones",
+      "journeyRole": "order",
+      "name": "Shopping list",
       "dims": [
         3,
         2,
         1
       ],
-      "budget": 24,
-      "prices": {
-        "brick": 2,
-        "edge": 3,
-        "corner": 4,
-        "cap": 5
-      },
-      "target": [
-        {
-          "id": "-1,0,-1",
-          "x": -1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner"
-        },
-        {
-          "id": "0,0,-1",
-          "x": 0.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "edge"
-        },
-        {
-          "id": "1,0,-1",
-          "x": 1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner"
-        },
-        {
-          "id": "-1,0,0",
-          "x": -1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge"
-        },
-        {
-          "id": "0,0,0",
-          "x": 0.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "brick"
-        },
-        {
-          "id": "1,0,0",
-          "x": 1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge"
-        },
-        {
-          "id": "-1,0,1",
-          "x": -1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner"
-        },
-        {
-          "id": "0,0,1",
-          "x": 0.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "edge"
-        },
-        {
-          "id": "1,0,1",
-          "x": 1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner"
-        },
-        {
-          "id": "-0.5,1,-0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0.5,1,-0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner"
-        },
-        {
-          "id": "-0.5,1,0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0.5,1,0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0,2,0",
-          "x": 0.0,
-          "y": 2,
-          "z": 0.0,
-          "type": "cap"
-        }
-      ],
-      "seed": [
-        {
-          "id": "-1,0,-1",
-          "x": -1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,-1",
-          "x": 0.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,-1",
-          "x": 1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-1,0,0",
-          "x": -1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,0",
-          "x": 0.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "brick",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,0",
-          "x": 1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-1,0,1",
-          "x": -1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,1",
-          "x": 0.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,1",
-          "x": 1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        }
-      ],
-      "mechanics": [
-        "inspectShapes"
-      ],
-      "completion": [
-        "exactTarget",
-        "correctTypes",
-        "supported",
-        "budgetNonnegative"
-      ],
-      "rewardKey": "egypt",
-      "targetQuantities": {
-        "corner": 8,
-        "edge": 4,
-        "brick": 1,
-        "cap": 1
-      },
-      "requiredNewQuantities": {
-        "corner": 4,
-        "cap": 1
-      },
-      "minimumPurchaseCost": 21,
-      "minimumTotalCost": 21,
-      "lockedIds": [
-        "-1,0,-1",
-        "0,0,-1",
-        "1,0,-1",
-        "-1,0,0",
-        "0,0,0",
-        "1,0,0",
-        "-1,0,1",
-        "0,0,1",
-        "1,0,1"
-      ],
-      "unlocksAfter": null,
-      "initialState": {
-        "stage": "plan",
-        "money": 24,
-        "inventory": {},
-        "blocks": [
-          {
-            "id": "-1,0,-1",
-            "x": -1.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,-1",
-            "x": 0.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,-1",
-            "x": 1.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-1,0,0",
-            "x": -1.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,0",
-            "x": 0.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "brick",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,0",
-            "x": 1.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-1,0,1",
-            "x": -1.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,1",
-            "x": 0.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,1",
-            "x": 1.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          }
-        ],
-        "undoStack": []
-      }
-    },
-    {
-      "id": "egypt-2",
-      "sceneId": "egypt",
-      "shapeFamily": "egypt",
-      "name": "The Quarry & the Nile",
-      "dims": [
-        3,
-        2,
-        1
-      ],
-      "budget": 25,
-      "prices": {
-        "brick": 2,
-        "edge": 3,
-        "corner": 4,
-        "cap": 5
-      },
-      "target": [
-        {
-          "id": "-1,0,-1",
-          "x": -1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner"
-        },
-        {
-          "id": "0,0,-1",
-          "x": 0.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "edge"
-        },
-        {
-          "id": "1,0,-1",
-          "x": 1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner"
-        },
-        {
-          "id": "-1,0,0",
-          "x": -1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge"
-        },
-        {
-          "id": "0,0,0",
-          "x": 0.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "brick"
-        },
-        {
-          "id": "1,0,0",
-          "x": 1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge"
-        },
-        {
-          "id": "-1,0,1",
-          "x": -1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner"
-        },
-        {
-          "id": "0,0,1",
-          "x": 0.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "edge"
-        },
-        {
-          "id": "1,0,1",
-          "x": 1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner"
-        },
-        {
-          "id": "-0.5,1,-0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0.5,1,-0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner"
-        },
-        {
-          "id": "-0.5,1,0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0.5,1,0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0,2,0",
-          "x": 0.0,
-          "y": 2,
-          "z": 0.0,
-          "type": "cap"
-        }
-      ],
-      "seed": [
-        {
-          "id": "-1,0,-1",
-          "x": -1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,-1",
-          "x": 0.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,-1",
-          "x": 1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-1,0,0",
-          "x": -1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,0",
-          "x": 0.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "brick",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,0",
-          "x": 1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-1,0,1",
-          "x": -1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,1",
-          "x": 0.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,1",
-          "x": 1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        }
-      ],
-      "mechanics": [
-        "quarryMarket",
-        "cargoArrangement",
-        "loadBalance",
-        "shippingBudget"
-      ],
-      "completion": [
-        "allCargoDelivered",
-        "budgetNonnegative"
-      ],
-      "rewardKey": "egypt",
-      "delivery": {
-        "mode": "harbor",
-        "capacity": 6,
-        "weights": {
-          "corner": 2,
-          "cap": 3
-        },
-        "maxImbalance": 2,
-        "fee": 2,
-        "optimalTrips": 2,
-        "extraTripsAllowed": false,
-        "validation": "Deliver four corners and one cap; each voyage weighs at most 6; side weights differ by at most 2; pay 2 coins per voyage."
-      },
-      "targetQuantities": {
-        "corner": 8,
-        "edge": 4,
-        "brick": 1,
-        "cap": 1
-      },
-      "requiredNewQuantities": {
-        "corner": 4,
-        "cap": 1
-      },
-      "minimumPurchaseCost": 21,
-      "minimumTotalCost": 25,
-      "lockedIds": [
-        "-1,0,-1",
-        "0,0,-1",
-        "1,0,-1",
-        "-1,0,0",
-        "0,0,0",
-        "1,0,0",
-        "-1,0,1",
-        "0,0,1",
-        "1,0,1"
-      ],
-      "unlocksAfter": "egypt-1",
-      "initialState": {
-        "stage": "harbor",
-        "money": 25,
-        "inventory": {},
-        "blocks": [
-          {
-            "id": "-1,0,-1",
-            "x": -1.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,-1",
-            "x": 0.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,-1",
-            "x": 1.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-1,0,0",
-            "x": -1.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,0",
-            "x": 0.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "brick",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,0",
-            "x": 1.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-1,0,1",
-            "x": -1.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,1",
-            "x": 0.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,1",
-            "x": 1.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          }
-        ],
-        "undoStack": []
-      }
-    },
-    {
-      "id": "egypt-3",
-      "sceneId": "egypt",
-      "shapeFamily": "egypt",
-      "name": "Find the Broken Pattern",
-      "dims": [
-        3,
-        2,
-        1
-      ],
-      "budget": 15,
-      "prices": {
-        "brick": 2,
-        "edge": 3,
-        "corner": 4,
-        "cap": 5
-      },
-      "target": [
-        {
-          "id": "-1,0,-1",
-          "x": -1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner"
-        },
-        {
-          "id": "0,0,-1",
-          "x": 0.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "edge"
-        },
-        {
-          "id": "1,0,-1",
-          "x": 1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner"
-        },
-        {
-          "id": "-1,0,0",
-          "x": -1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge"
-        },
-        {
-          "id": "0,0,0",
-          "x": 0.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "brick"
-        },
-        {
-          "id": "1,0,0",
-          "x": 1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge"
-        },
-        {
-          "id": "-1,0,1",
-          "x": -1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner"
-        },
-        {
-          "id": "0,0,1",
-          "x": 0.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "edge"
-        },
-        {
-          "id": "1,0,1",
-          "x": 1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner"
-        },
-        {
-          "id": "-0.5,1,-0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0.5,1,-0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner"
-        },
-        {
-          "id": "-0.5,1,0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0.5,1,0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "corner"
-        },
-        {
-          "id": "0,2,0",
-          "x": 0.0,
-          "y": 2,
-          "z": 0.0,
-          "type": "cap"
-        }
-      ],
-      "seed": [
-        {
-          "id": "-1,0,-1",
-          "x": -1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,-1",
-          "x": 0.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,-1",
-          "x": 1.0,
-          "y": 0,
-          "z": -1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-1,0,0",
-          "x": -1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,0",
-          "x": 0.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "brick",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,0",
-          "x": 1.0,
-          "y": 0,
-          "z": 0.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-1,0,1",
-          "x": -1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "0,0,1",
-          "x": 0.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "edge",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "1,0,1",
-          "x": 1.0,
-          "y": 0,
-          "z": 1.0,
-          "type": "corner",
-          "locked": true,
-          "provenance": "site"
-        },
-        {
-          "id": "-0.5,1,-0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner",
-          "locked": false,
-          "provenance": "site",
-          "refundValue": 0
-        },
-        {
-          "id": "0.5,1,-0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": -0.5,
-          "type": "corner",
-          "locked": false,
-          "provenance": "site",
-          "refundValue": 0
-        },
-        {
-          "id": "-0.5,1,0.5",
-          "x": -0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "edge",
-          "locked": false,
-          "provenance": "site",
-          "refundValue": 0
-        },
-        {
-          "id": "0.5,1,0.5",
-          "x": 0.5,
-          "y": 1,
-          "z": 0.5,
-          "type": "edge",
-          "locked": false,
-          "provenance": "site",
-          "refundValue": 0
-        }
-      ],
-      "mechanics": [
-        "inspectRepair"
-      ],
-      "completion": [
-        "exactTarget",
-        "correctTypes",
-        "supported",
-        "budgetNonnegative"
-      ],
-      "rewardKey": "egypt",
-      "targetQuantities": {
-        "corner": 8,
-        "edge": 4,
-        "brick": 1,
-        "cap": 1
-      },
-      "requiredNewQuantities": {
-        "corner": 2,
-        "cap": 1
-      },
-      "minimumPurchaseCost": 13,
-      "minimumTotalCost": 13,
-      "lockedIds": [
-        "-1,0,-1",
-        "0,0,-1",
-        "1,0,-1",
-        "-1,0,0",
-        "0,0,0",
-        "1,0,0",
-        "-1,0,1",
-        "0,0,1",
-        "1,0,1"
-      ],
-      "unlocksAfter": "egypt-2",
-      "initialState": {
-        "stage": "plan",
-        "money": 15,
-        "inventory": {},
-        "blocks": [
-          {
-            "id": "-1,0,-1",
-            "x": -1.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,-1",
-            "x": 0.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,-1",
-            "x": 1.0,
-            "y": 0,
-            "z": -1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-1,0,0",
-            "x": -1.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,0",
-            "x": 0.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "brick",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,0",
-            "x": 1.0,
-            "y": 0,
-            "z": 0.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-1,0,1",
-            "x": -1.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "0,0,1",
-            "x": 0.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "edge",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "1,0,1",
-            "x": 1.0,
-            "y": 0,
-            "z": 1.0,
-            "type": "corner",
-            "locked": true,
-            "provenance": "site"
-          },
-          {
-            "id": "-0.5,1,-0.5",
-            "x": -0.5,
-            "y": 1,
-            "z": -0.5,
-            "type": "corner",
-            "locked": false,
-            "provenance": "site",
-            "refundValue": 0
-          },
-          {
-            "id": "0.5,1,-0.5",
-            "x": 0.5,
-            "y": 1,
-            "z": -0.5,
-            "type": "corner",
-            "locked": false,
-            "provenance": "site",
-            "refundValue": 0
-          },
-          {
-            "id": "-0.5,1,0.5",
-            "x": -0.5,
-            "y": 1,
-            "z": 0.5,
-            "type": "edge",
-            "locked": false,
-            "provenance": "site",
-            "refundValue": 0
-          },
-          {
-            "id": "0.5,1,0.5",
-            "x": 0.5,
-            "y": 1,
-            "z": 0.5,
-            "type": "edge",
-            "locked": false,
-            "provenance": "site",
-            "refundValue": 0
-          }
-        ],
-        "undoStack": []
-      }
-    },
-    {
-      "id": "egypt-4",
-      "sceneId": "egypt",
-      "shapeFamily": "egypt",
-      "name": "Your Pyramid Commission",
-      "dims": [
-        3,
-        2,
-        1
-      ],
-      "budget": 54,
+      "budget": 63,
       "prices": {
         "brick": 2,
         "edge": 3,
@@ -1218,6 +153,793 @@
       ],
       "seed": [],
       "mechanics": [
+        "orderReference"
+      ],
+      "completion": [
+        "orderConfirmed"
+      ],
+      "rewardKey": "egypt",
+      "targetQuantities": {
+        "brick": 1,
+        "edge": 4,
+        "corner": 8,
+        "cap": 1
+      },
+      "requiredNewQuantities": {
+        "brick": 1,
+        "edge": 4,
+        "corner": 8,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 51,
+      "minimumTotalCost": 60,
+      "lockedIds": [],
+      "suppliedInventory": {},
+      "unlocksAfter": null,
+      "initialState": {
+        "stage": "order",
+        "money": 63,
+        "inventory": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "freeInventory": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "warehouse": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "blocks": [],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "egypt-2",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "journeyRole": "cargo",
+      "name": "Pack and ship",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 63,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [],
+      "mechanics": [
+        "quarryMarket",
+        "cargoArrangement",
+        "loadBalance",
+        "shippingBudget"
+      ],
+      "completion": [
+        "allCargoDelivered",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "egypt",
+      "delivery": {
+        "mode": "harbor",
+        "capacity": 16,
+        "weights": {
+          "brick": 2,
+          "edge": 3,
+          "corner": 3,
+          "cap": 5
+        },
+        "maxImbalance": 0.3,
+        "maxOffsetX": 0.3,
+        "maxOffsetZ": 0.3,
+        "fee": 3,
+        "optimalTrips": 3,
+        "maxTrips": 4,
+        "extraTripsAllowed": true,
+        "validation": "Deliver fourteen padded sleds; each voyage weighs at most 16 and stays balanced laterally and fore/aft. Three voyages earn the efficiency badge; four are allowed."
+      },
+      "targetQuantities": {
+        "brick": 1,
+        "edge": 4,
+        "corner": 8,
+        "cap": 1
+      },
+      "requiredNewQuantities": {
+        "brick": 1,
+        "edge": 4,
+        "corner": 8,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 51,
+      "minimumTotalCost": 60,
+      "lockedIds": [],
+      "suppliedInventory": {},
+      "unlocksAfter": "egypt-1",
+      "initialState": {
+        "stage": "harbor",
+        "money": 63,
+        "inventory": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "freeInventory": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "warehouse": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "blocks": [],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "egypt-3",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "journeyRole": "build",
+      "name": "Build three layers",
+      "dims": [
+        3,
+        2,
+        1
+      ],
+      "budget": 0,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "target": [
+        {
+          "id": "-1,0,-1",
+          "x": -1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,-1",
+          "x": 0.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,-1",
+          "x": 1.0,
+          "y": 0,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,0,0",
+          "x": -1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,0,0",
+          "x": 0.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,0,0",
+          "x": 1.0,
+          "y": 0,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,0,1",
+          "x": -1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,0,1",
+          "x": 0.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,0,1",
+          "x": 1.0,
+          "y": 0,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,-0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,-0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,1,0.5",
+          "x": -0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,1,0.5",
+          "x": 0.5,
+          "y": 1,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,2,0",
+          "x": 0.0,
+          "y": 2,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [],
+      "mechanics": [
+        "buildLayers",
+        "inspectShapes"
+      ],
+      "completion": [
+        "exactTarget",
+        "correctTypes",
+        "supported",
+        "budgetNonnegative"
+      ],
+      "rewardKey": "egypt",
+      "targetQuantities": {
+        "brick": 1,
+        "edge": 4,
+        "corner": 8,
+        "cap": 1
+      },
+      "requiredNewQuantities": {},
+      "suppliedInventory": {
+        "brick": 1,
+        "edge": 4,
+        "corner": 8,
+        "cap": 1
+      },
+      "minimumPurchaseCost": 0,
+      "minimumTotalCost": 0,
+      "lockedIds": [],
+      "unlocksAfter": "egypt-2",
+      "initialState": {
+        "stage": "build",
+        "money": 0,
+        "inventory": {
+          "brick": 1,
+          "edge": 4,
+          "corner": 8,
+          "cap": 1
+        },
+        "freeInventory": {
+          "brick": 1,
+          "edge": 4,
+          "corner": 8,
+          "cap": 1
+        },
+        "warehouse": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "blocks": [],
+        "undoStack": []
+      }
+    },
+    {
+      "id": "egypt-4",
+      "sceneId": "egypt",
+      "shapeFamily": "egypt",
+      "journeyRole": "expand",
+      "name": "Expand to four",
+      "dims": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "budget": 60,
+      "prices": {
+        "brick": 2,
+        "edge": 3,
+        "corner": 4,
+        "cap": 5
+      },
+      "delivery": {
+        "mode": "harbor",
+        "capacity": 16,
+        "weights": {
+          "brick": 2,
+          "edge": 3,
+          "corner": 3
+        },
+        "maxImbalance": 0.3,
+        "maxOffsetX": 0.3,
+        "maxOffsetZ": 0.3,
+        "fee": 3,
+        "optimalTrips": 3,
+        "maxTrips": 4,
+        "extraTripsAllowed": true,
+        "validation": "Deliver sixteen new base sleds; each voyage weighs at most 16 and stays balanced laterally and fore/aft. Three voyages earn the efficiency badge; four are allowed."
+      },
+      "target": [
+        {
+          "id": "-1.5,0,-1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,0,-1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "edge"
+        },
+        {
+          "id": "0.5,0,-1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "edge"
+        },
+        {
+          "id": "1.5,0,-1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -1.5,
+          "type": "corner"
+        },
+        {
+          "id": "-1.5,0,-0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "edge"
+        },
+        {
+          "id": "-0.5,0,-0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,-0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,-0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": -0.5,
+          "type": "edge"
+        },
+        {
+          "id": "-1.5,0,0.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "edge"
+        },
+        {
+          "id": "-0.5,0,0.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "0.5,0,0.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "brick"
+        },
+        {
+          "id": "1.5,0,0.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 0.5,
+          "type": "edge"
+        },
+        {
+          "id": "-1.5,0,1.5",
+          "x": -1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,0,1.5",
+          "x": -0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "edge"
+        },
+        {
+          "id": "0.5,0,1.5",
+          "x": 0.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "edge"
+        },
+        {
+          "id": "1.5,0,1.5",
+          "x": 1.5,
+          "y": 0,
+          "z": 1.5,
+          "type": "corner"
+        },
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "edge"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "edge"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,2,-0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,2,-0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "corner"
+        },
+        {
+          "id": "-0.5,2,0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0.5,2,0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "corner"
+        },
+        {
+          "id": "0,3,0",
+          "x": 0.0,
+          "y": 3,
+          "z": 0.0,
+          "type": "cap"
+        }
+      ],
+      "seed": [
+        {
+          "id": "-1,1,-1",
+          "x": -1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,-1",
+          "x": 0.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,-1",
+          "x": 1.0,
+          "y": 1,
+          "z": -1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,0",
+          "x": -1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,0",
+          "x": 0.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "brick",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,0",
+          "x": 1.0,
+          "y": 1,
+          "z": 0.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-1,1,1",
+          "x": -1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,1,1",
+          "x": 0.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "edge",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "1,1,1",
+          "x": 1.0,
+          "y": 1,
+          "z": 1.0,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,2,-0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,2,-0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": -0.5,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "-0.5,2,0.5",
+          "x": -0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0.5,2,0.5",
+          "x": 0.5,
+          "y": 2,
+          "z": 0.5,
+          "type": "corner",
+          "locked": true,
+          "provenance": "site"
+        },
+        {
+          "id": "0,3,0",
+          "x": 0.0,
+          "y": 3,
+          "z": 0.0,
+          "type": "cap",
+          "locked": true,
+          "provenance": "site"
+        }
+      ],
+      "mechanics": [
         "independentTally",
         "rowFill"
       ],
@@ -1229,26 +951,186 @@
       ],
       "rewardKey": "egypt",
       "targetQuantities": {
-        "corner": 8,
-        "edge": 4,
-        "brick": 1,
+        "brick": 5,
+        "edge": 12,
+        "corner": 12,
         "cap": 1
       },
       "requiredNewQuantities": {
-        "corner": 8,
-        "edge": 4,
-        "brick": 1,
-        "cap": 1
+        "brick": 4,
+        "edge": 8,
+        "corner": 4,
+        "cap": 0
       },
-      "minimumPurchaseCost": 51,
-      "minimumTotalCost": 51,
-      "lockedIds": [],
+      "minimumPurchaseCost": 48,
+      "minimumTotalCost": 57,
+      "lockedIds": [
+        "-1,1,-1",
+        "0,1,-1",
+        "1,1,-1",
+        "-1,1,0",
+        "0,1,0",
+        "1,1,0",
+        "-1,1,1",
+        "0,1,1",
+        "1,1,1",
+        "-0.5,2,-0.5",
+        "0.5,2,-0.5",
+        "-0.5,2,0.5",
+        "0.5,2,0.5",
+        "0,3,0"
+      ],
+      "suppliedInventory": {},
       "unlocksAfter": "egypt-3",
       "initialState": {
-        "stage": "plan",
-        "money": 54,
-        "inventory": {},
-        "blocks": [],
+        "stage": "order",
+        "money": 60,
+        "inventory": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "freeInventory": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "warehouse": {
+          "brick": 0,
+          "edge": 0,
+          "corner": 0,
+          "cap": 0
+        },
+        "blocks": [
+          {
+            "id": "-1,1,-1",
+            "x": -1.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,-1",
+            "x": 0.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,-1",
+            "x": 1.0,
+            "y": 1,
+            "z": -1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,0",
+            "x": -1.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,0",
+            "x": 0.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "brick",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,0",
+            "x": 1.0,
+            "y": 1,
+            "z": 0.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-1,1,1",
+            "x": -1.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,1,1",
+            "x": 0.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "edge",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "1,1,1",
+            "x": 1.0,
+            "y": 1,
+            "z": 1.0,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,2,-0.5",
+            "x": -0.5,
+            "y": 2,
+            "z": -0.5,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,2,-0.5",
+            "x": 0.5,
+            "y": 2,
+            "z": -0.5,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "-0.5,2,0.5",
+            "x": -0.5,
+            "y": 2,
+            "z": 0.5,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0.5,2,0.5",
+            "x": 0.5,
+            "y": 2,
+            "z": 0.5,
+            "type": "corner",
+            "locked": true,
+            "provenance": "site"
+          },
+          {
+            "id": "0,3,0",
+            "x": 0.0,
+            "y": 3,
+            "z": 0.0,
+            "type": "cap",
+            "locked": true,
+            "provenance": "site"
+          }
+        ],
         "undoStack": []
       }
     },
