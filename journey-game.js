@@ -68,15 +68,15 @@ function orderRecord(level, quantities) {
 }
 
 /**
- * Confirm an Egypt order without spending coins.  M1 records the approved
- * reference order and completes immediately; M4 opens the new cargo run.
+ * Seal quantities before buying. Completion requires the entire paid order;
+ * shipping cannot reopen this desk or change the quantities.
  */
 export function confirmOrder(state, level) {
   if (!state || !level || !['order', 'expand'].includes(level.journeyRole)) {
     return 'This stop is not an order desk.';
   }
-  if (level.journeyRole === 'expand' && state.stage !== 'order') {
-    return 'The expansion order has already been confirmed.';
+  if (state.stage !== 'order') {
+    return 'This shopping list has already been confirmed and sealed.';
   }
   const problem = orderError(level, state.estimates);
   if (problem) return problem;
@@ -87,16 +87,10 @@ export function confirmOrder(state, level) {
   const record = orderRecord(level, quantities);
   expedition.orders[orderName] = record;
 
-  if (level.journeyRole === 'order') {
-    state.stage = 'complete';
-    state.completed ||= [];
-    if (!state.completed.includes(level.missionId)) state.completed.push(level.missionId);
-  } else {
-    state.stage = 'harbor';
-    state.harbor = createHarbor(level);
-    state.warehouse ||= Object.fromEntries(level.types.map(type => [type, 0]));
-    state.history = [];
-  }
+  state.stage = 'purchase';
+  state.harbor = createHarbor(level);
+  state.warehouse ||= Object.fromEntries(level.types.map(type => [type, 0]));
+  state.history = [];
   return null;
 }
 
@@ -208,7 +202,9 @@ export function migrateJourney(state) {
     return state;
   }
 
-  const completed = Array.isArray(state.completed) ? [...new Set(state.completed)] : [];
+  // The former fourteen-piece M4 is archived; it does not pass the new
+  // thirty-piece expansion. Its already-earned profile reward is retained.
+  const completed = Array.isArray(state.completed) ? [...new Set(state.completed)].filter(id=>id!=='egypt-4') : [];
   const oldRuns = state.runs && typeof state.runs === 'object' ? state.runs : {};
   const archive = state.legacyEgyptRuns && typeof state.legacyEgyptRuns === 'object'
     ? clone(state.legacyEgyptRuns) : {};

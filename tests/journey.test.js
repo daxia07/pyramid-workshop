@@ -11,7 +11,7 @@ test('Egypt now has an order, cargo, supplied build and expansion journey', () =
   const [m1, m2, m3, m4] = egypt;
   assert.deepEqual(egypt.map(mission => mission.journeyRole), ['order', 'cargo', 'build', 'expand']);
   assert.deepEqual(egypt.map(mission => mission.name), [
-    'Shopping list', 'Pack and ship', 'Build three layers', 'Expand to four',
+    'Plan and buy', 'Pack and ship', 'Build three layers', 'Expand to four',
   ]);
   assert.deepEqual(m1.dims, [3, 2, 1]);
   assert.equal(m1.target.length, 14);
@@ -52,7 +52,8 @@ test('initial journey states expose the intended phase and inventory', () => {
   const s2 = initial(LEVELS.indexOf(m2));
   assert.equal(s2.stage, 'harbor');
   assert.equal(s2.harbor.cargo.length, 14);
-  assert.equal(s2.money, 63);
+  assert.equal(s2.money, 12);
+  assert.ok(s2.harbor.cargo.every(c=>c.status==='quay'));
 
   const s3 = initial(LEVELS.indexOf(m3));
   assert.equal(s3.stage, 'build');
@@ -68,7 +69,7 @@ test('initial journey states expose the intended phase and inventory', () => {
   assert.deepEqual(s4.estimates, {brick: '', edge: '', corner: '', cap: ''});
 });
 
-test('confirmOrder checks every quantity and completes only the reference order', () => {
+test('confirmOrder checks every quantity and seals the list without passing the level', () => {
   const m1 = level('egypt-1');
   const state = initial(LEVELS.indexOf(m1));
   const before = structuredClone(state);
@@ -79,8 +80,8 @@ test('confirmOrder checks every quantity and completes only the reference order'
 
   state.estimates = order(m1, {brick: 1, edge: 4, corner: 8, cap: 1});
   assert.equal(confirmOrder(state, m1), null);
-  assert.equal(state.stage, 'complete');
-  assert.ok(state.completed.includes('egypt-1'));
+  assert.equal(state.stage, 'purchase');
+  assert.equal(state.completed.includes('egypt-1'),false);
   assert.deepEqual(state.expedition.orders.three.quantities, m1.requiredNewQuantities);
   assert.equal(state.expedition.orders.three.stoneCost, 51);
   assert.equal(state.expedition.orders.three.shippingBudget, 12);
@@ -91,7 +92,7 @@ test('confirming expansion opens a sixteen-stone harbor run', () => {
   const state = initial(LEVELS.indexOf(m4));
   state.estimates = order(m4, {brick: 4, edge: 8, corner: 4, cap: 0});
   assert.equal(confirmOrder(state, m4), null);
-  assert.equal(state.stage, 'harbor');
+  assert.equal(state.stage, 'purchase');
   assert.equal(state.harbor.cargo.length, 16);
   assert.equal(state.expedition.orders.expansion.stoneCost, 48);
   assert.equal(state.completed.includes('egypt-4'), false);
@@ -202,4 +203,14 @@ test('legacy purchased stock is reused without double top-ups or a refund gate',
   assert.deepEqual(s.freeInventory,s.inventory);
   assert.equal(unusedPurchases(s),0);
   assert.ok(s.blocks.every(b=>b.provenance==='site'),'retained paid stones stay free when lifted');
+});
+
+test('a legacy M4 completion is archived without passing the new expansion',()=>{
+  const s=initial(3);delete s.journeyVersion;delete s.expedition;
+  s.stage='complete';s.completed=['egypt-1','egypt-2','egypt-3','egypt-4'];
+  s.profile={coins:110,awarded:[...s.completed],decorations:['path']};
+  migrateJourney(s);
+  assert.equal(s.stage,'order');assert.equal(s.completed.includes('egypt-4'),false);
+  assert.ok(s.legacyEgyptRuns[3].completed.includes('egypt-4'));
+  assert.equal(s.profile.coins,110);assert.ok(s.profile.awarded.includes('egypt-4'));
 });

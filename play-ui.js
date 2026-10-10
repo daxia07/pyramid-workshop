@@ -1,3 +1,4 @@
+import {canEnterLevel} from './journey-progress.js';
 import { STONE_DETAILS, stoneArt } from './stone-art.js';
 import { isQuarry } from './harbor-game.js';
 import { buildHint } from './build-hints.js';
@@ -104,7 +105,7 @@ export function updatePlayUI(state, level, guide) {
   const app = document.getElementById('app'), panel = document.getElementById('panel');
   const harbor = isQuarry(level,state);
   const journey=document.getElementById('journey-timeline');journey.hidden=level.id!=='egypt'||state.studioMode;
-  if(!journey.hidden)journey.innerHTML=['Shopping list','Pack & ship','Build 3 layers','Expand to 4'].map((name,i)=>{const done=state.completed.includes(`egypt-${i+1}`),active=state.level===i,open=!i||state.completed.includes(`egypt-${i}`);return `<button data-journey="${i}" class="${active?'current':''} ${done?'done':''}" ${open?'':'disabled'} ${active?'aria-current="step"':''}><b>${done?'✓':i+1}</b><span>${name}</span></button>`;}).join('');
+  if(!journey.hidden)journey.innerHTML=['Plan & buy','Pack & ship','Build 3 layers','Expand to 4'].map((name,i)=>{const done=state.completed.includes(`egypt-${i+1}`),active=state.level===i,open=canEnterLevel(state,i),criteria=['Buy all 14 stones','Deliver all 14 stones','Inspect the pyramid','Inspect all 4 layers'];return `<button data-journey="${i}" class="${active?'current':''} ${done?'done':''}" ${open?'':'disabled'} ${active?'aria-current="step"':''} aria-label="Level ${i+1}: ${name}. ${done?'Passed':criteria[i]}"><b>${done?'✓':i+1}</b><span>${name}<small>${done?'Passed':criteria[i]}</small></span></button>`;}).join('');
   const building = !harbor && !state.studioMode && ['build','complete'].includes(state.stage);
   const stageChanged = lastStage !== state.stage || lastLevel !== state.level;
   if (stageChanged) panelOpen = !building && !harbor && !state.studioMode;

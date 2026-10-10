@@ -25,15 +25,7 @@ import {awardCompletedMissions} from '../workshop-profile.js';
 const firstShipping = LEVELS[1];
 const expansion = LEVELS[3];
 
-function buyQuantities(state, level, quantities) {
-  for (const [type, count] of Object.entries(quantities)) {
-    for (let i = 0; i < count; i += 1) {
-      assert.equal(buyCargo(state, level, type), true, `buy ${type} #${i + 1}`);
-    }
-  }
-}
-
-/** Buy the contract, then assign the next unused item of each requested type. */
+/** Assign the next unused item of each requested type. */
 function placeSolution(state, solution) {
   const used = new Set();
   for (const placement of solution) {
@@ -60,7 +52,7 @@ test('the full first shipment fits in three balanced voyages and keeps its coin 
   const state = initial(1);
 
   assert.equal(state.stage, 'harbor');
-  assert.equal(buyOrder(state, firstShipping), true);
+  assert.equal(buyOrder(state, firstShipping), false, 'shipping cannot reopen the paid order');
   assert.equal(state.money, 12, 'the fourteen stones cost 51 from the 63 coin budget');
   assert.equal(state.harbor.cargo.filter(item => item.status === 'quay').length, 14);
 
@@ -76,6 +68,7 @@ test('the full first shipment fits in three balanced voyages and keeps its coin 
     assert.equal(result.voyage.number, number + 1);
     assert.equal(result.voyage.fee, 3);
     assert.equal(arriveCargo(state, firstShipping), true);
+    if(number<2){assert.equal(state.stage,'harbor');assert.equal(state.completed.includes('egypt-2'),false);}
   }
 
   assert.equal(state.trips, 3);
@@ -94,7 +87,7 @@ test('the expansion shipment uses its three-voyage witness and opens the four-la
   assert.equal(state.stage, 'order');
   state.estimates = {...expansion.requiredNewQuantities};
   assert.equal(confirmOrder(state, expansion), null);
-  assert.equal(state.stage, 'harbor');
+  assert.equal(state.stage, 'purchase');
   assert.equal(state.money, 60);
   assert.equal(buyOrder(state, expansion), true);
   assert.equal(state.money, 12, 'sixteen expansion stones cost 48');
@@ -121,9 +114,9 @@ test('the expansion shipment uses its three-voyage witness and opens the four-la
 test('collision, mast, bounds, rotation and rearrangement rules keep the deck editable', () => {
   const state = initial(1);
 
-  assert.equal(buyCargo(state, firstShipping, 'brick'), true);
+  assert.equal(buyCargo(state, firstShipping, 'brick'), false);
   assert.equal(placeCargo(state, 'brick-1', 0, 0, 0), true);
-  assert.equal(buyCargo(state, firstShipping, 'edge'), true);
+  assert.equal(buyCargo(state, firstShipping, 'edge'), false);
   assert.equal(placeCargo(state, 'edge-1', 1, 0, 0), false, 'overlapping sleds cannot be stacked');
   assert.equal(placeCargo(state, 'edge-1', 2, 0, 90), false, 'a rotated edge cannot cross the mast');
   assert.equal(placeCargo(state, 'edge-1', 3, 3, 0), false, 'a footprint cannot run off the deck');
@@ -144,7 +137,6 @@ test('collision, mast, bounds, rotation and rearrangement rules keep the deck ed
 
 test('purchases, placement and dispatch are locked while a voyage is in transit', () => {
   const state = initial(1);
-  buyQuantities(state, firstShipping, {brick: 1, edge: 2, corner: 3});
   placeSolution(state, THREE_VOYAGE_SOLUTION[0]);
 
   const result = dispatchCargo(state, firstShipping, 1234);
@@ -159,7 +151,6 @@ test('purchases, placement and dispatch are locked while a voyage is in transit'
 
 test('a saved voyage keeps its departure timestamp and travel duration after reload', () => {
   const state = initial(1);
-  buyQuantities(state, firstShipping, {edge: 2});
   assert.equal(placeCargo(state, 'edge-1', 0, 0, 0), true);
   assert.equal(placeCargo(state, 'edge-2', 2, 3, 0), true);
 
@@ -175,24 +166,22 @@ test('a saved voyage keeps its departure timestamp and travel duration after rel
 
 test('undo restores the exact purchased set and shipping fee even with a newer load on deck', () => {
   const state = initial(1);
-  buyQuantities(state, firstShipping, {edge: 2, corner: 3});
   placeSolution(state, THREE_VOYAGE_SOLUTION[0]);
   const first = dispatchCargo(state, firstShipping, 3000).voyage;
   assert.ok(first);
   assert.equal(arriveCargo(state, firstShipping), true);
 
-  // This stone was purchased after the first voyage and is deliberately left
-  // on the deck when the earlier voyage is undone.
-  assert.equal(buyCargo(state, firstShipping, 'brick'), true);
+  // Another paid stone is left on deck when the earlier voyage is undone.
+  assert.equal(buyCargo(state, firstShipping, 'brick'), false);
   assert.equal(placeCargo(state, 'brick-1', 3, 0, 0), true);
   const purchasedIds = state.harbor.cargo
     .filter(item => item.status !== 'market')
     .map(item => item.id)
     .sort();
-  assert.equal(state.money, 40);
+  assert.equal(state.money, 9);
 
   assert.equal(undoVoyage(state), true);
-  assert.equal(state.money, 43, 'undo refunds the three-coin fare');
+  assert.equal(state.money, 12, 'undo refunds the three-coin fare');
   assert.equal(state.trips, 0);
   assert.equal(state.harbor.feesPaid, 0);
   assert.equal(state.harbor.voyages.length, 0);
@@ -206,21 +195,20 @@ test('undo restores the exact purchased set and shipping fee even with a newer l
     first.ids.slice().sort(),
   );
   assert.equal(state.harbor.cargo.find(item => item.id === 'brick-1').status, 'quay');
-  assert.equal(state.harbor.cargo.filter(item => item.status === 'market').length, 8);
+  assert.equal(state.harbor.cargo.filter(item => item.status === 'market').length, 0);
 });
 
 test('an inefficient small voyage is still reversible after arrival', () => {
   const state = initial(1);
-  buyQuantities(state, firstShipping, {edge: 2});
   assert.equal(placeCargo(state, 'edge-1', 0, 0, 0), true);
   assert.equal(placeCargo(state, 'edge-2', 2, 3, 0), true);
   assert.equal(harborStats(state).weight, 6);
   const result = dispatchCargo(state, firstShipping, 4000);
   assert.ok(result.voyage);
   assert.equal(arriveCargo(state, firstShipping), true);
-  assert.equal(state.money, 54);
+  assert.equal(state.money, 9);
   assert.equal(undoVoyage(state), true);
-  assert.equal(state.money, 57);
+  assert.equal(state.money, 12);
   assert.equal(state.trips, 0);
   assert.equal(state.harbor.feesPaid, 0);
   assert.deepEqual(
@@ -247,6 +235,7 @@ test('v1 harbor migration preserves bought stones, delivered status, and fee cre
   migrateHarbor(state, firstShipping);
   assert.equal(state.harbor.version, 2);
   assert.equal(state.harbor.legacyTrips, 1);
+  assert.equal(state.trips, 1);
   assert.equal(state.harbor.feesPaid, 2);
   assert.equal(state.harbor.carriedOver, true);
   assert.equal(state.legacyHarbor.version, 1);

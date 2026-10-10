@@ -3,11 +3,11 @@ import {CARGO_SPECS, DECK, canSail, loadMetrics, placementProblem} from './cargo
 export const isHarbor = (level, state) => level.journeyRole === 'cargo'
   || level.journeyRole === 'expand' && state?.stage === 'harbor';
 export const isQuarry = (level, state) => isHarbor(level, state)
-  || level.journeyRole === 'order' || level.journeyRole === 'expand' && state?.stage === 'order';
+  || level.journeyRole === 'order' || level.journeyRole === 'expand' && ['order','purchase'].includes(state?.stage);
 export const VOYAGE_MS = 7600;
-export function createHarbor(level) {
+export function createHarbor(level, purchased=false) {
   return {version:2, cargo:Object.entries(level.requiredNewQuantities).flatMap(([type,count]) =>
-    Array.from({length:count}, (_,i) => ({id:`${type}-${i+1}`, type, status:'market', column:null, row:null, rotation:0}))),
+    Array.from({length:count}, (_,i) => ({id:`${type}-${i+1}`, type, status:purchased?'quay':'market', column:null, row:null, rotation:0}))),
     selected:null, rotation:0, voyages:[], feesPaid:0, inTransit:null};
 }
 
@@ -37,7 +37,7 @@ export function migrateHarbor(state, level) {
   }
   const bought=h.cargo.filter(c=>c.status!=='market').reduce((n,c)=>n+level.prices[c.type],0);
   state.money=level.budget-bought-h.feesPaid;
-  state.harbor=h;state.stage='harbor';state.trips=0;
+  state.harbor=h;state.stage='harbor';state.trips=h.legacyTrips||0;
   state.inventory=Object.fromEntries(level.types.map(t=>[t,0]));state.warehouse={...state.inventory};state.history=[];
 }
 export function harborStats(state,level) {
@@ -47,22 +47,35 @@ export function harborStats(state,level) {
 }
 export function buyCargo(state, level, type, all=false) {
   const h=state.harbor;
-  if(h.inTransit||state.stage!=='harbor')return false;
+  if(!h||h.inTransit||state.stage!=='purchase')return false;
   const items=h.cargo.filter(c=>c.type===type&&c.status==='market');
   const count=all?items.length:Math.min(1,items.length);
   if(!count||state.money<level.prices[type]*count)return false;
   state.money-=level.prices[type]*count;
   items.slice(0,count).forEach(c=>c.status='quay');
   h.selected=items[0].id;h.rotation=0;
+  completePurchases(state,level);
   return true;
 }
 export function buyOrder(state,level) {
   const h=state.harbor;
-  if(h.inTransit||state.stage!=='harbor')return false;
+  if(!h||h.inTransit||state.stage!=='purchase')return false;
   const items=h.cargo.filter(c=>c.status==='market');
   const cost=items.reduce((n,c)=>n+level.prices[c.type],0);
   if(!items.length||cost>state.money)return false;
-  state.money-=cost;items.forEach(c=>c.status='quay');h.selected=items[0].id;h.rotation=0;return true;
+  state.money-=cost;items.forEach(c=>c.status='quay');h.selected=items[0].id;h.rotation=0;completePurchases(state,level);return true;
+}
+function completePurchases(state,level) {
+  const h=state.harbor;
+  h.selected=null;
+  if(!h.cargo.length||h.cargo.some(c=>c.status==='market'))return;
+  const order=state.expedition?.orders?.[level.journeyRole==='expand'?'expansion':'three'];
+  if(order){order.purchased=true;order.shippingBudget=state.money;}
+  if(level.journeyRole==='order') {
+    state.stage='complete';
+    h.earnedThisRun=!state.profile?.awarded?.includes(level.missionId);
+    if(!state.completed.includes(level.missionId))state.completed.push(level.missionId);
+  } else state.stage='harbor';
 }
 export function placeCargo(state, id, column, row, rotation=state.harbor.rotation) {
   const h=state.harbor;
@@ -76,8 +89,18 @@ export function unloadCargo(state,id) {
   const item=h.cargo.find(c=>c.id===id&&c.status==='boat');if(!item)return false;
   Object.assign(item,{status:'quay',column:null,row:null});h.selected=item.id;h.rotation=item.rotation;return true;
 }
+export function unloadAllCargo(state) {
+  const h=state.harbor;
+  if(!h||h.inTransit||h.finished||state.stage!=='harbor')return false;
+  const load=h.cargo.filter(c=>c.status==='boat');
+  if(!load.length)return false;
+  load.forEach(c=>Object.assign(c,{status:'quay',column:null,row:null,rotation:0}));
+  h.selected=null;h.rotation=0;return true;
+}
 export function dispatchProblem(state,level) {
   if(state.harbor.inTransit)return 'Your boat is on the river.';
+  if(state.stage!=='harbor')return 'Finish buying the sealed order before loading the boat.';
+  if(state.harbor.cargo.some(c=>c.status==='market'))return 'Buy every stone in the order before shipping.';
   const problem=canSail(state.harbor.cargo);if(problem)return problem;
   const reserve=state.harbor.cargo.filter(c=>c.status==='market').reduce((n,c)=>n+level.prices[c.type],0);
   if(state.money<DECK.fee+reserve)return 'Keep the coins for your remaining stones. Undo a voyage to reclaim its shipping fee.';
@@ -89,7 +112,7 @@ export function dispatchCargo(state,level,now=Date.now()) {
   const {load,weight,offsetX,offsetZ}=harborStats(state);
   const voyage={number:state.trips+1,ids:load.map(c=>c.id),placements:structuredClone(load),weight,offsetX,offsetZ,fee:DECK.fee,startedAt:now};
   state.money-=DECK.fee;state.harbor.feesPaid+=DECK.fee;state.trips++;
-  state.harbor.inTransit=voyage;state.harbor.selected=null;
+  state.harbor.inTransit=voyage;state.harbor.selected=null;state.harbor.showOrder=false;
   load.forEach(c=>c.status='transit');return{voyage};
 }
 export function arriveCargo(state,level) {
@@ -103,7 +126,7 @@ export function arriveCargo(state,level) {
     // Arrival is a reviewable checkpoint. The player chooses when to open the building site.
     h.finished=true;
     if(level.journeyRole==='cargo') {
-      h.earnedThisRun=!state.completed.includes(level.missionId);
+      h.earnedThisRun=!state.profile?.awarded?.includes(level.missionId);
       state.stage='complete';
       if(!state.completed.includes(level.missionId))state.completed.push(level.missionId);
     }

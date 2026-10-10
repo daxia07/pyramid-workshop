@@ -163,13 +163,62 @@ export function routePoint(progress) {
   };
 }
 
+// Departure is deliberately slower than the long downriver leg: the crew
+// recovers the anchor and opens the sail while the hull is still at the quay.
+// Keeping these phase boundaries in the pure model makes a resumed voyage
+// render the same rig state from its persisted startedAt timestamp.
+export const VOYAGE_RIG_PHASES = Object.freeze({
+  anchorLiftEnd: 0.13,
+  sailDeployStart: 0.13,
+  sailDeployEnd: 0.36,
+  travelStart: 0.36,
+  travelEnd: 0.93,
+  visibleEnd: 0.94,
+});
+
+function easeUnit(value) {
+  const t = clamp(finite(value), 0, 1);
+  return t * t * (3 - 2 * t);
+}
+
+/**
+ * Deterministic rig choreography for a voyage departure.
+ *
+ * The anchor starts down, the sail unfolds second, and only then does the
+ * boat begin travelling.  Values are normalized so the renderer can decide
+ * how to articulate meshes without duplicating timing rules.
+ */
+export function voyageRigPose(progress) {
+  const p = clamp(finite(progress), 0, 1);
+  const anchorLift = easeUnit(p / VOYAGE_RIG_PHASES.anchorLiftEnd);
+  const sailDeploy = easeUnit(
+    (p - VOYAGE_RIG_PHASES.sailDeployStart)
+      / (VOYAGE_RIG_PHASES.sailDeployEnd - VOYAGE_RIG_PHASES.sailDeployStart),
+  );
+  const travel = easeUnit(
+    (p - VOYAGE_RIG_PHASES.travelStart)
+      / (VOYAGE_RIG_PHASES.travelEnd - VOYAGE_RIG_PHASES.travelStart),
+  );
+  const wakeStart = easeUnit((p - 0.4) / 0.2);
+  return {
+    anchorLift,
+    sailDeploy,
+    sailBillow: sailDeploy * (0.12 + 0.2 * travel),
+    travel,
+    wakeStrength: wakeStart * (0.35 + 0.65 * travel),
+    visible: p < VOYAGE_RIG_PHASES.visibleEnd,
+  };
+}
+
 /** A one-way departure. The next boat is only revealed after delivery completes. */
 export function voyagePose(progress) {
-  const p=clamp(finite(progress),0,1),t=Math.min(1,p/.93),distance=t*t*(2-t);
+  const p = clamp(finite(progress), 0, 1);
+  const rig = voyageRigPose(p);
+  const distance = rig.travel * rig.travel * (2 - rig.travel);
   const point=routePoint(distance);
   const dx=2*(1-distance)*(ROUTE.control.x-ROUTE.start.x)+2*distance*(ROUTE.end.x-ROUTE.control.x);
   const dz=2*(1-distance)*(ROUTE.control.z-ROUTE.start.z)+2*distance*(ROUTE.end.z-ROUTE.control.z);
-  return {...point,heading:-Math.atan2(dx,-dz),visible:p<.94};
+  return {...point,heading:-Math.atan2(dx,-dz),visible:rig.visible};
 }
 
 export function routeClearance(point, z = point?.z) {

@@ -5,7 +5,7 @@ import {SoftwareRenderer} from './software-renderer.js';
 import {DECK, CARGO_SPECS, footprint, placementProblem, loadMetrics} from './cargo-packing.js';
 import {VOYAGE_MS} from './harbor-game.js';
 import {createHarborEnvironment,MARKET_BAYS} from './harbor-environment.js';
-import {terrainHeight,voyagePose} from './harbor-terrain.js';
+import {terrainHeight,voyagePose,voyageRigPose} from './harbor-terrain.js';
 
 const CELL=.76, DECK_Y=.61;
 const INKS={brick:0x2a7380,edge:0x53849d,corner:0xb46d42,cap:0xc99c35};
@@ -34,7 +34,7 @@ export function createHarborWorld(container, getContext, actions) {
   function label(parent,text,x,y,z,w=1,color='#294e51',bg='#f4e5c4'){const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=bg;ctx.fillRect(0,0,512,128);ctx.strokeStyle=color;ctx.lineWidth=4;ctx.strokeRect(9,9,494,110);ctx.font='bold 44px Georgia';const fontSize=Math.min(44,44*472/ctx.measureText(text).width);ctx.font=`bold ${fontSize}px Georgia`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color;ctx.fillText(text,256,68);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;const m=mesh(parent,new THREE.PlaneGeometry(w,w/4),new THREE.MeshStandardMaterial({map:t,side:THREE.DoubleSide,roughness:1}),x,y,z);m.castShadow=false;m.userData.ownedLabel=true;return m;}
   const environment=createHarborEnvironment(scene,renderer,{mesh,box,pole,rope,label,tex,stone,sand,wood,darkWood},renderer instanceof SoftwareRenderer);
   // Curved, planked hull. The usable grid is a small patch of the physical deck.
-  const boat=new THREE.Group();scene.add(boat);
+  const boat=new THREE.Group();boat.name='cargo-barge';scene.add(boat);
   const sections=[[-2.9,.13],[-2.58,1.18],[-2.02,1.99],[-1.25,2.13],[0,2.15],[1.25,2.13],[2.02,1.99],[2.58,1.18],[2.9,.13]];
   const pos=[],uv=[];function tri(a,b,c){pos.push(...a,...b,...c);for(const p of[a,b,c])uv.push(p[2]*.4,p[1]*2);}
   for(let i=0;i<sections.length-1;i++)for(const side of[-1,1]){const[z,w]=sections[i],[zz,ww]=sections[i+1];const a=[side*w,.57,z],b=[side*ww,.57,zz],c=[side*ww*.65,-.24,zz*.87],d=[side*w*.65,-.24,z*.87];tri(a,b,d);tri(b,c,d);}
@@ -44,12 +44,29 @@ export function createHarborWorld(container, getContext, actions) {
   for(const side of[-1,1]){rope(boat,sections.map(([z,w])=>[side*w,.68,z]),.065,wood);rope(boat,sections.map(([z,w])=>[side*w*.9,.26,z*.97]),.023,0xc2a76d);for(const z of[-2,-1.3,0,1.3,2]){pole(boat,[side*widthAt(z),.15,z],[side*widthAt(z),.69,z],.028,0x715033);}}
   for(const z of[-2.6,2.6]){box(boat,0,.65,z,1.9,.12,.22,darkWood);pole(boat,[0,.5,z],[0,1.04,z*1.05],.065);}
   // The mast occupies two central cells; rigging stays above the picking plane.
-  box(boat,0,.64,0,.54,.12,1.38,darkWood,.05);pole(boat,[0,.68,0],[0,3.1,0],.062);
-  pole(boat,[-1.48,2.8,0],[1.48,2.8,0],.038);
-  const furled=mesh(boat,new THREE.CylinderGeometry(.09,.1,2.7,12),0xe9dbc0,0,2.76,.035);furled.rotation.z=Math.PI/2;
-  for(const x of[-.9,0,.9])rope(boat,[[x,2.8,-.07],[x,2.64,.04],[x,2.8,.13]],.018,0x896647);
-  rope(boat,[[0,3.06,0],[.05,1.6,-1.15],[0,.78,-2.55]],.012);rope(boat,[[0,3.06,0],[.04,1.6,1.23],[0,.8,2.6]],.012);
-  const pennantGeo=new THREE.BufferGeometry();pennantGeo.setAttribute('position',new THREE.Float32BufferAttribute([0,0,0,.8,-.08,0,0,-.3,0],3));pennantGeo.computeVertexNormals();const pennant=mesh(boat,pennantGeo,new THREE.MeshStandardMaterial({color:0x3d777e,side:THREE.DoubleSide}),0,3.13,0);
+  box(boat,0,.64,0,.54,.12,1.38,darkWood,.05);pole(boat,[0,.68,0],[0,3.65,0],.062);
+  pole(boat,[-1.48,3.4,0],[1.48,3.4,0],.038);
+  const furled=mesh(boat,new THREE.CylinderGeometry(.09,.1,2.7,12),0xe9dbc0,0,3.36,.035);furled.rotation.z=Math.PI/2;
+  // A capstone reaches about y=1.81 above the deck. Keep the fully opened
+  // canvas above y=2 so the sail can billow without clipping a loaded sled.
+  const SAIL_WIDTH=2.7,SAIL_HEIGHT=1.3,SAIL_TOP_Y=3.36;
+  const sailGeo=new THREE.PlaneGeometry(SAIL_WIDTH,SAIL_HEIGHT,8,5);
+  const sailCanvas=document.createElement('canvas');sailCanvas.width=512;sailCanvas.height=256;const sailCtx=sailCanvas.getContext('2d');
+  sailCtx.fillStyle='#eadcc2';sailCtx.fillRect(0,0,sailCanvas.width,sailCanvas.height);sailCtx.strokeStyle='rgba(104,78,55,.26)';sailCtx.lineWidth=3;
+  for(const x of[128,256,384]){sailCtx.beginPath();sailCtx.moveTo(x,8);sailCtx.lineTo(x,248);sailCtx.stroke();}
+  for(const y of[64,128,192]){sailCtx.beginPath();sailCtx.moveTo(8,y);sailCtx.lineTo(504,y);sailCtx.stroke();}
+  sailCtx.strokeStyle='rgba(93,67,47,.48)';sailCtx.lineWidth=5;sailCtx.strokeRect(8,8,496,240);
+  sailCtx.fillStyle='rgba(93,67,47,.5)';for(const x of[32,96,160,224,288,352,416,480])for(const y of[8,248])sailCtx.fillRect(x,y-2,12,4);
+  const sailMap=new THREE.CanvasTexture(sailCanvas);sailMap.colorSpace=THREE.SRGBColorSpace;
+  const sail=mesh(boat,sailGeo,new THREE.MeshStandardMaterial({map:sailMap,color:0xffffff,roughness:.88,side:THREE.DoubleSide}),0,SAIL_TOP_Y,.07);sail.name='cargo-sail';sail.visible=false;
+  function shapeSail(amount,windPhase=0){const position=sailGeo.attributes.position;for(let i=0;i<position.count;i++){const x=position.getX(i),y=position.getY(i),across=THREE.MathUtils.clamp(x/SAIL_WIDTH+.5,0,1),vertical=THREE.MathUtils.clamp(y/SAIL_HEIGHT+.5,0,1),fullness=Math.sin(Math.PI*across)*Math.sin(Math.PI*vertical);position.setZ(i,amount*fullness+.024*Math.sin(windPhase+x*2.8+y*3.2)*fullness);}position.needsUpdate=true;sailGeo.computeVertexNormals();}
+  for(const x of[-.9,0,.9])rope(boat,[[x,3.4,-.07],[x,3.24,.04],[x,3.4,.13]],.018,0x896647);
+  rope(boat,[[0,3.6,0],[.05,1.6,-1.15],[0,.78,-2.55]],.012);rope(boat,[[0,3.6,0],[.04,1.6,1.23],[0,.8,2.6]],.012);
+  const anchorRig=new THREE.Group();anchorRig.name='cargo-anchor';anchorRig.position.set(1.28,.02,2.65);boat.add(anchorRig);
+  const anchorRing=mesh(anchorRig,new THREE.TorusGeometry(.12,.024,6,16),0x6f5942);anchorRing.rotation.x=Math.PI/2;
+  pole(anchorRig,[0,.08,0],[0,-.18,0],.027,0x6f5942);pole(anchorRig,[-.22,-.16,0],[.22,-.16,0],.024,0x6f5942);
+  const anchorCableRig=new THREE.Group();anchorCableRig.position.set(1.28,.72,2.65);boat.add(anchorCableRig);rope(anchorCableRig,[[0,0,0],[0,-.7,0]],.014,0x6f5942);
+  const pennantGeo=new THREE.BufferGeometry();pennantGeo.setAttribute('position',new THREE.Float32BufferAttribute([0,0,0,.8,-.08,0,0,-.3,0],3));pennantGeo.computeVertexNormals();const pennant=mesh(boat,pennantGeo,new THREE.MeshStandardMaterial({color:0x3d777e,side:THREE.DoubleSide}),0,3.68,0);
   pole(boat,[1.7,.68,2],[3,.02,3.6],.033,wood);box(boat,2.85,.1,3.41,.22,.05,.65,wood).rotation.y=-.55;
   const deckCells=new THREE.Group(),cargoGroup=new THREE.Group(),ghost=new THREE.Group();boat.add(deckCells,cargoGroup,ghost);
   const cellMat=new THREE.MeshBasicMaterial({color:0xf3dfac,transparent:true,opacity:.15,depthWrite:false,side:THREE.DoubleSide});
@@ -62,7 +79,8 @@ export function createHarborWorld(container, getContext, actions) {
   for(let c=0;c<5;c++){const tag=label(boat,String.fromCharCode(65+c),(c-2)*CELL,DECK_Y+.012,1.83,.3);tag.rotation.x=-Math.PI/2;}
   for(let r=0;r<4;r++){const tag=label(boat,String(r+1),-2,DECK_Y+.012,(r-1.5)*CELL,.24);tag.rotation.x=-Math.PI/2;}
   label(boat,'NILE • 01',0,.19,2.63,1.1,'#f1d9a7','#456e70');
-  const wake=new THREE.Group();scene.add(wake);for(let i=0;i<6;i++){const line=mesh(wake,new THREE.TorusGeometry(.4+i*.2,.018,4,40,Math.PI),new THREE.MeshBasicMaterial({color:0xc6e8de,transparent:true,opacity:.23}),0,-.105,i*.32);line.rotation.x=-Math.PI/2;line.scale.set(1,.6,1);}
+  const wake=new THREE.Group(),wakeLines=[];scene.add(wake);for(let i=0;i<6;i++){const line=mesh(wake,new THREE.TorusGeometry(.4+i*.2,.018,4,40,Math.PI),new THREE.MeshBasicMaterial({color:0xc6e8de,transparent:true,opacity:.23}),0,-.105,i*.32);line.rotation.x=-Math.PI/2;line.scale.set(1,.6,1);wakeLines.push(line);}
+  function applyRigPose(rig,elapsed,reduced){const deploy=rig.sailDeploy;sail.visible=rig.visible&&deploy>.01;sail.scale.set(1,Math.max(.001,deploy),1);sail.position.y=SAIL_TOP_Y-SAIL_HEIGHT*.5*deploy;furled.scale.set(1,1-.82*deploy,1);shapeSail(rig.sailBillow*(reduced?.82:1),reduced?0:elapsed*.004);anchorRig.position.y=.02+rig.anchorLift*.66;anchorCableRig.scale.y=Math.max(.04,1-rig.anchorLift*.94);wake.visible=rig.visible&&rig.wakeStrength>.01;wake.scale.set(.7+.65*rig.wakeStrength,1,.7+.45*rig.wakeStrength);wakeLines.forEach((line,i)=>{line.material.opacity=.23*rig.wakeStrength*(1-i*.07);line.position.z=i*.32*(.65+.35*rig.wakeStrength);});}
   // Pallets are polyomino sleds: their full transport footprint is visible.
   function slabGeometry(cells,height){const occupied=new Set(cells.map(([c,r])=>`${c},${r}`)),edges=[];
     for(const[c,r]of cells){if(!occupied.has(`${c},${r-1}`))edges.push([[c,r],[c+1,r]]);if(!occupied.has(`${c+1},${r}`))edges.push([[c+1,r],[c+1,r+1]]);if(!occupied.has(`${c},${r+1}`))edges.push([[c+1,r+1],[c,r+1]]);if(!occupied.has(`${c-1},${r}`))edges.push([[c,r+1],[c,r]]);}
@@ -102,11 +120,15 @@ export function createHarborWorld(container, getContext, actions) {
   }
   function disposeGroup(g){for(const child of [...g.children]){g.remove(child);child.traverse(o=>{if(o.geometry&&!Array.from(geometries.values()).includes(o.geometry))o.geometry.dispose();if(o.userData.ownedLabel&&o.material?.map?.isCanvasTexture){o.material.map.dispose();o.material.dispose();}if(o.material?.isMeshBasicMaterial&&o.material.transparent)o.material.dispose();});}}
   let signature='',mode='',wasSailing=false,view='orbit',hoverSignature='',frame=0,lastFrame=0;
-  function sync(){const {state,level}=getContext();const nextMode=state.stage==='order'||level.journeyRole==='order'?'order':'cargo';
+  function sync(){const {state,level}=getContext();const nextMode=['order','purchase'].includes(state.stage)||level.journeyRole==='order'?'order':'cargo';
     if(nextMode!==mode){mode=nextMode;home();signature='';}
     syncMarket(state,level);
     const h=state.harbor;if(h?.inTransit&&!wasSailing)departureView();else if(!h?.inTransit&&wasSailing)home();wasSailing=!!h?.inTransit;const sig=JSON.stringify([h?.cargo,h?.selected]);if(sig!==signature){signature=sig;disposeGroup(cargoGroup);if(h)for(const item of h.cargo.filter(c=>['boat','transit'].includes(c.status))){const g=cargoMesh(item);g.position.set((item.column-2.5)*CELL,DECK_Y+.02,(item.row-2)*CELL);cargoGroup.add(g);if(h.selected===item.id){const edges=cargoMesh(item,true,true);edges.position.copy(g.position);edges.position.y=DECK_Y+.04;cargoGroup.add(edges);}}}
-    deckCells.visible=mode==='cargo';ghost.visible=mode==='cargo'&&!!h?.selected&&!h.inTransit;controls.enabled=!h?.selected||mode==='order'||!!h?.inTransit;
+    deckCells.visible=mode==='cargo';ghost.visible=mode==='cargo'&&!!h?.selected&&!h.inTransit;
+    // Orbit remains available while a stone is selected. Placement gestures
+    // temporarily suspend it, so a drag that starts on open water can still
+    // orbit the deck without turning its release point into a placement.
+    controls.enabled=mode==='order'||!h?.inTransit;
     renderer.domElement.style.cursor=h?.selected?'crosshair':'grab';container.dataset.view=view;hoverSignature='';dirty=true;resize();
   }
   function departureView(){view='voyage';controls.target.set(3,1,-20);camera.position.set(5.5,5.2,16);controls.update();resize();container.dataset.view=view;dirty=true;}
@@ -127,22 +149,60 @@ export function createHarborWorld(container, getContext, actions) {
     const problem=placementProblem(h.cargo,item,column,row,h.rotation),sig=[item.id,column,row,h.rotation,problem].join(':');
     if(sig!==hoverSignature){hoverSignature=sig;disposeGroup(ghost);const g=cargoMesh({...item,rotation:h.rotation},true,!problem);g.position.set((column-2.5)*CELL,DECK_Y+.04,(row-2)*CELL);ghost.add(g);ghost.visible=true;actions.onHover?.(problem||`Place at ${String.fromCharCode(65+column)}${row+1} · ${h.rotation}°`);dirty=true;}
   }
+  function restoreControls(){const h=getContext().state.harbor;controls.enabled=mode==='order'||!h?.inTransit;}
+  function releasePointer(pointerId){if(renderer.domElement.hasPointerCapture?.(pointerId))renderer.domElement.releasePointerCapture?.(pointerId);}
   let down=null,pointers=new Set();
-  renderer.domElement.addEventListener('pointerdown',e=>{pointers.add(e.pointerId);if(pointers.size>1){down=null;controls.enabled=true;return;}const{state}=getContext();if(state.harbor?.inTransit)return;const hitInfo=hit(e);down={x:e.clientX,y:e.clientY,selected:state.harbor?.selected,cargoId:hitInfo.cargoId,marketType:hitInfo.marketType};if(hitInfo.marketType){controls.enabled=false;renderer.domElement.setPointerCapture(e.pointerId);return;}if(!down.selected&&hitInfo.cargoId){actions.onSelect(hitInfo.cargoId);controls.enabled=false;}if(down.selected||hitInfo.cargoId)renderer.domElement.setPointerCapture(e.pointerId);});
-  renderer.domElement.addEventListener('pointermove',e=>{if(pointers.size>1)return;const{state}=getContext();const info=hit(e);renderer.domElement.style.cursor=info.marketType?'pointer':state.harbor?.selected?'crosshair':'grab';if(mode!=='cargo'||!state.harbor?.selected)return;if(info.cell)preview(info.cell.column,info.cell.row);else ghost.visible=false;});
-  renderer.domElement.addEventListener('pointerup',e=>{pointers.delete(e.pointerId);if(!down)return;const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y)>7,shouldPlace=down.selected||down.cargoId&&moved,marketType=down.marketType;down=null;if(marketType){controls.enabled=true;if(!moved)actions.onMarket?.(marketType);return;}if(shouldPlace){const info=hit(e);if(info.cell)actions.onPlace(info.cell.column,info.cell.row);}});
-  renderer.domElement.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);down=null;controls.enabled=!getContext().state.harbor?.selected;});
+  renderer.domElement.addEventListener('pointerdown',e=>{
+    pointers.add(e.pointerId);
+    if(pointers.size>1){if(down)releasePointer(down.pointerId);down=null;ghost.visible=false;restoreControls();return;}
+    const{state}=getContext();
+    if(state.harbor?.inTransit){pointers.delete(e.pointerId);restoreControls();return;}
+    const hitInfo=hit(e),selected=!!state.harbor?.selected;
+    let kind='orbit';
+    if(hitInfo.marketType)kind='market';
+    else if(hitInfo.cargoId)kind='cargo-drag';
+    else if(hitInfo.cell&&selected)kind='place';
+    down={pointerId:e.pointerId,x:e.clientX,y:e.clientY,selected,cargoId:hitInfo.cargoId,marketType:hitInfo.marketType,kind};
+    if(kind==='market'||kind==='place'||kind==='cargo-drag'){
+      if(kind==='cargo-drag'&&state.harbor?.selected!==hitInfo.cargoId)actions.onSelect(hitInfo.cargoId);
+      controls.enabled=false;
+      renderer.domElement.setPointerCapture(e.pointerId);
+    }else ghost.visible=false;
+  });
+  renderer.domElement.addEventListener('pointermove',e=>{
+    if(pointers.size>1)return;
+    const{state}=getContext(),info=hit(e),orbiting=down?.kind==='orbit';
+    renderer.domElement.style.cursor=orbiting?'grabbing':info.marketType?'pointer':state.harbor?.selected?'crosshair':'grab';
+    if(mode!=='cargo'||!state.harbor?.selected||orbiting||down?.kind==='market')return;
+    if(info.cell)preview(info.cell.column,info.cell.row);else ghost.visible=false;
+  });
+  renderer.domElement.addEventListener('pointerup',e=>{
+    pointers.delete(e.pointerId);
+    const gesture=down;down=null;releasePointer(e.pointerId);
+    if(!gesture){restoreControls();return;}
+    const moved=Math.hypot(e.clientX-gesture.x,e.clientY-gesture.y)>7;
+    if(gesture.kind==='market'){restoreControls();if(!moved)actions.onMarket?.(gesture.marketType);return;}
+    if(gesture.kind==='place'||gesture.kind==='cargo-drag'){
+      // A deck tap places the selected stone. A loaded-cargo drag places only
+      // after movement; a cargo click therefore remains a selection gesture.
+      if(gesture.kind==='place'||moved){const info=hit(e);if(info.cell)actions.onPlace(info.cell.column,info.cell.row);}
+    }
+    restoreControls();
+  });
+  renderer.domElement.addEventListener('pointercancel',e=>{
+    pointers.delete(e.pointerId);if(down)releasePointer(down.pointerId);down=null;ghost.visible=false;restoreControls();
+  });
   renderer.domElement.addEventListener('pointerleave',()=>{if(!down)ghost.visible=false;});
   controls.addEventListener('change',()=>dirty=true);
   controls.addEventListener('start',()=>renderer.setInteractive?.(true));controls.addEventListener('end',()=>renderer.setInteractive?.(false));
   function animate(t){requestAnimationFrame(animate);if(container.closest('[hidden]')||document.hidden)return;const software=renderer instanceof SoftwareRenderer;if(t-lastFrame<(software?110:25))return;lastFrame=t;
     const{state}=getContext(),h=state.harbor,trip=h?.inTransit;const m=h?loadMetrics(h.cargo):{offsetX:0,offsetZ:0};
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let dx=0,dz=0,turn=0;
-    if(trip){const p=Math.min(1,Math.max(0,(Date.now()-trip.startedAt)/VOYAGE_MS)),pose=voyagePose(p);dx=pose.x;dz=pose.z;turn=pose.heading;boat.visible=pose.visible;cargoGroup.visible=true;wake.visible=pose.visible;
-    }else{boat.visible=true;cargoGroup.visible=true;wake.visible=false;}
-    boat.position.set(dx,reduced?0:Math.sin(t*.0013)*.025,dz);boat.rotation.set((trip?.offsetZ??m.offsetZ)*.12,turn,-(trip?.offsetX??m.offsetX)*.16+(reduced?0:Math.sin(t*.0009)*.007));wake.position.set(dx,-.01,dz+2.5);
-    environment.update(t,reduced);if(!reduced)pennant.rotation.y=Math.sin(t*.002)*.12;
+    let dx=0,dz=0,turn=0,rig=voyageRigPose(0),elapsed=0;
+    if(trip){elapsed=Math.max(0,Date.now()-trip.startedAt);const p=Math.min(1,elapsed/VOYAGE_MS),pose=voyagePose(p);rig=voyageRigPose(p);actions.onVoyagePhase?.(rig.anchorLift<1?'Raising the anchor…':rig.sailDeploy<1?'Unfurling the sail…':rig.visible?'Under sail · bound for Giza':'Beyond the bend · arriving at Giza');dx=pose.x;dz=pose.z;turn=pose.heading;boat.visible=pose.visible;cargoGroup.visible=true;
+    }else{boat.visible=true;cargoGroup.visible=true;}
+    const motionTime=trip?elapsed:t;boat.position.set(dx,reduced?0:Math.sin(motionTime*.0013)*.025,dz);boat.rotation.set((trip?.offsetZ??m.offsetZ)*.12,turn,-(trip?.offsetX??m.offsetX)*.16+(reduced?0:Math.sin(motionTime*.0009)*.007));wake.position.set(dx,-.01,dz+2.5);
+    applyRigPose(rig,elapsed,reduced);environment.update(motionTime,reduced);if(!reduced)pennant.rotation.y=Math.sin(motionTime*.002)*.12;
     controls.update();renderer.render(scene,camera);container.dataset.ready='ready';container.dataset.frame=String(++frame);dirty=false;
   }
   sync();requestAnimationFrame(animate);

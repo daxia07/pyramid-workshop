@@ -82,3 +82,50 @@
 #harbor-scene:has(#harbor-world[data-view=market])[data-phase=cargo] .cargo-controls{max-width:820px}
 
 .order-layers{margin:0 0 10px;font-size:11px;color:#526d62}.order-layers summary{cursor:pointer;padding:7px 0 9px;min-height:32px;border-bottom:1px solid #b9ab895c}.order-layers[open] summary{border:0}.order-layers .mini-blueprints{padding-top:9px}.order-layers .order-reference p{margin-bottom:0}
+
+/* Brief, visible instructions follow the current puzzle action. */
+#journey-timeline span small{display:block;margin-top:3px;font-size:8px;font-weight:400;opacity:.85}
+#journey-timeline .done:disabled{opacity:.8;color:#436d60}
+.sealed-stamp{display:inline-block;padding:6px 9px;border:1px solid #648473;border-radius:3px;color:#436d60!important;background:#e3e9d6}
+.order-paper-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.order-paper-top>.eyebrow{flex:1;min-width:0;font-size:8px!important;letter-spacing:1px!important}
+#harbor-hud .order-paper-top .text-button{flex-shrink:0;width:auto;font-size:9px;padding:5px;min-height:28px}
+.order-study>summary{cursor:pointer;font-size:10px;color:#587568;padding:7px 0;margin-bottom:10px;border-bottom:1px solid #bdab8550}
+.panel-guidance{font-size:11px;line-height:1.6;color:#5b786c;margin:0 0 16px}
+.harbor-panel-heading{display:block;position:static;height:auto;min-height:0;padding:20px 20px 0;background:none;border:0;box-shadow:none;backdrop-filter:none}
+.harbor-panel-heading .eyebrow{font-size:8px!important;letter-spacing:1.3px!important}
+.harbor-panel-heading h2{font:400 28px/1.12 Georgia,serif;color:#335f58;margin:9px 0}
+.harbor-panel-heading p{font-size:10px;line-height:1.6;color:#627b6e;margin:0 0 4px}
+.cargo-order .voyage-banner,.cargo-order .harbor-complete{position:static;background:transparent;border:0;border-top:1px solid #b9b08d66;border-radius:0;padding:20px;box-shadow:none;backdrop-filter:none}
+.cargo-order .harbor-complete h3{font-size:28px}.cargo-order .harbor-complete p{font-size:11px}
+.cargo-order .voyage-banner>strong{font-size:23px}.cargo-order .voyage-line{margin:0 8px}
+.cargo-order:has(.harbor-complete):not(.expanded) .cargo-order-body,.cargo-order:has(.voyage-banner):not(.expanded) .cargo-order-body{display:none}
+@media(max-width:800px) and (min-height:521px){
+ .cargo-order{top:147px;max-height:41%}
+ .harbor-panel-heading{padding:11px 13px 0}.harbor-panel-heading h2{font-size:20px;margin:4px 0}.harbor-panel-heading p{display:none}
+ .cargo-order .voyage-banner,.cargo-order .harbor-complete{padding:13px}.cargo-order .harbor-complete h3{font-size:24px;margin:9px 0}
+ .panel-guidance{font-size:10px;line-height:1.5}
+}
+.shopping-row.sealed-row{grid-template-columns:50px 1fr 68px}
+.sealed-row button{padding:5px!important;min-height:35px;font-size:10px!important}
+#harbor-hud .text-button{background:transparent;box-shadow:none;font-size:10px;padding:8px;min-height:34px}
+.cargo-coach{border-bottom:1px solid #b8b79470;margin:-3px 0 12px;padding-bottom:8px}
+#harbor-hud .cargo-coach>button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:5px 0;background:transparent;border:0;box-shadow:none;min-height:29px;font-size:11px;color:#386c62}
+.cargo-coach ol{display:grid;grid-template-columns:repeat(3,1fr);list-style:none;counter-reset:coach;gap:14px;padding:0;margin:7px 0}
+.cargo-coach li{counter-increment:coach;font-size:10px;line-height:1.45;color:#617c6e}
+.cargo-coach li b{display:block;margin-bottom:4px;color:#335f56;font-size:11px}
+.cargo-coach li b:before{content:counter(coach);display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:#376b66;color:#fff7e6;font-size:9px;margin-right:5px}
+.cargo-coach p{font-size:9px;color:#69806e;margin:8px 0 2px}
+#harbor-hud .packing-actions .hint-active{background:#e1ead1!important;color:#295e50;border:1px solid #61836a;box-shadow:0 0 0 2px #65876b26!important}
+.cargo-guidance p{min-height:40px}
+.voyage-banner p{font-size:11px;color:#506f63}
+.harbor-complete .text-button{display:block;margin:5px auto 0}
+@media(max-width:800px) and (min-height:521px){
+ #journey-timeline span small{font-size:7px;line-height:1.25;margin-top:3px}
+ .cargo-coach{margin:-2px 0 7px;padding-bottom:5px}.cargo-coach ol{gap:8px;margin:4px 0}.cargo-coach li{font-size:9px;line-height:1.35}.cargo-coach li b{font-size:9px}.cargo-coach p{font-size:8px}
+ #harbor-hud .cargo-coach>button{font-size:10px;min-height:27px}
+ .cargo-controls:has(.cargo-coach.open){max-height:49%}
+ .shopping-row.sealed-row{grid-template-columns:43px 1fr 65px}
+ .packing-actions{justify-content:flex-start}.packing-actions button{font-size:9px!important;min-height:32px}
+ #cargo-hint{display:block}
+}

@@ -18,6 +18,7 @@ import {
   routeClearance,
   routeIsNavigable,
   routePoint,
+  voyageRigPose,
   terrainHeight,
   voyagePose,
 } from '../harbor-terrain.js';
@@ -205,4 +206,24 @@ test('a voyage travels into the distance and disappears without returning across
   assert.equal(voyagePose(.95).visible,false);
   assert.equal(voyagePose(1).visible,false);
   assert.ok(voyagePose(1).z<-120);
+});
+
+test('departure rig lifts the anchor before opening the sail and making wake',()=>{
+  const dock=voyageRigPose(0);
+  const anchor=voyageRigPose(.08);
+  const sail=voyageRigPose(.19);
+  const underway=voyageRigPose(.5);
+  assert.equal(dock.anchorLift,0);
+  assert.equal(dock.sailDeploy,0);
+  assert.equal(dock.wakeStrength,0);
+  assert.ok(anchor.anchorLift>0);
+  assert.equal(anchor.sailDeploy,0);
+  assert.equal(anchor.travel,0);
+  assert.ok(sail.anchorLift>=.99);
+  assert.ok(sail.sailDeploy>0);
+  assert.equal(sail.travel,0);
+  assert.ok(underway.sailDeploy>=.99);
+  assert.ok(underway.travel>0);
+  assert.ok(underway.wakeStrength>0);
+  assert.deepEqual(voyageRigPose(.5),voyageRigPose(.5),'rig phases are deterministic across reloads');
 });

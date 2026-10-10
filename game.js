@@ -8,8 +8,8 @@ export const SCENES=[
  {id:'mesopotamia',name:'The sacred city of Ur',place:'Mesopotamia',kind:'Mudbrick ziggurat',dims:[5,3,1],types:['brick','temple','stairs'],prices:{brick:2,temple:8,stairs:3},budget:94,color:0xc99570,ground:0xb3ad7f,sky:0xd1e7ea,lesson:'A two-unit change in width makes a one-unit terrace on each side. Count bricks and stairs separately.'}
 ];
 export const missionText={
- 'egypt-1':'Before any stone is lifted, write the complete fourteen-piece order. The quarry list is our reference for the first three layers.',
- 'egypt-2':'The order is approved. Pack all fourteen sleds for the Nile: weight, shape and balance decide whether each voyage can sail.',
+ 'egypt-1':'Study the model, seal your fourteen-piece shopping list, then buy every stone. Level 1 passes only when the full order is purchased.',
+ 'egypt-2':'Your sealed order is paid for. Rotate and balance all fourteen sleds for the Nile. Level 2 passes only when every stone arrives.',
  'egypt-3':'The stones have arrived. Build the first three layers from the supplied stock, then inspect every smooth face and the cap.',
  'egypt-4':'Keep your three completed layers. Order and ship sixteen new stones, then fit a wider foundation beneath the model on its temporary scaffold.',
  'maya-1':'The next floor needs a terrace around it. Compare the two footprints before ordering your materials.',
@@ -50,6 +50,7 @@ export function initial(i=0){
  const firstMissing=target(l).filter(b=>!l.seed.some(p=>key(p.x,p.y,p.z)===key(b.x,b.y,b.z)&&sku(p)===sku(b))).map(b=>b.y);
  const egypt=l.id==='egypt',orderDesk=egypt&&(role==='order'||role==='expand'),state={level:i,stage:'plan',estimates:Object.fromEntries(l.types.map(t=>[t,orderDesk?'':q[t]===0?'0':''])),money:l.budget,inventory:empty(),freeInventory:empty(),warehouse:empty(),blocks:structuredClone(l.seed),layer:firstMissing.length?Math.min(...firstMissing):0,tool:'place',part:l.types.find(t=>q[t]>0)||l.types[0],history:[],completed:[],siteChoice:null,planningChoice:null,waterPreview:false,cutaway:false,trips:0,...(egypt?{journeyVersion:2,expedition:{version:2,orders:{}}}:{}),...(isHarbor(l)?{stage:'harbor',harbor:createHarbor(l)}:{})};
  if(egypt&&role==='order')state.stage='order';
+ if(egypt&&role==='cargo'){state.harbor=createHarbor(l,true);state.money=l.budget-l.minimumPurchaseCost;}
  if(egypt&&role==='expand'){state.stage='order';delete state.harbor;}
  if(egypt&&role==='build'){state.stage='build';state.inventory={...supplied};state.freeInventory={...supplied};}
  return state;
