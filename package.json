@@ -1,1 +1,1 @@
-{"name":"pyramid-workshop","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"vite build","test":"node --test tests/*.test.js"},"dependencies":{"three":"0.186.1"},"devDependencies":{"vite":"^7.3.7"}}
+{"name":"pyramid-workshop","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"vite build","test":"node --test tests/*.test.js"},"dependencies":{"three":"0.186.1"},"devDependencies":{"esbuild":"^0.28.2","linkedom":"^0.18.13","vite":"^7.3.7"}}

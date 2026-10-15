@@ -10,11 +10,23 @@ npm test
 npm run build
 ```
 
-Use a Node.js version supported by the pinned Vite release: 20.19+ or 22.12+. This snapshot was tested with Node.js 24.19.0. Production output is `dist/`. For local development, run `npm run dev`. Serve production output over HTTP; opening index.html directly is not supported. Vercel configuration uses Vite, `npm run build`, and `dist` as output.
+Use a Node.js version supported by the pinned Vite release: 20.19+ or 22.12+. The current release is checked with Node.js 22.22.3. Production output is `dist/`. For local development, run `npm run dev`. Serve production output over HTTP; opening index.html directly is not supported. Vercel configuration uses Vite, `npm run build`, and `dist` as output.
 
 The original sanitized snapshot is commit `495e585` (reviewed release `2026-10-08-r1-vlhdOufz`). `SOURCE-RELEASE.json` and `SOURCE-SHA256SUMS.txt` describe that original snapshot, not subsequent interface changes.
 
 ## Current interface
+
+All three chapters have a visible four-mission expedition timeline and a persistent next-mission action after inspection. Optional **Explore the model** activities use the active mission blueprint: Egypt compares layers, Maya explores terraces and stair routes, and Ur compares core/facing bricks, four-brick packs and model waterlines. Predictions give explanations and allow retries; revealing model counts never fills estimates, spends coins or passes a mission. Open them in the field journal or worksite guide. Real history stories also have optional read-aloud controls.
+
+Maya and Ur now have distinct procedural summit buildings with open doorways. Maya uses a framed limestone chamber and stepped roof; Ur uses a brick chamber with projecting buttresses, flat coping and visible brick courses. These are illustrative teaching models, especially the uncertain upper structures at Ur. Both use ordinary merged meshes for WebGL and the software fallback, retain picking and ghost previews, and keep geometry inside the existing puzzle envelope. Core and facing bricks have clearer contrasting colors.
+
+Maya and Ur build hints now identify incorrect materials and disconnected stair routes, guide safe upper-first removal, and direct the player to the next supported layer, stair slot or inspection. Market refunds preserve salvaged site stones, so a repair cannot lose its reusable stair through the return-stock button. The top-view journal includes its own material, layer, place/remove, undo and inspection controls, keeping the full build reachable on narrow screens.
+
+Egypt is designed around short, guided challenges for young players. The shopping list requires the child's own counts, with large +/− controls, gentle recount clues, and a counting mat where matching stones can be marked individually. Marking stones never fills an answer or passes a level. Optional “Read to me” buttons use the device's speech support; written directions remain available.
+
+“Help me pack” reveals one move from a verified three-trip route. The child rotates the sled and taps the starred deck-map space; hints never place or ship cargo. The boat checks weight, balance, and whether the remaining fares could carry the waiting stones. Undo is visible beside the packing tools. Both shipments retain their original puzzles and budgets.
+
+Building checks shapes before consuming a stone, gives persistent layer and repair hints, and keeps a next-step button visible after completion and reload. Egypt's top-view map focuses on the current layer's building spaces, while keeping misplaced stones from older saves reachable for repair. Bigger touch controls and simpler directions apply across the Egypt chapter; existing saves and earned rewards are retained.
 
 The worksite fills the window, with an illustrated material tray and a floating field journal. Capstone and other layer transitions now show a persistent next-step hint, highlight the suggested layer, and offer a layer shortcut. Repair missions allow salvaged stones to remain in the store after inspection.
 
@@ -49,9 +61,11 @@ Dimensions, prices, transport capacities and flood levels are teaching abstracti
 
 ## Verification and limits
 
-All 112 automated checks and the production build pass. Coverage includes spatial collision and mast restrictions, both balance axes, verified three-voyage solutions for both contracts, freight accounting and undo, voyage persistence, legacy migration, salvaged inventory, one-time wages, free design, monument geometry and capstone guidance.
+The automated suite covers spatial collision and mast restrictions, both balance axes, verified three-voyage solutions for both contracts, freight accounting and undo, voyage persistence, legacy migration, salvaged inventory, one-time wages, free design, monument geometry and capstone guidance. Child-focused regressions also cover independent counting answers, expansion counts, fare exhaustion prevention, repair recovery, and complete guided shipments with save/reload.
 
-Connected Chrome checks exercised the full four-stop Egypt journey through UI controls, shipment undo and fees, native canvas picking, the L3 capstone hint, the 30-piece expansion, earned wages, save/reload, and returning to Free Design. Desktop and emulated phone layouts were visually reviewed with WebGL rendering. Physical touch-device testing remains open. A textured software renderer remains available when WebGL cannot initialize.
+The current suite has 154 passing tests, including an actual-control playthrough of all twelve missions with the 3D renderers stubbed. It checks both Egypt shipments and builds, Maya terrace/mirrored-route/repair/corridor missions, Ur materials/packs/high-site/budget missions, independent learning activities, final reward navigation, reload persistence and one-time wages. Geometry tests check distinct temple silhouettes, finite bounds and open doorways.
+
+Connected Chrome checks exercised the production preview, including completed Maya and Ur missions and their rendered summits, Egypt's counting scene, and an emulated iPhone 16 viewport (393 × 852). The Ur mission was completed with the journal's mobile map controls, including material/layer selection and inspection. These complement the automated playthrough; the simulated tests do not prove rendering, and phone emulation does not prove physical touch or device speech playback. A textured software renderer remains available when WebGL cannot initialize.
 
 No accounts, analytics or backend services are used. Coins are in-game rewards, with no real-money purchases. Progress stays in local browser storage on the current device. The original sanitized source snapshot excludes build output and installed dependencies.
 

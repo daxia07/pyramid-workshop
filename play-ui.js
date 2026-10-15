@@ -1,3 +1,4 @@
+import {LEVELS} from './game.js';
 import {canEnterLevel} from './journey-progress.js';
 import { STONE_DETAILS, stoneArt } from './stone-art.js';
 import { isQuarry } from './harbor-game.js';
@@ -41,7 +42,7 @@ export function playShell() {
     <aside id="studio-controls" aria-label="Free design controls" hidden></aside>
     <aside id="panel" aria-label="Expedition field journal"></aside>
     <section id="builder-dock" aria-label="Building materials and tools" hidden>
-      <div class="dock-heading"><span class="eyebrow">THE STONE YARD</span><p id="selected-piece"></p><button id="open-tools" aria-controls="panel" aria-expanded="false">Blueprint & tools</button></div>
+      <div class="dock-heading"><span class="eyebrow">THE STONE YARD</span><p id="selected-piece"></p><button id="open-tools" aria-controls="panel" aria-expanded="false">Top view & tools</button></div>
       <div id="build-hint" hidden><p id="build-hint-text" role="status" aria-live="polite" aria-atomic="true"></p><span id="build-hint-action"></span></div>
       <div id="material-tray"></div><div id="build-tools"></div>
     </section>
@@ -88,7 +89,7 @@ export function capturePlayFocus() {
   const active = document.activeElement;
   if (!active || !document.getElementById('app').contains(active)) return null;
   if (active.id) return {id:active.id};
-  for (const name of ['part','layer','cell','stair','scene','mission','design','site','studioTab','studioStyle','studioLayer','studioPart','decoration','garden','cargoBuy','cargo','deck']) {
+  for (const name of ['part','layer','cell','stair','scene','mission','design','site','studioTab','studioStyle','studioLayer','studioPart','decoration','garden','cargoBuy','cargo','deck','shopping','countKind','countCell','countAdjust','cargoType','journey']) {
     if (active.dataset[name] !== undefined) return {name, value:active.dataset[name]};
   }
   return null;
@@ -104,8 +105,17 @@ export function restorePlayFocus(focus) {
 export function updatePlayUI(state, level, guide) {
   const app = document.getElementById('app'), panel = document.getElementById('panel');
   const harbor = isQuarry(level,state);
-  const journey=document.getElementById('journey-timeline');journey.hidden=level.id!=='egypt'||state.studioMode;
-  if(!journey.hidden)journey.innerHTML=['Plan & buy','Pack & ship','Build 3 layers','Expand to 4'].map((name,i)=>{const done=state.completed.includes(`egypt-${i+1}`),active=state.level===i,open=canEnterLevel(state,i),criteria=['Buy all 14 stones','Deliver all 14 stones','Inspect the pyramid','Inspect all 4 layers'];return `<button data-journey="${i}" class="${active?'current':''} ${done?'done':''}" ${open?'':'disabled'} ${active?'aria-current="step"':''} aria-label="Level ${i+1}: ${name}. ${done?'Passed':criteria[i]}"><b>${done?'✓':i+1}</b><span>${name}<small>${done?'Passed':criteria[i]}</small></span></button>`;}).join('');
+  const journey=document.getElementById('journey-timeline');
+  journey.hidden=!!state.studioMode;
+  journey.setAttribute('aria-label', `${level.place} expedition timeline`);
+  if(!journey.hidden) {
+    const names = {egypt:['Count & buy','Pack the boat','Build a pyramid','Make it bigger'],maya:['Leave a terrace','Mirror the stairs','Repair the route','Protect the path'],mesopotamia:['Inside & outside','Packs of four','Higher ground','Your commission']}[level.id];
+    const criteria = {egypt:['Count each shape','Bring every stone','Fit all 14 stones','Add a new layer'],maya:['Compare footprints','Connect both sides','Reuse every stone','Keep access clear'],mesopotamia:['Choose materials','Count the perimeter','Test the waterline','Plan within budget']}[level.id];
+    journey.innerHTML=LEVELS.filter(m=>m.id===level.id).map((mission,i)=>{
+      const index=LEVELS.indexOf(mission),done=state.completed.includes(mission.missionId),active=state.level===index;
+      return `<button data-journey="${index}" class="${active?'current':''} ${done?'done':''}" ${canEnterLevel(state,index)?'':'disabled'} ${active?'aria-current="step"':''} aria-label="Level ${i+1}: ${names[i]}. ${done?'Passed':criteria[i]}"><b>${done?'✓':i+1}</b><span>${names[i]}<small>${done?'Passed':criteria[i]}</small></span></button>`;
+    }).join('');
+  }
   const building = !harbor && !state.studioMode && ['build','complete'].includes(state.stage);
   const stageChanged = lastStage !== state.stage || lastLevel !== state.level;
   if (stageChanged) panelOpen = !building && !harbor && !state.studioMode;
@@ -128,12 +138,13 @@ export function updatePlayUI(state, level, guide) {
     move('.layer-tabs', 'layer-control');
     const layerCaption = document.createElement('span');
     layerCaption.className = 'layer-caption';
-    layerCaption.textContent = `L${state.layer + 1} active`;
+    layerCaption.textContent = `${level.id==='egypt'?'Layer':'L'} ${state.layer + 1}`;
     document.getElementById('layer-control').prepend(layerCaption);
     move('.tools', 'build-tools');
     move('#market', 'build-tools');
     move('#ghost', 'build-tools');
     move('#check', 'build-tools');
+    if(state.stage==='complete'){move('#next','build-tools');const next=document.getElementById('next');if(next){next.className='primary';next.textContent=level.journeyRole==='expand'?'Next: Maya cities →':level.journeyRole==='build'?'Next: make it bigger →':state.level===7?'Next: ancient Ur →':state.level===11?'View discoveries →':'Next mission →';}document.getElementById('check').hidden=true;}
     const detail = STONE_DETAILS[state.part];
     document.getElementById('selected-piece').textContent = state.tool === 'remove' ? 'Lift out a stone to use it again.' : `${detail.label} — ${detail.role}`;
     document.getElementById('ghost')?.setAttribute('aria-pressed', String(guide));
@@ -156,19 +167,22 @@ export function updatePlayUI(state, level, guide) {
     const hintText = document.getElementById('build-hint-text');
     if (hintText.textContent !== (hint?.text || '')) hintText.textContent = hint?.text || '';
     document.getElementById('build-hint').hidden = !hint;
-    if (hint?.layer !== undefined || hint?.part) {
+    if (hint?.layer !== undefined || hint?.part || hint?.tool || hint?.check) {
       const action = document.createElement('button');
       action.id = 'build-hint-button';
-      if (hint.layer !== undefined) {
+      if(hint.check){action.textContent=level.id==='egypt'?'Check my pyramid':'Inspect my building';}
+      else if(hint.tool==='remove'){action.textContent='Help me fix it';}
+      else if (hint.layer !== undefined && hint.layer !== state.layer) {
         action.dataset.layer = hint.layer;
-        action.textContent = `Select L${hint.layer + 1}${hint.layer > state.layer ? ' ↑' : ''}`;
-      } else {
+        action.textContent = `${level.id==='egypt'?'Go to layer ':'Select L'}${hint.layer + 1}${hint.layer > state.layer ? ' ↑' : ''}`;
+      } else if(hint.part && hint.part !== state.part) {
         action.dataset.part = hint.part;
         action.textContent = `Select ${STONE_DETAILS[hint.part].label.toLowerCase()}`;
-      }
+      } else {action.textContent='Place stones';}
       action.setAttribute('aria-describedby', 'build-hint-text');
       document.getElementById('build-hint-action').append(action);
     }
+    if(hint){const read=document.createElement('button');read.className='read-aloud';read.dataset.readAloud='#build-hint-text';read.textContent='♪ Read to me';document.getElementById('build-hint-action').append(read);}
     // Keep the selected material in reach when the touch tray scrolls.
     requestAnimationFrame(() => {
       const selected = document.querySelector('#material-tray [aria-pressed="true"]');

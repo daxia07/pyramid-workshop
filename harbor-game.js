@@ -97,14 +97,24 @@ export function unloadAllCargo(state) {
   load.forEach(c=>Object.assign(c,{status:'quay',column:null,row:null,rotation:0}));
   h.selected=null;h.rotation=0;return true;
 }
+// Do not spend a fare when even the most tightly packed later trips could
+// no longer carry the waiting stones. Rearranging and undo remain free.
+export function freightProblem(state) {
+  if (state.money < DECK.fee) return `A boat trip costs ${DECK.fee} coins. Undo a trip to get its coins back.`;
+  const waiting = state.harbor.cargo.filter(c => c.status === 'quay');
+  const weight = waiting.reduce((n,c) => n + CARGO_SPECS[c.type].weight, 0);
+  const tiles = waiting.reduce((n,c) => n + CARGO_SPECS[c.type].cells.length, 0);
+  const minimumTrips = Math.max(Math.ceil(weight / DECK.capacity), Math.ceil(tiles / (DECK.columns * DECK.rows - DECK.blocked.length)));
+  const tripsAfterThis = Math.floor((state.money - DECK.fee) / DECK.fee);
+  if (minimumTrips > tripsAfterThis) return `Pack more stones before sailing. You have coins for ${tripsAfterThis + 1} more ${tripsAfterThis ? 'trips' : 'trip'}, and ${waiting.length} ${waiting.length===1?'stone is':'stones are'} still on shore. You can also undo a trip.`;
+  return null;
+}
 export function dispatchProblem(state,level) {
   if(state.harbor.inTransit)return 'Your boat is on the river.';
   if(state.stage!=='harbor')return 'Finish buying the sealed order before loading the boat.';
   if(state.harbor.cargo.some(c=>c.status==='market'))return 'Buy every stone in the order before shipping.';
   const problem=canSail(state.harbor.cargo);if(problem)return problem;
-  const reserve=state.harbor.cargo.filter(c=>c.status==='market').reduce((n,c)=>n+level.prices[c.type],0);
-  if(state.money<DECK.fee+reserve)return 'Keep the coins for your remaining stones. Undo a voyage to reclaim its shipping fee.';
-  return null;
+  return freightProblem(state);
 }
 export function dispatchCargo(state,level,now=Date.now()) {
   if(state.stage!=='harbor')return{problem:'This shipment is complete.'};

@@ -1,0 +1,85 @@
+/* Readable directions and forgiving touch controls for the Egypt chapter. */
+.read-aloud{font-size:13px;min-height:44px;padding:8px 12px;background:#fff9e9;border:1px solid #aab39a}
+.no-speech .read-aloud{display:none!important}
+#harbor-hud button{min-height:44px;font-size:14px}
+#harbor-hud .eyebrow{letter-spacing:1px;font-size:11px}
+#harbor-hud .panel-guidance{font-size:16px;line-height:1.5;color:#345851;margin-bottom:8px}
+#harbor-hud .order-paper h3{font-size:32px;margin:14px 0}
+#harbor-hud .order-paper .read-aloud{margin-bottom:12px;background:#f0ead7;font-size:13px;box-shadow:none}
+.order-study>summary,.order-layers>summary,.counting-help>summary{font-size:14px;min-height:44px;cursor:pointer;align-content:center}
+.counting-help{border:1px solid #a0b6a5;border-radius:8px;background:#e9efdf;margin:12px 0;padding:0 12px}
+.counting-help>summary{font-weight:700;color:#315a50}
+.counting-help p{font-size:14px;line-height:1.5;margin:10px 0;color:#345851}
+.count-kinds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+#harbor-hud .count-kinds button{padding:5px 2px;background:#fff8e7;box-shadow:none;font-size:11px}
+.count-kinds .stone-art{width:48px;height:40px;margin:auto}
+.count-kinds span{display:block}
+#harbor-hud .count-kinds button[aria-pressed=true]{border:2px solid #326758;background:#d8e6cd}
+.counting-layers{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;justify-content:center;margin:14px 0}
+.counting-layer>strong{display:block;font-size:12px;margin-bottom:8px;text-align:center}
+.counting-layer>div{display:grid;gap:3px}
+#harbor-hud .counting-layer button{position:relative;width:44px;height:44px;padding:2px;box-shadow:none;border:1px solid #a4b5a1;background:#fff9e7}
+#harbor-hud .counting-layer .matching{border:2px solid #517b64}
+#harbor-hud .counting-layer .other-shape{background:#e1e3d8;opacity:.6}
+#harbor-hud .counting-layer .counted{background:#c9dfb6}
+.counting-layer b{position:absolute;top:-2px;right:1px;background:#315e47;color:white;border-radius:50%;width:18px;height:18px;font-size:12px;line-height:18px}
+.counting-help .count-tally{font-weight:700;border-top:1px solid #b7c2a5;padding-top:12px}
+.counting-help .count-kept{font-size:12px}
+.shopping-row.count-row{grid-template-columns:44px minmax(0,1fr) 132px;gap:8px;min-height:82px}
+.count-row .order-stone{width:44px;height:44px}
+.shopping-row strong{font-size:14px}.shopping-row small{font-size:12px;line-height:1.4;color:#4c695c}
+.count-stepper{display:flex;align-items:center;gap:0}
+#harbor-hud .count-stepper button{width:44px;min-width:44px;min-height:48px;padding:0;font-size:23px;border-radius:5px;box-shadow:none}
+.count-stepper input{width:44px;height:48px;border-radius:0;padding:3px;appearance:textfield;-moz-appearance:textfield;font-size:20px}
+.count-stepper input::-webkit-inner-spin-button,.count-stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.count-row.count-correct{background:#e5eedc}.count-row.count-correct small{color:#315a42;font-weight:600}
+.count-stepper input[aria-invalid=true]{border:2px solid #986127;background:#fff0d6}
+.order-feedback{font-size:14px;line-height:1.6;padding:12px;background:#eee8d5;color:#3c594d;border-radius:6px}
+.order-feedback.try-again{background:#f6e7c5;border-left:3px solid #ab752b}
+.order-budget{font-size:14px}.order-budget small{font-size:12px;line-height:1.4}.order-approved{font-size:15px;line-height:1.5}
+#harbor-hud .text-button,#harbor-hud .order-paper-top .text-button{font-size:12px;min-height:44px}
+#harbor-hud .sealed-row button{font-size:13px!important;min-height:44px}
+#harbor-hud .model-tools button{font-size:12px;min-height:44px}.order-model{height:200px}.model-tools{height:44px}.model-tools span{font-size:11px}
+.cargo-guidance p{font-size:15px;line-height:1.5;color:#345b50}
+#harbor-hud .cargo-guidance button{font-size:15px!important;min-height:48px}
+.cargo-stock-text b{font-size:13px}.cargo-stock-text small,.cargo-footprint small{font-size:12px;color:#496657}
+.load-weight>span,.balance-copy>span{font-size:11px;letter-spacing:.4px}.load-weight>small,.balance-copy small{font-size:12px;color:#486452}.balance-copy strong{font-size:14px}
+#harbor-hud .packing-actions button{min-height:44px;font-size:13px!important;padding:8px 10px}
+.selection-label{font-size:12px;color:#496657}
+#harbor-hud .cargo-coach>button{font-size:14px;min-height:44px}.cargo-coach li,.cargo-coach li b{font-size:13px}.cargo-coach p{font-size:12px}
+.harbor-panel-heading p,.cargo-order .harbor-complete p,.voyage-banner p{font-size:14px;color:#426756}
+.accessible-deck button{min-height:44px;height:44px}
+#harbor-hud .accessible-deck .hint-cell{outline:3px solid #346f55;outline-offset:1px;background:#d9ebbe;position:relative}
+.cargo-read-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.cargo-recovery{border:1px solid #b58b4c;border-radius:6px;padding:10px;margin:10px 0;background:#fff0d1;font-size:14px;line-height:1.5;color:#684b27}
+.cargo-recovery p{margin:0 0 8px}
+.sail-checklist{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin:8px 0;color:#4c6351}.sail-checklist span{padding:4px 7px;border-radius:4px;background:#ece3ce}.sail-checklist .ready{background:#dce9ca;color:#325741}
+#app[data-civilization=egypt] #build-hint p{font-size:15px;line-height:1.5}
+#app[data-civilization=egypt] #build-tools button{min-height:44px;font-size:13px}
+#app[data-civilization=egypt] .dock-heading button{min-height:44px;font-size:13px}
+#app[data-civilization=egypt] .layer-caption{font-size:13px}
+#app[data-civilization=egypt] .build-help{font-size:15px}
+#app[data-civilization=egypt] #journey-timeline button{font-size:12px}
+#app[data-civilization=egypt] #journey-timeline span small{font-size:10px}
+@media(min-width:801px){.order-paper{width:430px}.harbor-camera{right:483px}.cargo-controls{max-height:calc(100% - 200px);overflow:auto}.cargo-controls:has(.accessible-deck){overflow:auto}.accessible-deck{position:static;width:min(100%,300px);padding:6px;margin:12px auto}}
+@media(max-width:1100px){.cargo-tray{grid-template-columns:repeat(2,minmax(0,1fr))}.cargo-guidance{align-items:stretch;flex-direction:column}.cargo-guidance button{min-height:44px}}
+@media(max-width:800px) and (min-height:521px){
+ .order-paper{top:146px;bottom:12px;max-height:none;padding:16px;left:10px;right:10px;width:auto}
+ #harbor-scene[data-phase=order] .harbor-camera{display:none}
+ .shopping-row.count-row{grid-template-columns:36px minmax(0,1fr) 132px;gap:6px}.count-row .order-stone{width:36px;height:40px}
+ .shopping-row strong{font-size:13px}.shopping-row small{font-size:11px}
+ #harbor-hud .order-paper h3{font-size:28px}
+ .cargo-controls,.cargo-controls:has(.cargo-coach.open){bottom:12px;max-height:54%;overflow:auto;padding:12px}
+ .cargo-coach ol{grid-template-columns:1fr;gap:10px}.cargo-coach li,.cargo-coach li b{font-size:14px}
+ .cargo-guidance p{font-size:14px}.cargo-stock-text b{font-size:12px}.cargo-stock-text small{font-size:11px}
+ .harbor-panel-heading p{display:block;font-size:12px}.cargo-order{max-height:27%}.cargo-order:has(.harbor-complete),.cargo-order:has(.voyage-banner){max-height:calc(100% - 175px)}
+ .cargo-read-actions{gap:6px}.cargo-read-actions button{flex:1}
+ #harbor-scene[data-phase=cargo] .harbor-camera{bottom:auto;top:calc(46% - 47px);right:12px}
+ #app[data-civilization=egypt] #journey-timeline button{font-size:10px}#app[data-civilization=egypt] #journey-timeline span small{font-size:8px}
+ #app[data-civilization=egypt] #build-hint{flex-wrap:wrap;gap:6px}#app[data-civilization=egypt] #build-hint p{font-size:14px;flex-basis:100%}
+ #app[data-civilization=egypt] .header-actions #earned-purse{display:none}
+ #app[data-civilization=egypt] .header-actions #free-design,#app[data-civilization=egypt] .header-actions #toggle-panel{font-size:11px;min-height:44px;padding:6px}
+ #app[data-civilization=egypt] .header-actions #collection{min-width:44px;min-height:44px}
+}
+@media(max-width:360px){.count-row .order-stone{display:none}.shopping-row.count-row{grid-template-columns:minmax(0,1fr) 132px}.count-kinds span{font-size:10px}}
+@media(max-height:520px) and (min-width:600px){.order-paper{width:350px}.harbor-camera{right:380px}.cargo-controls{max-height:calc(100% - 120px);padding:10px}.cargo-guidance p{font-size:14px}.cargo-tray{grid-template-columns:repeat(2,minmax(0,1fr))}.cargo-stock-text{display:block}.load-readout{display:flex;flex-wrap:wrap}.cargo-coach ol{grid-template-columns:1fr}.cargo-order{width:280px}.cargo-controls{right:311px}.shopping-row.count-row{grid-template-columns:minmax(0,1fr) 132px}.count-row .order-stone{display:none}}
